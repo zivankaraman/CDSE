@@ -1,9 +1,9 @@
-#' @title Get the list of available imagery collections
-#' @description FUNCTION_DESCRIPTION
+#' @title List available collections
+#' @description Retrieves the list of available imagery collections
 #' @param url character, STAC collections endpoint
 #' @param as_data_frame logical indicating if the result should be returned as data frame. Default: TRUE
 #' @return A \code{list} or a \code{data.frame} of all available imagery collections and their attributes.
-#' @details DETAILS
+#' @details This function doesn't require authentication.
 #' @examples
 #' \dontrun{
 #' if(interactive()){

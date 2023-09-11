@@ -2,16 +2,16 @@
 % Please edit documentation in R/GetArchiveImage.R
 \name{GetArchiveImage}
 \alias{GetArchiveImage}
-\title{FUNCTION_TITLE}
+\title{Get an image from the archive}
 \source{
-\url{http://somewhere.important.com/}
+\url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
 }
 \usage{
 GetArchiveImage(
   aoi,
   bbox,
   time_range,
-  type,
+  collection,
   script,
   format,
   mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
@@ -26,35 +26,38 @@ GetArchiveImage(
 )
 }
 \arguments{
-\item{aoi}{PARAM_DESCRIPTION}
+\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest}
 
-\item{bbox}{PARAM_DESCRIPTION}
+\item{bbox}{numeric vector of four elements describing the bounding box of interest.
 
-\item{time_range}{PARAM_DESCRIPTION}
+Only one of either aoi or bbox may be specified.}
 
-\item{type}{PARAM_DESCRIPTION}
+\item{time_range}{scalar or vector (Date or character that can be converted to date) defining the time interval}
 
-\item{script}{PARAM_DESCRIPTION}
+\item{collection}{character indicating which collection to search.
+Must be one of the collections returned by \code{GetCollections}.}
 
-\item{format}{PARAM_DESCRIPTION}
+\item{script}{character with tha evaluation script or the name of the file containing the script}
 
-\item{mosaicking_order}{PARAM_DESCRIPTION, Default: c("mostRecent", "leastRecent", "leastCC")}
+\item{format}{output format (PNG, JPG, TIFF)}
 
-\item{file}{PARAM_DESCRIPTION, Default: NULL}
+\item{mosaicking_order}{PARAM_DESCRIPTION. Default: c("mostRecent", "leastRecent", "leastCC")}
+
+\item{file}{name of the file to save the image. If NULL the raster object is returened. Default: NULL}
 
 \item{pixels}{PARAM_DESCRIPTION}
 
 \item{resolution}{PARAM_DESCRIPTION}
 
-\item{buffer}{PARAM_DESCRIPTION, Default: 0}
+\item{buffer}{width of the buffer (in meters) to retrieve image of enlarged area. Default: 0}
 
-\item{mask}{PARAM_DESCRIPTION, Default: FALSE}
+\item{mask}{logical indicating if the image should contain only pixels within aoi. Default: FALSE}
 
-\item{client}{PARAM_DESCRIPTION}
+\item{client}{OAuth client object to use for authentication.}
 
-\item{token}{PARAM_DESCRIPTION}
+\item{token}{OAuth token character string to use for authentication.}
 
-\item{url}{PARAM_DESCRIPTION, Default: 'https://services.sentinel-hub.com/api/v1/process'}
+\item{url}{character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint}
 }
 \value{
 OUTPUT_DESCRIPTION
@@ -73,9 +76,5 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[sf]{st_transform}}, \code{\link[sf]{st_geometry}}, \code{\link[sf]{st_bbox}}, \code{\link[sf]{geos_unary}}, \code{\link[sf]{st_coordinates}}
- \code{\link[geojsonsf]{sfc_geojson}}
- \code{\link[jsonlite]{toJSON, fromJSON}}
- \code{\link[httr2]{request}}, \code{\link[httr2]{req_headers}}, \code{\link[httr2]{req_body}}, \code{\link[httr2]{req_auth_bearer_token}}, \code{\link[httr2]{req_oauth_client_credentials}}, \code{\link[httr2]{req_perform}}
- \code{\link[terra]{rast}}, \code{\link[terra]{crs}}, \code{\link[terra]{project}}, \code{\link[terra]{mask}}, \code{\link[terra]{writeRaster}}
+\code{\link[CDSE]{GetCollections}}
 }

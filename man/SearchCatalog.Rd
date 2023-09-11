@@ -2,9 +2,9 @@
 % Please edit documentation in R/SearchCatalog.R
 \name{SearchCatalog}
 \alias{SearchCatalog}
-\title{FUNCTION_TITLE}
+\title{Search collection for available images}
 \source{
-\url{http://somewhere.important.com/}
+\url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
 }
 \usage{
 SearchCatalog(
@@ -17,38 +17,46 @@ SearchCatalog(
   client,
   token,
   as_data_frame = TRUE,
-  with_geometry = FALSE
+  with_geometry = TRUE
 )
 }
 \arguments{
-\item{aoi}{PARAM_DESCRIPTION}
+\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest}
 
-\item{bbox}{PARAM_DESCRIPTION}
+\item{bbox}{numeric vector of four elements describing the bounding box of interest.
 
-\item{from}{PARAM_DESCRIPTION}
+Only one of either aoi or bbox may be specified.}
 
-\item{to}{PARAM_DESCRIPTION}
+\item{from}{start of the time interval to search}
 
-\item{collection}{PARAM_DESCRIPTION}
+\item{to}{end of the time interval to search
 
-\item{url}{PARAM_DESCRIPTION}
+\code{from} and \code{to} can be either Date or character that can be converted to date by \code{as.Date}.
 
-\item{client}{PARAM_DESCRIPTION}
+Open interval (one side only) can e obtaining by providing the \code{NA} or \code{NULL} value for the corresponding argument.}
 
-\item{token}{PARAM_DESCRIPTION}
+\item{collection}{character indicating which collection to search.
+Must be one of the collections returned by \code{GetCollections}.}
 
-\item{as_data_frame}{PARAM_DESCRIPTION, Default: TRUE}
+\item{url}{character indicating the STAC catalog search endpoint. Deafault: Copernicus Data Space Ecosystem STACprocess endpoint}
 
-\item{with_geometry}{PARAM_DESCRIPTION, Default: FALSE}
+\item{client}{OAuth client object to use for authentication.}
+
+\item{token}{OAuth token character string to use for authentication.}
+
+\item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
+
+\item{with_geometry}{logical indicating if the granule geometries should be included in the data.frame. Default: TRUE}
 }
 \value{
-OUTPUT_DESCRIPTION
+A \code{list}, \code{data.frame} or a \code{sf} object.
 }
 \description{
-FUNCTION_DESCRIPTION
+Searches the specified collection for available images in the given time interval and intersecting with the
+    bounding box or the area of interest
 }
 \details{
-DETAILS
+If no images found, a \code{NULL} value is returned.
 }
 \examples{
 \dontrun{
@@ -58,10 +66,5 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[sf]{st_transform}}, \code{\link[sf]{st_geometry}}, \code{\link[sf]{st_bbox}}, \code{\link[sf]{st}}, \code{\link[sf]{st_as_sfc}}, \code{\link[sf]{geos_binary_pred}}, \code{\link[sf]{geos_measures}}, \code{\link[sf]{geos_binary_ops}}
- \code{\link[geojsonsf]{sfc_geojson}}
- \code{\link[jsonlite]{toJSON, fromJSON}}
- \code{\link[httr2]{request}}, \code{\link[httr2]{req_body}}, \code{\link[httr2]{req_auth_bearer_token}}, \code{\link[httr2]{req_oauth_client_credentials}}, \code{\link[httr2]{req_perform}}, \code{\link[httr2]{resp_body_raw}}
- \code{\link[lutz]{tz_lookup_coords}}
- \code{\link[lubridate]{with_tz}}
+\code{\link[CDSE]{GetCollections}}
 }

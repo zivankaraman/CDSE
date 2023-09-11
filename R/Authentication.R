@@ -1,10 +1,10 @@
 #' @title Get an OAuth token
-#' @description FUNCTION_DESCRIPTION
+#' @description Gets an OAuth authentication token (long character string)
 #' @param id character, user OAuth client id
 #' @param secret character, user OAuth client secret
 #' @param url character, endpoint for requesting tokens. Default: Copernicus Data Space Ecosystem OAuth endpoint
 #' @return Long character string containing the authentication token.
-#' @details DETAILS
+#' @details The token can be used in queries requiring the authentication.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -26,12 +26,12 @@ GetToken <- function(id, secret, url = "https://identity.dataspace.copernicus.eu
 }
 
 #' @title Get an OAuth client
-#' @description FUNCTION_DESCRIPTION
+#' @description Gets an OAuth authentication client (\code{httr2} OAuth client object)
 #' @param id character, user OAuth client id
 #' @param secret character, user OAuth client secret
 #' @param url character, endpoint for requesting tokens. Default: Copernicus Data Space Ecosystem OAuth endpoint
 #' @return \code{httr2} OAuth client object
-#' @details DETAILS
+#' @details The client can be used in queries requiring the authentication.
 #' @examples
 #' \dontrun{
 #' if(interactive()){

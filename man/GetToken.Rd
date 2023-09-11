@@ -25,10 +25,10 @@ GetToken(
 Long character string containing the authentication token.
 }
 \description{
-FUNCTION_DESCRIPTION
+Gets an OAuth authentication token (long character string)
 }
 \details{
-DETAILS
+The token can be used in queries requiring the authentication.
 }
 \examples{
 \dontrun{

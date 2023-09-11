@@ -1,13 +1,13 @@
-#' @title Produce catalog without multiple entries per date
-#' @description Sometimes several images could be available for the given day. It could be useful to have a list
-#'     where for any given day there would be just one row in the list. This unique row can be selected to represent either
+#' @title Produce image catalog without multiple entries per date
+#' @description Sometimes several images could be available for the given day. It can be useful to have a list
+#'     where for any given day there is just one row in the list. This unique row can be selected to represent either
 #'     the least cloud coverage or the biggest coverage of the are of interest.
 #' @param imageCatalog \code{data.frame} as returned by the \code{SearchCatalog} function
 #' @param by character indicating which attribute is used to select the best image per date.
 #'     Can be either "areaCoverage" or "tileCloudCover".
 #' @param keep list of columns to keep in output. Default: all columns in input.
 #' @return \code{data.frame} with one row per date.
-#' @details DETAILS
+#' @details The returned \code{data.frame} has the same columns as the input catalog.
 #' @examples
 #' \dontrun{
 #' if(interactive()){

@@ -1,43 +1,42 @@
-#' @title FUNCTION_TITLE
+#' @title Get an image from the archive
 #' @description FUNCTION_DESCRIPTION
-#' @param aoi PARAM_DESCRIPTION
-#' @param bbox PARAM_DESCRIPTION
-#' @param time_range PARAM_DESCRIPTION
-#' @param type PARAM_DESCRIPTION
-#' @param script PARAM_DESCRIPTION
-#' @param format PARAM_DESCRIPTION
-#' @param mosaicking_order PARAM_DESCRIPTION, Default: c("mostRecent", "leastRecent", "leastCC")
-#' @param file PARAM_DESCRIPTION, Default: NULL
+#' @param aoi sf or sfc object, typically a (multi)polygon, describing the Area of Interest
+#' @param bbox numeric vector of four elements describing the bounding box of interest.
+#'
+#' Only one of either aoi or bbox may be specified.
+#' @param time_range scalar or vector (Date or character that can be converted to date) defining the time interval
+#' @param collection character indicating which collection to search.
+#'     Must be one of the collections returned by \code{GetCollections}.
+#' @param script character with tha evaluation script or the name of the file containing the script
+#' @param format output format (PNG, JPG, TIFF)
+#' @param mosaicking_order PARAM_DESCRIPTION. Default: c("mostRecent", "leastRecent", "leastCC")
+#' @param file name of the file to save the image. If NULL the raster object is returened. Default: NULL
 #' @param pixels PARAM_DESCRIPTION
 #' @param resolution PARAM_DESCRIPTION
-#' @param buffer PARAM_DESCRIPTION, Default: 0
-#' @param mask PARAM_DESCRIPTION, Default: FALSE
-#' @param client PARAM_DESCRIPTION
-#' @param token PARAM_DESCRIPTION
-#' @param url PARAM_DESCRIPTION, Default: 'https://services.sentinel-hub.com/api/v1/process'
+#' @param buffer width of the buffer (in meters) to retrieve image of enlarged area. Default: 0
+#' @param mask logical indicating if the image should contain only pixels within aoi. Default: FALSE
+#' @param client OAuth client object to use for authentication.
+#' @param token OAuth token character string to use for authentication.
+#' @param url character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
-#'  \code{\link[sf]{st_transform}}, \code{\link[sf]{st_geometry}}, \code{\link[sf]{st_bbox}}, \code{\link[sf]{geos_unary}}, \code{\link[sf]{st_coordinates}}
-#'  \code{\link[geojsonsf]{sfc_geojson}}
-#'  \code{\link[jsonlite]{toJSON, fromJSON}}
-#'  \code{\link[httr2]{request}}, \code{\link[httr2]{req_headers}}, \code{\link[httr2]{req_body}}, \code{\link[httr2]{req_auth_bearer_token}}, \code{\link[httr2]{req_oauth_client_credentials}}, \code{\link[httr2]{req_perform}}
-#'  \code{\link[terra]{rast}}, \code{\link[terra]{crs}}, \code{\link[terra]{project}}, \code{\link[terra]{mask}}, \code{\link[terra]{writeRaster}}
+#' @seealso
+#'  \code{\link[CDSE]{GetCollections}}
 #' @rdname GetArchiveImage
-#' @export 
-#' @source \url{http://somewhere.important.com/}
+#' @export
+#' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
 #' @importFrom sf st_transform st_geometry st_bbox st_buffer st_coordinates st_centroid
 #' @importFrom geojsonsf sfc_geojson
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
 #' @importFrom terra rast crs project mask writeRaster
-GetArchiveImage <- function(aoi, bbox, time_range, type, script, format, mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
+GetArchiveImage <- function(aoi, bbox, time_range, collection, script, format, mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
                             file = NULL, pixels, resolution, buffer = 0, mask = FALSE,
                             client, token, url = "https://services.sentinel-hub.com/api/v1/process")
 {
@@ -107,7 +106,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, type, script, format, mosaick
     data <- list(
         list(
             dataFilter = list(timeRange = period, mosaickingOrder = priority),
-            type = type)
+            type = collection)
     )
     # build input part of the request
     if (missing(aoi)) { # query by bbox

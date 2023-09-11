@@ -2,10 +2,7 @@
 % Please edit documentation in R/UniqueCatalog.R
 \name{UniqueCatalog}
 \alias{UniqueCatalog}
-\title{FUNCTION_TITLE}
-\source{
-\url{http://somewhere.important.com/}
-}
+\title{Produce image catalog without multiple entries per date}
 \usage{
 UniqueCatalog(
   imageCatalog,
@@ -14,20 +11,23 @@ UniqueCatalog(
 )
 }
 \arguments{
-\item{imageCatalog}{PARAM_DESCRIPTION}
+\item{imageCatalog}{\code{data.frame} as returned by the \code{SearchCatalog} function}
 
-\item{by}{PARAM_DESCRIPTION, Default: c("areaCoverage", "tileCloudCover")}
+\item{by}{character indicating which attribute is used to select the best image per date.
+Can be either "areaCoverage" or "tileCloudCover".}
 
-\item{keep}{PARAM_DESCRIPTION, Default: names(imageCatalog)}
+\item{keep}{list of columns to keep in output. Default: all columns in input.}
 }
 \value{
-OUTPUT_DESCRIPTION
+\code{data.frame} with one row per date.
 }
 \description{
-FUNCTION_DESCRIPTION
+Sometimes several images could be available for the given day. It can be useful to have a list
+    where for any given day there is just one row in the list. This unique row can be selected to represent either
+    the least cloud coverage or the biggest coverage of the are of interest.
 }
 \details{
-DETAILS
+The returned \code{data.frame} has the same columns as the input catalog.
 }
 \examples{
 \dontrun{
@@ -37,5 +37,5 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[stats]{aggregate}}
+\code{\link[CDSE]{SearchCatalog}}
 }

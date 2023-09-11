@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetCollections.R
 \name{GetCollections}
 \alias{GetCollections}
-\title{Get the list of available imagery collections}
+\title{List available collections}
 \source{
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
 }
@@ -18,10 +18,10 @@ GetCollections(url, as_data_frame = TRUE)
 A \code{list} or a \code{data.frame} of all available imagery collections and their attributes.
 }
 \description{
-FUNCTION_DESCRIPTION
+Retrieves the list of available imagery collections
 }
 \details{
-DETAILS
+This function doesn't require authentication.
 }
 \examples{
 \dontrun{

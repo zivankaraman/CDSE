@@ -25,10 +25,10 @@ GetClient(
 \code{httr2} OAuth client object
 }
 \description{
-FUNCTION_DESCRIPTION
+Gets an OAuth authentication client (\code{httr2} OAuth client object)
 }
 \details{
-DETAILS
+The client can be used in queries requiring the authentication.
 }
 \examples{
 \dontrun{

@@ -1,19 +1,25 @@
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
+#' @title Search collection for available images
+#' @description Searches the specified collection for available images in the given time interval and intersecting with the
+#'     bounding box or the area of interest
 #' @param aoi sf or sfc object, typically a (multi)polygon, describing the Area of Interest
-#' @param bbox numeric vector of four elements.
-#'     Only one of either aoi or bbox may be specified.
-#' @param from PARAM_DESCRIPTION
-#' @param to PARAM_DESCRIPTION
+#' @param bbox numeric vector of four elements describing the bounding box of interest.
+#'
+#' Only one of either aoi or bbox may be specified.
+#' @param from start of the time interval to search
+#' @param to  end of the time interval to search
+#'
+#' \code{from} and \code{to} can be either Date or character that can be converted to date by \code{as.Date}.
+#'
+#' Open interval (one side only) can e obtaining by providing the \code{NA} or \code{NULL} value for the corresponding argument.
 #' @param collection character indicating which collection to search.
 #'     Must be one of the collections returned by \code{GetCollections}.
-#' @param url character indicating the STAC catalog search endpoint. Deafault:
+#' @param url character indicating the STAC catalog search endpoint. Deafault: Copernicus Data Space Ecosystem STACprocess endpoint
 #' @param client OAuth client object to use for authentication.
 #' @param token OAuth token character string to use for authentication.
 #' @param as_data_frame logical indicating if the result should be returned as data frame. Default: TRUE
 #' @param with_geometry logical indicating if the granule geometries should be included in the data.frame. Default: TRUE
 #' @return A \code{list}, \code{data.frame} or a \code{sf} object.
-#' @details DETAILS
+#' @details If no images found, a \code{NULL} value is returned.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
