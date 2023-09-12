@@ -2,7 +2,7 @@
 % Please edit documentation in R/Authentication.R
 \name{GetToken}
 \alias{GetToken}
-\title{Get an OAuth token}
+\title{Get OAuth token}
 \source{
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 }

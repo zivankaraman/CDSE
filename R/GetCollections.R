@@ -1,7 +1,7 @@
 #' @title List available collections
-#' @description Retrieves the list of available imagery collections
-#' @param url character, STAC collections endpoint
+#' @description Retrieves the list of available imagery collections.
 #' @param as_data_frame logical indicating if the result should be returned as data frame. Default: TRUE
+#' @param url character indicating the STAC catalog search endpoint. Default: Copernicus Data Space Ecosystem STAC endpoint
 #' @return A \code{list} or a \code{data.frame} of all available imagery collections and their attributes.
 #' @details This function doesn't require authentication.
 #' @examples
@@ -16,7 +16,7 @@
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
 #' @importFrom httr2 request req_perform resp_body_json
-GetCollections <- function(url, as_data_frame = TRUE) {
+GetCollections <- function(as_data_frame = TRUE, url = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/") {
     req <- httr2::request(paste0(url, "collections"))
     resp <- httr2::req_perform(req)
     if (isTRUE(as_data_frame)) {

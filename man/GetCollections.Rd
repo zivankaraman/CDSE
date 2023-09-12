@@ -7,18 +7,21 @@
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
 }
 \usage{
-GetCollections(url, as_data_frame = TRUE)
+GetCollections(
+  as_data_frame = TRUE,
+  url = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/"
+)
 }
 \arguments{
-\item{url}{character, STAC collections endpoint}
-
 \item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
+
+\item{url}{character indicating the STAC catalog search endpoint. Default: Copernicus Data Space Ecosystem STAC endpoint}
 }
 \value{
 A \code{list} or a \code{data.frame} of all available imagery collections and their attributes.
 }
 \description{
-Retrieves the list of available imagery collections
+Retrieves the list of available imagery collections.
 }
 \details{
 This function doesn't require authentication.

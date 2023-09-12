@@ -13,23 +13,25 @@ SearchCatalog(
   from,
   to,
   collection,
-  url,
   client,
   token,
   as_data_frame = TRUE,
-  with_geometry = TRUE
+  with_geometry = TRUE,
+  url = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/"
 )
 }
 \arguments{
-\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest}
+\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest.}
 
 \item{bbox}{numeric vector of four elements describing the bounding box of interest.
+    Specify with a coordinate pair on two (opposite) vertices of the bounding box rectangle.
+    Coordinates need to be in longitude, latitude.
 
-Only one of either aoi or bbox may be specified.}
+Only one of either \code{aoi} or \code{bbox} may be specified.}
 
-\item{from}{start of the time interval to search}
+\item{from}{start of the time interval to search.}
 
-\item{to}{end of the time interval to search
+\item{to}{end of the time interval to search.
 
 \code{from} and \code{to} can be either Date or character that can be converted to date by \code{as.Date}.
 
@@ -38,8 +40,6 @@ Open interval (one side only) can e obtaining by providing the \code{NA} or \cod
 \item{collection}{character indicating which collection to search.
 Must be one of the collections returned by \code{GetCollections}.}
 
-\item{url}{character indicating the STAC catalog search endpoint. Deafault: Copernicus Data Space Ecosystem STACprocess endpoint}
-
 \item{client}{OAuth client object to use for authentication.}
 
 \item{token}{OAuth token character string to use for authentication.}
@@ -47,13 +47,15 @@ Must be one of the collections returned by \code{GetCollections}.}
 \item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
 
 \item{with_geometry}{logical indicating if the granule geometries should be included in the data.frame. Default: TRUE}
+
+\item{url}{character indicating the STAC catalog search endpoint. Default: Copernicus Data Space Ecosystem STAC endpoint}
 }
 \value{
 A \code{list}, \code{data.frame} or a \code{sf} object.
 }
 \description{
 Searches the specified collection for available images in the given time interval and intersecting with the
-    bounding box or the area of interest
+    bounding box or the area of interest.
 }
 \details{
 If no images found, a \code{NULL} value is returned.

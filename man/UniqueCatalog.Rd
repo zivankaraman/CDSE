@@ -11,7 +11,7 @@ UniqueCatalog(
 )
 }
 \arguments{
-\item{imageCatalog}{\code{data.frame} as returned by the \code{SearchCatalog} function}
+\item{imageCatalog}{\code{data.frame} as returned by the \code{SearchCatalog} function.}
 
 \item{by}{character indicating which attribute is used to select the best image per date.
 Can be either "areaCoverage" or "tileCloudCover".}

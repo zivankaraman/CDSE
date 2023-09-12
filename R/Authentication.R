@@ -1,4 +1,4 @@
-#' @title Get an OAuth token
+#' @title Get OAuth token
 #' @description Gets an OAuth authentication token (long character string)
 #' @param id character, user OAuth client id
 #' @param secret character, user OAuth client secret
@@ -25,7 +25,7 @@ GetToken <- function(id, secret, url = "https://identity.dataspace.copernicus.eu
     return(out)
 }
 
-#' @title Get an OAuth client
+#' @title Get OAuth client
 #' @description Gets an OAuth authentication client (\code{httr2} OAuth client object)
 #' @param id character, user OAuth client id
 #' @param secret character, user OAuth client secret

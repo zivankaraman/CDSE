@@ -1,25 +1,34 @@
-#' @title Get an image from the archive
-#' @description FUNCTION_DESCRIPTION
-#' @param aoi sf or sfc object, typically a (multi)polygon, describing the Area of Interest
+#' @title Get image from the archive
+#' @description Retrieves the image for the area of interest using the parameters provided.
+#' @param aoi sf or sfc object, typically a (multi)polygon, describing the Area of Interest.
 #' @param bbox numeric vector of four elements describing the bounding box of interest.
+#'     Specify with a coordinate pair on two (opposite) vertices of the bounding box rectangle.
+#'     Coordinates need to be in longitude, latitude.
 #'
-#' Only one of either aoi or bbox may be specified.
-#' @param time_range scalar or vector (Date or character that can be converted to date) defining the time interval
+#' Only one of either \code{aoi} or \code{bbox} may be specified.
+#' @param time_range scalar or vector (Date or character that can be converted to date) defining the time interval.
 #' @param collection character indicating which collection to search.
 #'     Must be one of the collections returned by \code{GetCollections}.
-#' @param script character with tha evaluation script or the name of the file containing the script
-#' @param format output format (PNG, JPG, TIFF)
-#' @param mosaicking_order PARAM_DESCRIPTION. Default: c("mostRecent", "leastRecent", "leastCC")
-#' @param file name of the file to save the image. If NULL the raster object is returened. Default: NULL
-#' @param pixels PARAM_DESCRIPTION
-#' @param resolution PARAM_DESCRIPTION
-#' @param buffer width of the buffer (in meters) to retrieve image of enlarged area. Default: 0
-#' @param mask logical indicating if the image should contain only pixels within aoi. Default: FALSE
+#' @param script character containing the evaluation script or the name of the file containing the script.
+#' @param mosaicking_order character indicating the order in which tiles are overlapped from which the output result is mosaicked.
+#'     Must be one of "mostRecent", "leastRecent", or "leastCC". Default: "mostRecent"
+#' @param file name of the file to save the image. If NULL, a \code{SpatRaster} object is returned. Default: NULL
+#' @param format character indicating the output file format.
+#'     Must be one of "image/tiff", "image/png", or "image/jpeg". Default: "image/tiff"
+#' @param pixels integer scalar or length-two vector indicating the request image width and height.
+#'     Values must be integers between 1 and 2500.
+#' @param resolution numeric scalar or length-two vector indicating the spatial resolution of the request image
+#'     in horizontal and vertical direction (in meters).
+#'
+#' Only one of the arguments "pixels" or "resolution" must be set at the same time.
+#' @param buffer numeric, width of the buffer to retrieve the image of enlarged area. Default: 0
+#' @param mask logical indicating if the image should contain only pixels within Area of Interest. Default: FALSE
 #' @param client OAuth client object to use for authentication.
 #' @param token OAuth token character string to use for authentication.
 #' @param url character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @return \code{SpatRaster} object (from the package \code{terra}) of the requested image (if \code{file} is \code{NULL}),
+#'     or the (invisible) name of the file created.
+#' @details If \code{aoi} argument is provided, the result is returned in the same coordinate reference system.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -36,10 +45,11 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
 #' @importFrom terra rast crs project mask writeRaster
-GetArchiveImage <- function(aoi, bbox, time_range, collection, script, format, mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
-                            file = NULL, pixels, resolution, buffer = 0, mask = FALSE,
-                            client, token, url = "https://services.sentinel-hub.com/api/v1/process")
-{
+GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
+                            format = c("image/tiff", "image/png", "image/jpeg"),
+                            mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
+                            pixels, resolution, buffer = 0, mask = FALSE,
+                            client, token, url = "https://sh.dataspace.copernicus.eu/api/v1/process") {
     # Only one of either aoi or bbox may be specified.
     if (!missing(aoi) & !missing(bbox)) {
         stop("Only one of either aoi or bbox may be specified.")
@@ -105,7 +115,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, format, m
     period <- MakeTimeRange(time_range)
     data <- list(
         list(
-            dataFilter = list(timeRange = period, mosaickingOrder = priority),
+            dataFilter = list(timeRange = period, mosaickingOrder = mosaicking_order[1]),
             type = collection)
     )
     # build input part of the request
@@ -121,7 +131,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, format, m
     }
     # responses
     # if (missing(responses)) {
-        responses <- list(list(identifier = "default", format = list(type = format)))
+        responses <- list(list(identifier = "default", format = list(type = format[1])))
     # }
     # build output part of the request
     if (missing(resolution)) { # use width and height provided

@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetArchiveImage.R
 \name{GetArchiveImage}
 \alias{GetArchiveImage}
-\title{Get an image from the archive}
+\title{Get image from the archive}
 \source{
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
 }
@@ -13,45 +13,53 @@ GetArchiveImage(
   time_range,
   collection,
   script,
-  format,
-  mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
   file = NULL,
+  format = c("image/tiff", "image/png", "image/jpeg"),
+  mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
   pixels,
   resolution,
   buffer = 0,
   mask = FALSE,
   client,
   token,
-  url = "https://services.sentinel-hub.com/api/v1/process"
+  url = "https://sh.dataspace.copernicus.eu/api/v1/process"
 )
 }
 \arguments{
-\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest}
+\item{aoi}{sf or sfc object, typically a (multi)polygon, describing the Area of Interest.}
 
 \item{bbox}{numeric vector of four elements describing the bounding box of interest.
+    Specify with a coordinate pair on two (opposite) vertices of the bounding box rectangle.
+    Coordinates need to be in longitude, latitude.
 
-Only one of either aoi or bbox may be specified.}
+Only one of either \code{aoi} or \code{bbox} may be specified.}
 
-\item{time_range}{scalar or vector (Date or character that can be converted to date) defining the time interval}
+\item{time_range}{scalar or vector (Date or character that can be converted to date) defining the time interval.}
 
 \item{collection}{character indicating which collection to search.
 Must be one of the collections returned by \code{GetCollections}.}
 
-\item{script}{character with tha evaluation script or the name of the file containing the script}
+\item{script}{character containing the evaluation script or the name of the file containing the script.}
 
-\item{format}{output format (PNG, JPG, TIFF)}
+\item{file}{name of the file to save the image. If NULL, a \code{SpatRaster} object is returned. Default: NULL}
 
-\item{mosaicking_order}{PARAM_DESCRIPTION. Default: c("mostRecent", "leastRecent", "leastCC")}
+\item{format}{character indicating the output file format.
+Must be one of "image/tiff", "image/png", or "image/jpeg". Default: "image/tiff"}
 
-\item{file}{name of the file to save the image. If NULL the raster object is returened. Default: NULL}
+\item{mosaicking_order}{character indicating the order in which tiles are overlapped from which the output result is mosaicked.
+Must be one of "mostRecent", "leastRecent", or "leastCC". Default: "mostRecent"}
 
-\item{pixels}{PARAM_DESCRIPTION}
+\item{pixels}{integer scalar or length-two vector indicating the request image width and height.
+Values must be integers between 1 and 2500.}
 
-\item{resolution}{PARAM_DESCRIPTION}
+\item{resolution}{numeric scalar or length-two vector indicating the spatial resolution of the request image
+    in horizontal and vertical direction (in meters).
 
-\item{buffer}{width of the buffer (in meters) to retrieve image of enlarged area. Default: 0}
+Only one of the arguments "pixels" or "resolution" must be set at the same time.}
 
-\item{mask}{logical indicating if the image should contain only pixels within aoi. Default: FALSE}
+\item{buffer}{numeric, width of the buffer to retrieve the image of enlarged area. Default: 0}
+
+\item{mask}{logical indicating if the image should contain only pixels within Area of Interest. Default: FALSE}
 
 \item{client}{OAuth client object to use for authentication.}
 
@@ -60,13 +68,14 @@ Must be one of the collections returned by \code{GetCollections}.}
 \item{url}{character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint}
 }
 \value{
-OUTPUT_DESCRIPTION
+\code{SpatRaster} object (from the package \code{terra}) of the requested image (if \code{file} is \code{NULL}),
+    or the (invisible) name of the file created.
 }
 \description{
-FUNCTION_DESCRIPTION
+Retrieves the image for the area of interest using the parameters provided.
 }
 \details{
-DETAILS
+If \code{aoi} argument is provided, the result is returned in the same coordinate reference system.
 }
 \examples{
 \dontrun{

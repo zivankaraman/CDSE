@@ -2,7 +2,7 @@
 % Please edit documentation in R/Authentication.R
 \name{GetClient}
 \alias{GetClient}
-\title{Get an OAuth client}
+\title{Get OAuth client}
 \source{
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 }
