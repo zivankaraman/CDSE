@@ -12,10 +12,10 @@ Description: Provides interface to the 'Copernicus Data Space Ecosystem' API
     <https://dataspace.copernicus.eu/analyse/apis/sentinel-hub> that provides access to various 
     satellite imagery archives. It allows you to access raw satellite data, rendered images, 
     statistical analysis, and other features.
+Depends: R (>= 3.6.0)
 Imports: geojsonsf, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils   
-License: AGPL-3
+License: AGPL-3 + file LICENSE
 Encoding: UTF-8
 Config/build/clean-inst-doc: FALSE
 RoxygenNote: 7.2.2
-Suggests: knitr, maps, rmarkdown, tibble
-VignetteBuilder: knitr
+Suggests: maps, tibble

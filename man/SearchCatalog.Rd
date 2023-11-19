@@ -68,8 +68,8 @@ if(interactive()){
  #EXAMPLE1
  dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
- images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31", collection = "sentinel-2-l2a",
-                         with_geometry = TRUE, client = OAuthClient)
+ images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+            collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
  }
 }
 }
