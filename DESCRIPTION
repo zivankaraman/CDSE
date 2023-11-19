@@ -14,7 +14,7 @@ Description: Provides interface to the 'Copernicus Data Space Ecosystem' API
     statistical analysis, and other features.
 Depends: R (>= 3.6.0)
 Imports: geojsonsf, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils   
-License: AGPL-3 + file LICENSE
+License: AGPL-3
 Encoding: UTF-8
 Config/build/clean-inst-doc: FALSE
 RoxygenNote: 7.2.2
