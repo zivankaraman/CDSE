@@ -9,15 +9,18 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  id <- "..."
+#'  secret <- "..."
+#'  token <- GetOAuthToken(id = id, secret = secret)
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[CDSE]{GetClient}}
-#' @rdname GetToken
+#'  \code{\link[CDSE]{GetOAuthClient}}
+#' @rdname GetOAuthToken
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client oauth_flow_client_credentials
-GetToken <- function(id, secret, url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token") {
+GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
     client <- httr2::oauth_client(id = id, token_url = url,secret = secret, auth = "header")
     token <- httr2::oauth_flow_client_credentials(client)
     out <- token$access_token
@@ -36,15 +39,18 @@ GetToken <- function(id, secret, url = "https://identity.dataspace.copernicus.eu
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  id <- "..."
+#'  secret <- "..."
+#'  OAuthClient <- GetOAuthClient(id = id, secret = secret)
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[CDSE]{GetToken}}
-#' @rdname GetClient
+#'  \code{\link[CDSE]{GetOAuthToken}}
+#' @rdname GetOAuthClient
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client
-GetClient <- function(id, secret, url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token") {
+GetOAuthClient <- function(id, secret, url = getOption("CDSE.auth_url")) {
     client <- httr2::oauth_client(id = id, token_url = url, secret = secret, auth = "header")
     return(client)
 }

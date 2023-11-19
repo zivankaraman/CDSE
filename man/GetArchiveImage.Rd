@@ -22,7 +22,7 @@ GetArchiveImage(
   mask = FALSE,
   client,
   token,
-  url = "https://sh.dataspace.copernicus.eu/api/v1/process"
+  url = getOption("CDSE.process_url")
 )
 }
 \arguments{
@@ -39,7 +39,7 @@ Only one of either \code{aoi} or \code{bbox} may be specified.}
 \item{collection}{character indicating which collection to search.
 Must be one of the collections returned by \code{GetCollections}.}
 
-\item{script}{character containing the evaluation script or the name of the file containing the script.}
+\item{script}{a length one character string containing the evaluation script or the name of the file containing the script.}
 
 \item{file}{name of the file to save the image. If NULL, a \code{SpatRaster} object is returned. Default: NULL}
 
@@ -55,7 +55,8 @@ Values must be integers between 1 and 2500.}
 \item{resolution}{numeric scalar or length-two vector indicating the spatial resolution of the request image
     in horizontal and vertical direction (in meters).
 
-Only one of the arguments "pixels" or "resolution" must be set at the same time.}
+Only one of the arguments "pixels" or "resolution" must be set at the same time.
+If the argument "pixels" or "resolution" is scalar, the same value is used for horizontal and vertical direction (width and height).}
 
 \item{buffer}{numeric, width of the buffer to retrieve the image of enlarged area. Default: 0}
 
@@ -63,7 +64,9 @@ Only one of the arguments "pixels" or "resolution" must be set at the same time.
 
 \item{client}{OAuth client object to use for authentication.}
 
-\item{token}{OAuth token character string to use for authentication.}
+\item{token}{OAuth token character string to use for authentication.
+
+Exactly one of either \code{client} or \code{token} must be specified. It is recommended to use \code{client}.}
 
 \item{url}{character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint}
 }
@@ -81,6 +84,13 @@ If \code{aoi} argument is provided, the result is returned in the same coordinat
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+ aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+ script_file <- system.file("scripts", "NDVI_uint8.js", package = "CDSE")
+ day <- "2023-07-11"
+ ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
+        collection = "sentinel-2-l2a",format = "image/tiff",
+        mosaicking_order = "leastCC", resolution = 10, client = OAuthClient)
  }
 }
 }

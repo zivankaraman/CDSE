@@ -7,10 +7,7 @@
 \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
 }
 \usage{
-GetCollections(
-  as_data_frame = TRUE,
-  url = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/"
-)
+GetCollections(as_data_frame = TRUE, url = getOption("CDSE.catalog_url"))
 }
 \arguments{
 \item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
@@ -30,6 +27,7 @@ This function doesn't require authentication.
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ GetCollections(as_data_frame = TRUE)
  }
 }
 }

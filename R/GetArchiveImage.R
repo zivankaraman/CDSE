@@ -9,7 +9,7 @@
 #' @param time_range scalar or vector (Date or character that can be converted to date) defining the time interval.
 #' @param collection character indicating which collection to search.
 #'     Must be one of the collections returned by \code{GetCollections}.
-#' @param script character containing the evaluation script or the name of the file containing the script.
+#' @param script a length one character string containing the evaluation script or the name of the file containing the script.
 #' @param mosaicking_order character indicating the order in which tiles are overlapped from which the output result is mosaicked.
 #'     Must be one of "mostRecent", "leastRecent", or "leastCC". Default: "mostRecent"
 #' @param file name of the file to save the image. If NULL, a \code{SpatRaster} object is returned. Default: NULL
@@ -21,10 +21,13 @@
 #'     in horizontal and vertical direction (in meters).
 #'
 #' Only one of the arguments "pixels" or "resolution" must be set at the same time.
+#' If the argument "pixels" or "resolution" is scalar, the same value is used for horizontal and vertical direction (width and height).
 #' @param buffer numeric, width of the buffer to retrieve the image of enlarged area. Default: 0
 #' @param mask logical indicating if the image should contain only pixels within Area of Interest. Default: FALSE
 #' @param client OAuth client object to use for authentication.
 #' @param token OAuth token character string to use for authentication.
+#'
+#' Exactly one of either \code{client} or \code{token} must be specified. It is recommended to use \code{client}.
 #' @param url character indicating the process endpoint. Default: Copernicus Data Space Ecosystem process endpoint
 #' @return \code{SpatRaster} object (from the package \code{terra}) of the requested image (if \code{file} is \code{NULL}),
 #'     or the (invisible) name of the file created.
@@ -33,6 +36,13 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+#'  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+#'  script_file <- system.file("scripts", "NDVI_uint8.js", package = "CDSE")
+#'  day <- "2023-07-11"
+#'  ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
+#'         collection = "sentinel-2-l2a",format = "image/tiff",
+#'         mosaicking_order = "leastCC", resolution = 10, client = OAuthClient)
 #'  }
 #' }
 #' @seealso
@@ -49,7 +59,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
                             format = c("image/tiff", "image/png", "image/jpeg"),
                             mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
                             pixels, resolution, buffer = 0, mask = FALSE,
-                            client, token, url = "https://sh.dataspace.copernicus.eu/api/v1/process") {
+                            client, token, url = getOption("CDSE.process_url")) {
     # Only one of either aoi or bbox may be specified.
     if (!missing(aoi) & !missing(bbox)) {
         stop("Only one of either aoi or bbox may be specified.")

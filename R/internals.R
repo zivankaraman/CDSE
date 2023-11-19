@@ -2,13 +2,16 @@ between <- function(x, left, right) {
     x >= left & x <= right
 }
 
-
+#' @importFrom httr2 last_response resp_body_json
+#' @importFrom utils capture.output
+#' @noRd
 LastError <- function() {
     # Sentinel Hub API uses boom - HTTP-friendly error objects
     # https://hapi.dev/module/boom/
     resp <- httr2::last_response()
     err <- as.data.frame(httr2::resp_body_json(resp)[[1]])
     msg <- c(" \n", paste0(capture.output(err), "\n"))
+    return(msg)
 }
 
 SafeNull <- function(x) {
@@ -84,38 +87,8 @@ MakeTimeRange <- function(period) {
     return(list(from = sprintf("%sT00:00:00.000Z", from), to = sprintf("%sT23:59:59.000Z", to)))
 }
 
-
-Flatten <- function(x) {
-    allowed_class <- c("Raster", "sf", "sfc", "Spatial", "SpatRaster", "SpatVector")
-    ndx <- inherits(x, allowed_class, which = TRUE)
-    if (sum(ndx) == 0L) {
-        stop("x must be an Raster, sf, sfc, Spatial*, SpatRaster or SpatVector object")
-    } else {
-        type <- allowed_class[which(ndx > 0L)]
-    }
-    # get bounding box as geometry of type points
-    boxpts <- sf::st_as_sfc(sf::st_bbox(x))
-    # convert to geographic coordinates (longitude / latitude)
-    boxLL <- matrix(sf::st_bbox(sf::st_transform(boxpts, crs = 4326)), ncol = 2)
-    # find the center
-    llc <- apply(boxLL, 1, mean)
-    # construct the projection string with a minimal angle to avoid errors
-    angle <- 0.00001
-    prj <- paste0("+proj=omerc +lat_0=", llc[2], " +lonc=", llc[1], " +alpha=", angle,
-                  " +gamma=0.0 +k=1.000000 +x_0=0.000 +y_0=0.000 +ellps=WGS84 +units=m ")
-    # transform to the new planar projection
-    out <- switch(type,
-                  Raster = raster::projectRaster(x, crs = prj),
-                  sf = sf::st_transform(x, crs = sf::st_crs(prj)$wkt),
-                  sfc = sf::st_transform(x, crs = sf::st_crs(prj)$wkt),
-                  Spatial = sf::as_Spatial(sf::st_transform(sf::st_as_sf(x), crs = sf::st_crs(prj)$wkt)),
-                  SpatRaster = terra::project(x, sf::st_crs(prj)$wkt),
-                  SpatVector = terra::project(x, sf::st_crs(prj)$wkt),
-                  NULL)
-    return(out)
-}
-
-
+#' @importFrom sf st_as_sfc st_polygon
+#' @noRd
 PolyFromBbox <- function(x) {
     # creates sf geometry from bbox vector
     vec <- c(x[1], x[2],
@@ -124,12 +97,6 @@ PolyFromBbox <- function(x) {
              x[1], x[4],
              x[1], x[2])
     mat <- matrix(vec, ncol = 2, byrow = TRUE)
-    sf::st_as_sfc(list(sf::st_polygon(list(mat))), crs = 4326)
+    out <- sf::st_as_sfc(list(sf::st_polygon(list(mat))), crs = 4326)
+    return(out)
 }
-
-
-# Bufferize <- function(bounds, buffer, join = "MITRE") {
-#     bounds |> Flatten() |>
-#         sf::st_buffer(dist = buffer, joinStyle = join, mitreLimit = 999999) |>
-#         sf::st_transform(crs = sf::st_crs(bounds))
-# }

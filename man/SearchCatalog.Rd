@@ -13,11 +13,11 @@ SearchCatalog(
   from,
   to,
   collection,
-  client,
-  token,
   as_data_frame = TRUE,
   with_geometry = TRUE,
-  url = "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0/"
+  client,
+  token,
+  url = getOption("CDSE.catalog_url")
 )
 }
 \arguments{
@@ -40,13 +40,15 @@ Open interval (one side only) can e obtaining by providing the \code{NA} or \cod
 \item{collection}{character indicating which collection to search.
 Must be one of the collections returned by \code{GetCollections}.}
 
-\item{client}{OAuth client object to use for authentication.}
-
-\item{token}{OAuth token character string to use for authentication.}
-
 \item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
 
 \item{with_geometry}{logical indicating if the granule geometries should be included in the data.frame. Default: TRUE}
+
+\item{client}{OAuth client object to use for authentication.}
+
+\item{token}{OAuth token character string to use for authentication.
+
+Exactly one of either \code{client} or \code{token} must be specified. It is recommended to use \code{client}.}
 
 \item{url}{character indicating the STAC catalog search endpoint. Default: Copernicus Data Space Ecosystem STAC endpoint}
 }
@@ -64,6 +66,10 @@ If no images found, a \code{NULL} value is returned.
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+ aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+ images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31", collection = "sentinel-2-l2a",
+                         with_geometry = TRUE, client = OAuthClient)
  }
 }
 }
