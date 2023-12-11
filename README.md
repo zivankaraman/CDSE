@@ -8,4 +8,4 @@ This package provides interface to the 'Copernicus Data Space Ecosystem' API htt
 
 ## License
 
-This package is released under AGPLv3.
+This package is released under [AGPLv3]https://cran.r-project.org/web/licenses/AGPL-3.
