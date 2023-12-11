@@ -25,10 +25,8 @@ This function doesn't require authentication.
 }
 \examples{
 \dontrun{
-if(interactive()){
  #EXAMPLE1
  GetCollections(as_data_frame = TRUE)
- }
 }
 }
 \seealso{

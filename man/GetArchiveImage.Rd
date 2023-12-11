@@ -82,7 +82,6 @@ If \code{aoi} argument is provided, the result is returned in the same coordinat
 }
 \examples{
 \dontrun{
-if(interactive()){
  #EXAMPLE1
  dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
@@ -91,9 +90,8 @@ if(interactive()){
  ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
         collection = "sentinel-2-l2a",format = "image/tiff",
         mosaicking_order = "leastCC", resolution = 10, client = OAuthClient)
- }
 }
 }
 \seealso{
-\code{\link[CDSE]{GetCollections}}
+\code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{SearchCatalog}}
 }

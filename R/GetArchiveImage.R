@@ -34,7 +34,6 @@
 #' @details If \code{aoi} argument is provided, the result is returned in the same coordinate reference system.
 #' @examples
 #' \dontrun{
-#' if(interactive()){
 #'  #EXAMPLE1
 #'  dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 #'  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
@@ -43,10 +42,9 @@
 #'  ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
 #'         collection = "sentinel-2-l2a",format = "image/tiff",
 #'         mosaicking_order = "leastCC", resolution = 10, client = OAuthClient)
-#'  }
 #' }
 #' @seealso
-#'  \code{\link[CDSE]{GetCollections}}
+#'  \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{SearchCatalog}}
 #' @rdname GetArchiveImage
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
@@ -176,29 +174,47 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
     # run the request
     resp <- try(httr2::req_perform(req), silent = TRUE)
     if (inherits(resp, "try-error")) {
-        stop(LastError())
+        if (length(grep("SSL peer certificate", resp[1])) == 1L) {
+            req <- httr2::req_options(req, ssl_verifyhost = 0L, ssl_verifypeer = 0L)
+            resp <- httr2::req_perform(req)
+        } else {
+            stop(LastError())
+        }
     }
     if (unlist(strsplit(format, split = "/", fixed = TRUE))[1] != "image") {
         # TBD - process multipart response
     } else {
-        # write to temporary file to post-process the image
-        tmpfic <- tempfile()
-        writeBin(resp$body, tmpfic)
-        # read the file to transform in original CRS
-        ras <- suppressWarnings(terra::rast(tmpfic)) # warning if not tiff file
-        # if only bbox provided or format not tiff this can't be done
-        if (!missing(aoi) & terra::crs(ras) != "") {
-            ras <- terra::project(ras, terra::crs(aoi))
-            if (mask) {
-                ras <- terra::mask(ras, aoi)
+        if ((format != "image/tiff")) {    # JPEG or PNG image
+            if (is.null(file)) {
+                tmpfic <- tempfile()
+                writeBin(resp$body, tmpfic)
+                # read the file as raster
+                ras <- suppressWarnings(terra::rast(tmpfic)) # warning if not tiff file
+                return(ras)
+            } else {
+                writeBin(resp$body, file)
+                invisible(file)
             }
-        }
-        # save to file or return the raster
-        if (is.null(file)) {
-            return(ras)
         } else {
-            terra::writeRaster(ras, filename = file)
-            invisible(file)
+            # write to temporary file to post-process the image
+            tmpfic <- tempfile()
+            writeBin(resp$body, tmpfic)
+            # read the file to transform in original CRS
+            ras <- terra::rast(tmpfic)
+            # if only bbox provided or format not tiff this can't be done
+            if (!missing(aoi)) {
+                ras <- terra::project(ras, terra::crs(aoi))
+                if (mask) {
+                    ras <- terra::mask(ras, aoi)
+                }
+            }
+            # save to file or return the raster
+            if (is.null(file)) {
+                return(ras)
+            } else {
+                terra::writeRaster(ras, filename = file)
+                invisible(file)
+            }
         }
     }
 }

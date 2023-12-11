@@ -6,10 +6,8 @@
 #' @details This function doesn't require authentication.
 #' @examples
 #' \dontrun{
-#' if(interactive()){
 #'  #EXAMPLE1
 #'  GetCollections(as_data_frame = TRUE)
-#'  }
 #' }
 #' @seealso
 #'  \code{\link[CDSE]{GetArchiveImage}}, \code{\link[CDSE]{SearchCatalog}}
@@ -19,11 +17,18 @@
 #' @importFrom httr2 request req_perform resp_body_json
 GetCollections <- function(as_data_frame = TRUE, url = getOption("CDSE.catalog_url")) {
     req <- httr2::request(paste0(url, "collections"))
-    resp <- httr2::req_perform(req)
+    resp <- try(httr2::req_perform(req), silent = TRUE)
+    if (inherits(resp, "try-error")) {
+        if (length(grep("SSL peer certificate", resp[1])) == 1L) {
+            req <- httr2::req_options(req, ssl_verifyhost = 0L, ssl_verifypeer = 0L)
+            resp <- httr2::req_perform(req)
+        } else {
+            stop(LastError())
+        }
+    }
     if (isTRUE(as_data_frame)) {
         cnt <- httr2::resp_body_json(resp, simplifyVector = TRUE)
         collezioni <- cnt$collections
-
         bbox <- data.frame(matrix(unlist(collezioni$extent$spatial$bbox), ncol = 4, byrow = TRUE))
         names(bbox) <- c("long.min", "lat.min", "long.max", "lat.max")
         out <- data.frame(

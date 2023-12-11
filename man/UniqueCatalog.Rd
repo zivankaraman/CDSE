@@ -27,13 +27,17 @@ Sometimes several images could be available for the given day. It can be useful 
     the least cloud coverage or the biggest coverage of the are of interest.
 }
 \details{
-The returned \code{data.frame} has the same columns as the input catalog.
+By default, the returned \code{data.frame} has the same columns as the input catalog.
+User can specify a subset of columns to include in the output through the \code{keep} parameter.
 }
 \examples{
 \dontrun{
-if(interactive()){
  #EXAMPLE1
- }
+ dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+ aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+ images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+            collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+ best_daily <- UniqueCatalog(images, by = "areaCoverage")
 }
 }
 \seealso{

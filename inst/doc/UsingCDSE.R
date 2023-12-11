@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
 
 ## ----label = "setup", include = FALSE-----------------------------------------
 library(CDSE)
+options(warn = -1)
 
 ## ----label = "GetOAuthClient"-------------------------------------------------
 id <- Sys.getenv("CDSE_ID")
@@ -78,6 +79,6 @@ cat(script_text, sep = "\n")
 png <- tempfile("img", fileext = ".png")
 GetArchiveImage(bbox = bbox, time_range = day, script = script_text, 
                 collection = "sentinel-2-l2a", file = png, format = "image/png", 
-                mosaicking_order = "leastCC", pixels = 640, client = OAuthClient)
+                mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
 terra::plotRGB(terra::rast(png))
 

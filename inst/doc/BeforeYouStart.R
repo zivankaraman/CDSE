@@ -25,6 +25,13 @@ library(CDSE)
 #  #> token_url: https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token
 #  #> auth: oauth_client_req_auth_header
 
+## ----label = "Dummy OAuthClient", eval = TRUE---------------------------------
+id <- "my_dummy_id"
+secret <- "my_dummy_secret"
+OAuthClient <- GetOAuthClient(id = id, secret = secret, url = "https://my_dummy_url.org")
+class(OAuthClient)
+OAuthClient
+
 ## ----label = "GetOAuthToken", eval = FALSE------------------------------------
 #  id <- Sys.getenv("CDSE_ID")
 #  secret <- Sys.getenv("CDSE_SECRET")

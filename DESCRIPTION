@@ -1,6 +1,6 @@
 Package: CDSE
 Type: Package
-Title: Copernicus Data Space Ecosystem API Wrapper
+Title: 'Copernicus Data Space Ecosystem' API Wrapper
 Version: 0.1.0
 Authors@R: 
     person("Zivan", "Karaman", , "zivan.karaman@gmail.com", role = c("aut", "cre", "cph"),
@@ -8,7 +8,7 @@ Authors@R:
 Description: Provides interface to the 'Copernicus Data Space Ecosystem' API 
     <https://dataspace.copernicus.eu/analyse/apis>, mainly for searching the catalog of available
     data from Copernicus Sentinel missions and obtaining the images for just the area of interest 
-    based on selected spectral bands. The package uses the Sentinel Hub REST API interface
+    based on selected spectral bands. The package uses the 'Sentinel Hub' REST API interface
     <https://dataspace.copernicus.eu/analyse/apis/sentinel-hub> that provides access to various 
     satellite imagery archives. It allows you to access raw satellite data, rendered images, 
     statistical analysis, and other features.

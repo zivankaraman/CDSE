@@ -12,7 +12,7 @@
 #'
 #' \code{from} and \code{to} can be either Date or character that can be converted to date by \code{as.Date}.
 #'
-#' Open interval (one side only) can e obtaining by providing the \code{NA} or \code{NULL} value for the corresponding argument.
+#' Open interval (one side only) can be obtained by providing the \code{NA} or \code{NULL} value for the corresponding argument.
 #' @param collection character indicating which collection to search.
 #'     Must be one of the collections returned by \code{GetCollections}.
 #' @param as_data_frame logical indicating if the result should be returned as data frame. Default: TRUE
@@ -26,16 +26,14 @@
 #' @details If no images found, a \code{NULL} value is returned.
 #' @examples
 #' \dontrun{
-#' if(interactive()){
 #'  #EXAMPLE1
 #'  dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
 #'  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 #'  images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
 #'             collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
-#'  }
 #' }
 #' @seealso
-#'  \code{\link[CDSE]{GetCollections}}
+#'  \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetArchiveImage}}
 #' @rdname SearchCatalog
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
@@ -110,7 +108,15 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
         req <- httr2::req_oauth_client_credentials(req, client = client)
     }
     # run the request
-    resp <- httr2::req_perform(req)
+    resp <- try(httr2::req_perform(req), silent = TRUE)
+    if (inherits(resp, "try-error")) {
+        if (length(grep("SSL peer certificate", resp[1])) == 1L) {
+            req <- httr2::req_options(req, ssl_verifyhost = 0L, ssl_verifypeer = 0L)
+            resp <- httr2::req_perform(req)
+        } else {
+            stop(LastError())
+        }
+    }
     cnt <- httr2::resp_body_json(resp, simplifyVector = FALSE)
     features <- cnt$features
     # if no features found return NULL

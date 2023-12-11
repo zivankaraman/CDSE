@@ -1,5 +1,5 @@
 ---
-title: "Using Copernicus Data Space Ecosystem API Wrapper"
+title: "Using 'Copernicus Data Space Ecosystem' API Wrapper"
 output:
   pdf_document:
     df_print: tibble
@@ -33,6 +33,7 @@ knitr::opts_chunk$set(
 
 ```{r label = "setup", include = FALSE}
 library(CDSE)
+options(warn = -1)
 ```
 
 ### *Compiled on `r Sys.time()`.*
@@ -41,7 +42,7 @@ library(CDSE)
 
 # Introduction
 
-The `CDSE` package for R was developed to allow access to the [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/) data and services from R. The Copernicus Data Space Ecosystem, deployed in 2023, offers access to the EO data collection from the Copernicus missions, with discovery and download capabilities and numerous data processing tools. In particular, the [Sentinel Hub API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub.html) provides access to the multi-spectral and multi-temporal big data satellite imagery service, capable of fully automated, real-time processing and distribution of remote sensing data and related EO products. Users can use APIs to retrieve satellite data over their AOI and specific time range from full archives in a matter of seconds. When working on the application of EO where the area of interest is relatively small compared to the image tiles distributed by Copernicus (100 x 100 km), it allows to retrieve just the portion of the image of interest rather than downloading the huge tile image file and processing it locally. The goal of the `CDSE` package is to provide easy access to this functionality from R.
+The `CDSE` package for R was developed to allow access to the '[Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/)' data and services from R. The `'Copernicus Data Space Ecosystem'`, deployed in 2023, offers access to the EO data collection from the Copernicus missions, with discovery and download capabilities and numerous data processing tools. In particular, the ['Sentinel Hub' API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub.html) provides access to the multi-spectral and multi-temporal big data satellite imagery service, capable of fully automated, real-time processing and distribution of remote sensing data and related EO products. Users can use APIs to retrieve satellite data over their AOI and specific time range from full archives in a matter of seconds. When working on the application of EO where the area of interest is relatively small compared to the image tiles distributed by Copernicus (100 x 100 km), it allows to retrieve just the portion of the image of interest rather than downloading the huge tile image file and processing it locally. The goal of the `CDSE` package is to provide easy access to this functionality from R.
 
 The main functions allow to search the catalog of available imagery from the Sentinel-1, Sentinel-2, Sentinel-3, and Sentinel-5 missions, and to process and download the images of an area of interest and a time range in various formats. Other functions might be added in subsequent releases of the package.
 
@@ -62,7 +63,7 @@ OAuthClient <- GetOAuthClient(id = id, secret = secret)
 
 # Collections
 
-We can get the list of all the imagery collections available in the [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/). By default, the list is formatted as a data.frame listing the main collection features. It is also possible to obtain the raw list with all information by setting the argument `as_data_frame` to `FALSE`.
+We can get the list of all the imagery collections available in the `'Copernicus Data Space Ecosystem'`. By default, the list is formatted as a data.frame listing the main collection features. It is also possible to obtain the raw list with all information by setting the argument `as_data_frame` to `FALSE`.
 
 ```{r label = "get collections"}
 collections <- GetCollections(as_data_frame = TRUE)
@@ -73,7 +74,7 @@ collections
 
 # Catalog search
 
-The imagery catalog can be searched by spatial and temporal extent for every collection present in the `Copernicus Data Space Ecosystem`. For the spatial filter, you can provide either a `sf` or `sfc` object from the `sf` package, typically a (multi)polygon, describing the Area of Interest, or a numeric vector of four elements describing the bounding box of interest. For the temporal filter, you must specify the time range by either `Date` or `character` values that can be converted to date by `as.Date` function. Open intervals (one side only) can be obtained by providing the `NA` or `NULL` value for the corresponding argument.
+The imagery catalog can be searched by spatial and temporal extent for every collection present in the `'Copernicus Data Space Ecosystem'`. For the spatial filter, you can provide either a `sf` or `sfc` object from the `sf` package, typically a (multi)polygon, describing the Area of Interest, or a numeric vector of four elements describing the bounding box of interest. For the temporal filter, you must specify the time range by either `Date` or `character` values that can be converted to date by `as.Date` function. Open intervals (one side only) can be obtained by providing the `NA` or `NULL` value for the corresponding argument.
 
 ```{r label = "search catalog"}
 dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
@@ -174,6 +175,6 @@ cat(script_text, sep = "\n")
 png <- tempfile("img", fileext = ".png")
 GetArchiveImage(bbox = bbox, time_range = day, script = script_text, 
                 collection = "sentinel-2-l2a", file = png, format = "image/png", 
-                mosaicking_order = "leastCC", pixels = 640, client = OAuthClient)
+                mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
 terra::plotRGB(terra::rast(png))
 ```

@@ -31,12 +31,19 @@ CheckLengthIs2 <- function(x) {
 }
 
 CheckBbox <- function(bbox) {
-    if (!is.numeric(bbox) | (length(bbox) != 4L)) {
+    # try converting to numeric, just in case it is not
+    bbox <- try(as.numeric(bbox), silent = TRUE)
+    if (inherits(bbox, "try-error")) {
+        stop("Invalid value of bbox argument, must be a numeric vector of length 4.")
+    }
+    # check class and length
+    if (length(class(bbox)) > 1L || !inherits(bbox, "numeric") || (length(bbox) != 4L)) {
             stop("Invalid value of bbox argument, must be a numeric vector of length 4.")
     }
+    # convert to matrix for easier range checks
     mat <- matrix(bbox, ncol = 2, byrow = TRUE)
-    if (any(mat[, 1] > 90 | mat[, 1] < -90) |
-        any(mat[, 2] > 180 | mat[, 2] < -180) |
+    if (any(mat[, 1] > 90 | mat[, 1] < -90) ||
+        any(mat[, 2] > 180 | mat[, 2] < -180) ||
         any(mat[1, ] > mat[2, ])) {
         stop("Invalid values in bbox, must be longitude/latitude of lower-left/upper-right corner.")
     }

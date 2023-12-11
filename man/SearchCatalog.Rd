@@ -35,7 +35,7 @@ Only one of either \code{aoi} or \code{bbox} may be specified.}
 
 \code{from} and \code{to} can be either Date or character that can be converted to date by \code{as.Date}.
 
-Open interval (one side only) can e obtaining by providing the \code{NA} or \code{NULL} value for the corresponding argument.}
+Open interval (one side only) can be obtained by providing the \code{NA} or \code{NULL} value for the corresponding argument.}
 
 \item{collection}{character indicating which collection to search.
 Must be one of the collections returned by \code{GetCollections}.}
@@ -64,15 +64,13 @@ If no images found, a \code{NULL} value is returned.
 }
 \examples{
 \dontrun{
-if(interactive()){
  #EXAMPLE1
  dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
  images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
             collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
- }
 }
 }
 \seealso{
-\code{\link[CDSE]{GetCollections}}
+\code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetArchiveImage}}
 }

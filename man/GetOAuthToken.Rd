@@ -27,12 +27,10 @@ The token can be used in queries requiring the authentication.
 }
 \examples{
 \dontrun{
-if(interactive()){
  #EXAMPLE1
  id <- "..."
  secret <- "..."
  token <- GetOAuthToken(id = id, secret = secret)
- }
 }
 }
 \seealso{

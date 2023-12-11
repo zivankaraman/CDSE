@@ -4,8 +4,7 @@ output:
   pdf_document:
     df_print: tibble
     toc: yes
-  urlcolor: blue
-
+urlcolor: blue
 vignette: >
     %\VignetteIndexEntry{Before you start} 
     %\VignetteEncoding{UTF-8}
@@ -30,14 +29,14 @@ library(CDSE)
 
 # Introduction
 
-The `CDSE` package for R was developed to allow access to the [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/) data and services from R. The Copernicus Data Space Ecosystem, deployed in 2023, offers access to the EO data collection from the Copernicus missions, with discovery and download capabilities and numerous data processing tools. In particular, the [Sentinel Hub API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub.html) provides access to the multi-spectral and multi-temporal big data satellite imagery service, capable of fully automated, real-time processing and distribution of remote sensing data and related EO products. Users can use APIs to retrieve satellite data over their AOI and specific time range from full archives in a matter of seconds. When working on the application of EO where the area of interest is relatively small compared to the image tiles distributed by Copernicus (100 x 100 km), it allows to retrieve just the portion of the image of interest rather than downloading the huge tile image file and processing it locally. The goal of the `CDSE` package is to provide easy access to this functionality from R.
+The `CDSE` package for R was developed to allow access to the '[Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/)' data and services from R. The `'Copernicus Data Space Ecosystem'`, deployed in 2023, offers access to the EO data collection from the Copernicus missions, with discovery and download capabilities and numerous data processing tools. In particular, the ['Sentinel Hub' API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub.html) provides access to the multi-spectral and multi-temporal big data satellite imagery service, capable of fully automated, real-time processing and distribution of remote sensing data and related EO products. Users can use APIs to retrieve satellite data over their AOI and specific time range from full archives in a matter of seconds. When working on the application of EO where the area of interest is relatively small compared to the image tiles distributed by Copernicus (100 x 100 km), it allows to retrieve just the portion of the image of interest rather than downloading the huge tile image file and processing it locally. The goal of the `CDSE` package is to provide easy access to this functionality from R.
 
 The main functions allow to search the catalog of available imagery from the Sentinel-1, Sentinel-2, Sentinel-3, and Sentinel-5 missions, and to process and download the images of an area of interest and a time range in various formats. Other functions might be added in subsequent releases of the package.
 
 
 # Accessing CDSE data and services
 
-Access to the Copernicus Data Space Ecosystem is free, but you have to register to use the API. You can create a free account as explained in [User registration and authentication](https://documentation.dataspace.copernicus.eu/Registration.html). The free account has some limitations and quotas applied to it, but it should be sufficient for most individual users. The details are provided in [Quotas and Limitations](https://documentation.dataspace.copernicus.eu/Quotas.html).
+Access to the `'Copernicus Data Space Ecosystem'` is free, but you have to register to use the API. You can create a free account as explained in [User registration and authentication](https://documentation.dataspace.copernicus.eu/Registration.html). The free account has some limitations and quotas applied to it, but it should be sufficient for most individual users. The details are provided in [Quotas and Limitations](https://documentation.dataspace.copernicus.eu/Quotas.html).
 
 
 # API authentication
@@ -74,6 +73,14 @@ OAuthClient
 ```
 
 However, it should be noted that the object returned by the `GetOAuthClient` function has not been validated against the backend. The credentials provided will only be checked the first time this object is used in a query. Therefore, even if the `GetOAuthClient` function does not raise an error you cannot assume that your credentials have been accepted by the backend.
+To demonstrate it, you can provide a dummy id, secret, and URL, and no error will be raised at this stage.
+```{r label = "Dummy OAuthClient", eval = TRUE}
+id <- "my_dummy_id"
+secret <- "my_dummy_secret"
+OAuthClient <- GetOAuthClient(id = id, secret = secret, url = "https://my_dummy_url.org")
+class(OAuthClient)
+OAuthClient
+```
 
 
 # OAuth authentication token
