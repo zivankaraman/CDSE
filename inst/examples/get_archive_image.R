@@ -1,8 +1,11 @@
-# init ---------------------------------------------------------------------------------
+# Initialization -----------------------------------------------------------------------
 
 library(sf)
-library(terra)
 library(CDSE)
+
+
+# Getting help about the package -------------------------------------------------------
+help(package = "CDSE")
 
 
 # Getting collection doesn't require authentication ------------------------------------

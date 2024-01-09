@@ -1,10 +1,14 @@
-# init ---------------------------------------------------------------------------------
+# Initialization -----------------------------------------------------------------------
 
 library(sf)
 library(CDSE)
 
 
-# Getting collection doesn't require authentication ------------------------------------
+# Getting help about the package -------------------------------------------------------
+help(package = "CDSE")
+
+
+# Getting collection (doesn't require authentication) ----------------------------------
 
 collections <- GetCollections()
 collections
