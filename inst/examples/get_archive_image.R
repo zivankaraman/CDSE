@@ -41,5 +41,27 @@ ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
                        mask = TRUE, buffer = 100, client = OAuthClient)
 ras
 ras[ras < 0] <- 0
-plot(ras, main = paste("Central Park NDVI on", day),
+terra::plot(ras, main = paste("Central Park NDVI on", day),
             col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
+
+
+# get the RGB image (PNG file)
+bbox <- as.numeric(sf::st_bbox(aoi))
+script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE")), collapse = "\n")
+cat(script_text, sep = "\n")
+png <- tempfile("img", fileext = ".png")
+GetArchiveImage(bbox = bbox, time_range = day, script = script_text,
+                collection = "sentinel-2-l2a", file = png, format = "image/png",
+                mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
+terra::plotRGB(terra::rast(png))
+
+# get the same image as raster object
+ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_text,
+                collection = "sentinel-2-l2a", file = NULL, format = "image/png",
+                mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
+terra::plotRGB(ras)
+
+# the fourth band contains data mask, can use it to cut background
+terra::plot(ras)
+x <- terra::mask(ras[[1:3]], ras[[4]], maskvalue = 0)
+terra::plotRGB(x)

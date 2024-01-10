@@ -107,3 +107,9 @@ PolyFromBbox <- function(x) {
     out <- sf::st_as_sfc(list(sf::st_polygon(list(mat))), crs = 4326)
     return(out)
 }
+
+#' @export
+grepOptions <- function(pattern) {
+    opt <- options()
+    opt[grep(pattern, names(opt))]
+}

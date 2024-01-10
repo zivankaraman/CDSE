@@ -73,7 +73,7 @@ terra::plot(ras, main = paste("Central Park NDVI on", day),
 
 ## ----label = "retrieve the RGB image", fig.cap = "Central Park image as PNG file", fig.width = 5, fig.height = 3----
 bbox <- as.numeric(sf::st_bbox(aoi))
-script_text <- paste(readLines(system.file("scripts", "TrueColor.js", 
+script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", 
                                            package = "CDSE")), collapse = "\n")
 cat(script_text, sep = "\n")
 png <- tempfile("img", fileext = ".png")
