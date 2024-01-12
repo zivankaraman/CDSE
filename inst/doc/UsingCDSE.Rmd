@@ -60,7 +60,6 @@ OAuthClient <- GetOAuthClient(id = id, secret = secret)
 
 *In this document, the data.frames are output as tibbles since it renders better in PDF. However, all the functions produce standard data.frames.*
 
-
 # Collections
 
 We can get the list of all the imagery collections available in the `'Copernicus Data Space Ecosystem'`. By default, the list is formatted as a data.frame listing the main collection features. It is also possible to obtain the raw list with all information by setting the argument `as_data_frame` to `FALSE`.
@@ -127,7 +126,7 @@ The evaluation scripts can use any JavaScript function or language structures, a
 
 The evaluation scripts are passed as the `script` argument to the `GetArchiveImage` function. It has to be either a character string containing the evaluation script or the name of the file containing the script. The `scripts` folder of this package contains a few examples of evaluation scripts.
 
-It is beyond the scope of this document to provide guidance for writing scripts, we encourage users to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation.
+It is beyond the scope of this document to provide guidance for writing scripts, we encourage users to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation. You can find a big collection of custom scripts that you can readily use in this [repository](https://custom-scripts.sentinel-hub.com/).
 
 \newpage
 
@@ -169,9 +168,9 @@ If we don't want to process the satellite image locally but simply use as image 
 
 ```{r label = "retrieve the RGB image", fig.cap = "Central Park image as PNG file", fig.width = 5, fig.height = 3}
 bbox <- as.numeric(sf::st_bbox(aoi))
-script_text <- paste(readLines(system.file("scripts", "TrueColor.js", 
+script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", 
                                            package = "CDSE")), collapse = "\n")
-cat(script_text, sep = "\n")
+cat(c(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE"), n = 15), "..."), sep = "\n")
 png <- tempfile("img", fileext = ".png")
 GetArchiveImage(bbox = bbox, time_range = day, script = script_text, 
                 collection = "sentinel-2-l2a", file = png, format = "image/png", 

@@ -183,6 +183,8 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
     }
     if (unlist(strsplit(format, split = "/", fixed = TRUE))[1] != "image") {
         # TBD - process multipart response
+        msg <- "Sorry, multiple responses requests are not handled (yet)."
+        stop(msg)
     } else {
         if ((format != "image/tiff")) {    # JPEG or PNG image
             if (is.null(file)) {
