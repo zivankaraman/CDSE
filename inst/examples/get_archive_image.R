@@ -30,7 +30,7 @@ aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 # search by area of interest
 images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31", collection = "sentinel-2-l2a",
                         with_geometry = TRUE, client = OAuthClient)
-images
+View(images)
 
 # select the date with the least cloud cover, and retrieve the NDVI values
 day <- images[order(images$tileCloudCover), ]$acquisitionDate[1]
@@ -48,7 +48,7 @@ terra::plot(ras, main = paste("Central Park NDVI on", day),
 # get the RGB image (PNG file)
 bbox <- as.numeric(sf::st_bbox(aoi))
 script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE")), collapse = "\n")
-cat(script_text, sep = "\n")
+cat(script_text, sep = "\n", file = stderr())
 png <- tempfile("img", fileext = ".png")
 GetArchiveImage(bbox = bbox, time_range = day, script = script_text,
                 collection = "sentinel-2-l2a", file = png, format = "image/png",

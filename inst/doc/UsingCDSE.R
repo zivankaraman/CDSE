@@ -75,7 +75,7 @@ terra::plot(ras, main = paste("Central Park NDVI on", day),
 bbox <- as.numeric(sf::st_bbox(aoi))
 script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", 
                                            package = "CDSE")), collapse = "\n")
-cat(script_text, sep = "\n")
+cat(c(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE"), n = 15), "..."), sep = "\n")
 png <- tempfile("img", fileext = ".png")
 GetArchiveImage(bbox = bbox, time_range = day, script = script_text, 
                 collection = "sentinel-2-l2a", file = png, format = "image/png", 
