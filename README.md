@@ -10,7 +10,7 @@ This package provides the interface to the ['Copernicus Data Space Ecosystem' AP
 
 ### Stable version
 
-The current stable version is available on CRAN via You can install the current stable version of `CDSE` from [CRAN](https://cran.r-project.org/package=CDSE) via:
+You can install the current stable version of `CDSE` from [CRAN](https://cran.r-project.org/package=CDSE) via:
 
 ``` r
 install.packages("CDSE")
