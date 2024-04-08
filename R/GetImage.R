@@ -1,5 +1,4 @@
-#' @name GetArchiveImage
-#' @title Get image from the archive (deprecated)
+#' @title Get image from the archive
 #' @description Retrieves the image for the area of interest using the parameters provided.
 #' @param aoi sf or sfc object, typically a (multi)polygon, describing the Area of Interest.
 #' @param bbox numeric vector of four elements describing the bounding box of interest.
@@ -39,32 +38,25 @@
 #' aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 #' script_file <- system.file("scripts", "NDVI_uint8.js", package = "CDSE")
 #' day <- "2023-07-11"
-#' ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
+#' ras <- GetImage(aoi = aoi, time_range = day, script = script_file,
 #'        collection = "sentinel-2-l2a",format = "image/tiff",
 #'        mosaicking_order = "leastCC", resolution = 10, client = OAuthClient)
-#'}
-#' @seealso \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{SearchCatalog}}
-#' @seealso \code{\link{CDSE-deprecated}}
+#' }
+#' @seealso
+#'  \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{SearchCatalog}}
+#' @rdname GetImage
+#' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
 #' @importFrom sf st_transform st_geometry st_bbox st_buffer st_coordinates st_centroid
 #' @importFrom geojsonsf sfc_geojson
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
 #' @importFrom terra rast crs project mask writeRaster
-NULL
-
-#' @name CDSE-deprecated
-#' @usage NULL
-#' @aliases NULL
-#' @section \code{GetArchiveImage}:
-#' For \code{GetArchiveImage}, use \code{\link{GetImage}}.
-#' @export
-GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
+GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
                             format = c("image/tiff", "image/png", "image/jpeg"),
                             mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
                             pixels, resolution, buffer = 0, mask = FALSE,
                             client, token, url = getOption("CDSE.process_url")) {
-    .Deprecated("GetImage")
     # Only one of either aoi or bbox may be specified.
     if (!missing(aoi) & !missing(bbox)) {
         stop("Only one of either aoi or bbox may be specified.")
@@ -97,14 +89,15 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         resolution <- CheckLengthIs2(resolution)
     }
 
-    # get the first (default) value
-    mosaicking_order <- mosaicking_order[1]
-    format <- format[1]
+    # check or get the first (default) value if not specified
+    mosaicking_order <- CheckMosaicking(mosaicking_order[1])
+    format <- CheckFormat(format[1])
 
     if (missing(aoi)) { # query by bbox
         # make bounds from bbox
         bounds <- PolyFromBbox(bbox)
     } else { # query by aoi / intersects
+        aoi <- CheckAOI(aoi)
         # convert to WGS84 first to get longitude/latitude coordinates
         bounds <- sf::st_transform(sf::st_geometry(aoi), crs = 4326)
         # bounding box
@@ -156,8 +149,10 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
     if (missing(resolution)) { # use width and height provided
         # check the size of pixels
         yc <- mean(c(bbox[2], bbox[4]))
-        dummy_rast <- terra::rast(nrows = pixels[2], ncols =  pixels[1], crs = sf::st_crs(bounds),
+        dummy_rast <- terra::rast(nrows = pixels[2], ncols =  pixels[1], crs = sf::st_as_text(sf::st_crs(bounds)),
                                   extent = terra::ext(bbox[c(1, 3, 2, 4)]))
+        # dummy_rast <- terra::rast(nrows = pixels[2], ncols =  pixels[1], crs = terra::crs(terra::vect(bounds)),
+        #                           extent = terra::ext(bbox[c(1, 3, 2, 4)]))
         pixSize <- terra::res(dummy_rast) * DegLength(yc)
         pixSize <- pixSize * 1.001 # adjust for small discrepancy between SH and our values
         if (any(pixSize > 1500)) {
@@ -189,8 +184,6 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         output <- list(resx = res[1], resy = res[2],
                        responses = responses)
     }
-
-
 
     # read the evalscript from file if needed
     if (file.exists(script)) {
@@ -227,7 +220,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         msg <- "Sorry, multiple responses requests are not handled (yet)."
         stop(msg)
     } else {
-        if ((format != "image/tiff")) {    # JPEG or PNG image
+        if (format != "image/tiff") {    # JPEG or PNG image
             if (is.null(file)) {
                 tmpfic <- tempfile()
                 writeBin(resp$body, tmpfic)

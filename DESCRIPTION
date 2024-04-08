@@ -13,11 +13,11 @@ Description: Provides interface to the 'Copernicus Data Space Ecosystem' API
     satellite imagery archives. It allows you to access raw satellite data, rendered images, 
     statistical analysis, and other features.
 Depends: R (>= 3.6.0)
-Imports: geojsonsf, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils
+Imports: geojsonsf, grDevices, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils
 URL: https://github.com/zivankaraman/CDSE
 BugReports: https://github.com/zivankaraman/CDSE/issues
-License: AGPL-3
+License: AGPL-3 + file LICENSE
 Encoding: UTF-8
 Config/build/clean-inst-doc: FALSE
 RoxygenNote: 7.2.2
-Suggests: maps, tibble
+Suggests: maps, parallel, tibble

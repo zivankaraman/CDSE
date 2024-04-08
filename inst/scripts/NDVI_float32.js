@@ -1,5 +1,5 @@
 //VERSION=3
-//NDVI as 32-bit floatin point number
+//NDVI as 32-bit floating point number
 
 function setup() {
     return {

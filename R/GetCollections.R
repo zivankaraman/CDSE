@@ -6,11 +6,9 @@
 #' @details This function doesn't require authentication.
 #' @examples
 #' \dontrun{
-#'  #EXAMPLE1
-#'  GetCollections(as_data_frame = TRUE)
+#' GetCollections(as_data_frame = TRUE)
 #' }
-#' @seealso
-#'  \code{\link[CDSE]{GetArchiveImage}}, \code{\link[CDSE]{SearchCatalog}}
+#' @seealso \code{\link[CDSE]{GetImage}}, \code{\link[CDSE]{SearchCatalog}}
 #' @rdname GetCollections
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}

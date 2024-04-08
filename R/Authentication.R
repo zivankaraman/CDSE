@@ -7,11 +7,10 @@
 #' @details The token can be used in queries requiring the authentication.
 #' @examples
 #' \dontrun{
-#'  #EXAMPLE1
-#'  id <- "..."
-#'  secret <- "..."
-#'  token <- GetOAuthToken(id = id, secret = secret)
-#' }
+#' id <- "..."
+#' secret <- "..."
+#' token <- GetOAuthToken(id = id, secret = secret)
+#'}
 #' @seealso
 #'  \code{\link[CDSE]{GetOAuthClient}}
 #' @rdname GetOAuthToken
@@ -19,6 +18,10 @@
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client oauth_flow_client_credentials
 GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
+    if (id == "" || secret == "") {
+        suppressWarnings(system(command = paste("open", system.file("doc", "BeforeYouStart.pdf", package = "CDSE")), wait = FALSE))
+        stop("The provided credentials are not valid, please consult the 'BeforeYouStart' document.")
+    }
     client <- httr2::oauth_client(id = id, token_url = url,secret = secret, auth = "header")
     token <- httr2::oauth_flow_client_credentials(client)
     out <- token$access_token
@@ -35,10 +38,9 @@ GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
 #' @details The client can be used in queries requiring the authentication.
 #' @examples
 #' \dontrun{
-#'  #EXAMPLE1
-#'  id <- "..."
-#'  secret <- "..."
-#'  OAuthClient <- GetOAuthClient(id = id, secret = secret)
+#' id <- "..."
+#' secret <- "..."
+#' OAuthClient <- GetOAuthClient(id = id, secret = secret)
 #' }
 #' @seealso
 #'  \code{\link[CDSE]{GetOAuthToken}}
@@ -47,6 +49,10 @@ GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client
 GetOAuthClient <- function(id, secret, url = getOption("CDSE.auth_url")) {
+    if (id == "" || secret == "") {
+        suppressWarnings(system(command = paste("open", system.file("doc", "BeforeYouStart.pdf", package = "CDSE")), wait = FALSE))
+        stop("The provided credentials are not valid, please consult the 'BeforeYouStart' document.")
+    }
     client <- httr2::oauth_client(id = id, token_url = url, secret = secret, auth = "header")
     return(client)
 }

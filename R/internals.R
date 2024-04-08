@@ -3,19 +3,24 @@ between <- function(x, left, right) {
 }
 
 #' @importFrom httr2 last_response resp_body_json
-#' @importFrom utils capture.output
 #' @noRd
 LastError <- function() {
     # Sentinel Hub API uses boom - HTTP-friendly error objects
     # https://hapi.dev/module/boom/
     resp <- httr2::last_response()
     err <- as.data.frame(httr2::resp_body_json(resp)[[1]])
-    msg <- c(" \n", paste0(capture.output(err), "\n"))
+    msg <- paste0("\n", paste(paste(names(err), err, sep = ": "), collapse = "\n"))
     return(msg)
 }
 
+LastResponse <- function() {
+    # Sentinel Hub API uses boom - HTTP-friendly error objects
+    # https://hapi.dev/module/boom/
+    return(httr2::last_response())
+}
+
 SafeNull <- function(x) {
-    ifelse(is.null(x), NA, x)
+    return(ifelse(is.null(x), NA, x))
 }
 
 CheckLengthIs2 <- function(x) {
@@ -30,24 +35,87 @@ CheckLengthIs2 <- function(x) {
     return(x)
 }
 
+CheckMosaicking <- function(x) {
+    idx <- pmatch(tolower(x), tolower(c("mostRecent", "leastRecent", "leastCC")))
+    if (is.na(idx)) {
+        msg <- stop("Invalid value of 'mosaicking_order' argument, must be one of 'mostRecent', 'leastRecent', or 'leastCC'")
+        stop(msg)
+    } else {
+        out <- c("mostRecent", "leastRecent", "leastCC")[idx]
+        if (out != x) {
+            msg <- sprintf("The correct spelling for '%s' is '%s', accpeted anyway", x, out)
+            warning(msg)
+        }
+        return(out)
+    }
+}
+
+CheckFormat <- function(x) {
+    idx <- pmatch(tolower(x), tolower(c("image/tiff", "image/png", "image/jpeg", "image/jpg")))
+    if (is.na(idx)) {
+        # try with extension only, because we are nice :-)
+        idx <- pmatch(tolower(x), tolower(c("tiff", "png", "jpeg", "jpg")))
+    }
+    if (is.na(idx)) {
+        msg <- stop("Invalid value of 'format' argument, must be one of 'image/tiff', 'image/png', or 'image/jpeg'")
+        stop(msg)
+    } else {
+        if (idx == 4L) idx <- 3L # fix for jpg
+        out <- c("image/tiff", "image/png", "image/jpeg")[idx]
+        if (out != x) {
+            msg <- sprintf("The correct spelling for '%s' is '%s', accpeted anyway", x, out)
+            warning(msg)
+        }
+        return(out)
+    }
+}
+
+CheckAOI <- function(aoi) {
+    out <- NULL
+    if (inherits(aoi, "sf")) {
+        if (nrow(aoi) == 0L) {
+            stop("empty 'aoi' value")
+        }
+        if (nrow(aoi) > 1L) {
+            out <- sf::st_union(aoi)
+        } else {
+            out <- aoi
+        }
+    }
+    if (inherits(aoi, "sfc")) {
+        if (sf::st_is_empty(aoi)) {
+            stop("empty 'aoi' value")
+        }
+        if (length(aoi) > 1L) {
+            out <- sf::st_union(aoi)
+        } else {
+            out <- aoi
+        }
+    }
+    if (is.null(out)) {
+        stop("invalid 'aoi' value")
+    }
+    return(out)
+}
+
 CheckBbox <- function(bbox) {
     # try converting to numeric, just in case it is not
     bbox <- try(as.numeric(bbox), silent = TRUE)
     if (inherits(bbox, "try-error")) {
-        stop("Invalid value of bbox argument, must be a numeric vector of length 4.")
+        stop("Invalid value of 'bbox' argument, must be a numeric vector of length 4.")
     }
     # check class and length
     if (length(class(bbox)) > 1L || !inherits(bbox, "numeric") || (length(bbox) != 4L)) {
-            stop("Invalid value of bbox argument, must be a numeric vector of length 4.")
+            stop("Invalid value of 'bbox' argument, must be a numeric vector of length 4.")
     }
     # convert to matrix for easier range checks
     mat <- matrix(bbox, ncol = 2, byrow = TRUE)
     if (any(mat[, 1] > 90 | mat[, 1] < -90) ||
         any(mat[, 2] > 180 | mat[, 2] < -180) ||
         any(mat[1, ] > mat[2, ])) {
-        stop("Invalid values in bbox, must be longitude/latitude of lower-left/upper-right corner.")
+        stop("Invalid values in 'bbox', must be longitude/latitude of lower-left/upper-right corner.")
     }
-    return()
+    return(bbox)
 }
 
 DegLength <- function(latitude) {
@@ -80,7 +148,7 @@ DegLength <- function(latitude) {
     return(out)
 }
 
-MakeTimeRange <- function(period) {
+MakeTimeRange <- function(period, format = TRUE) {
     if (any(c(inherits(period, "character"), inherits(period, "Date")))) {
         from <- as.Date(min(period))
         to <- as.Date(max(period))
@@ -91,12 +159,17 @@ MakeTimeRange <- function(period) {
         from <- as.Date(as.character(from), format = "%Y%m%d")
         to <- as.Date(as.character(to), format = "%Y%m%d")
     }
-    return(list(from = sprintf("%sT00:00:00.000Z", from), to = sprintf("%sT23:59:59.000Z", to)))
+    if (isTRUE(format)) {
+        out <- list(from = sprintf("%sT00:00:00.000Z", from), to = sprintf("%sT00:00:00.000Z", to + 1))
+    } else {
+        out <- list(from = from, to = to)
+    }
+    return(out)
 }
 
 #' @importFrom sf st_as_sfc st_polygon
 #' @noRd
-PolyFromBbox <- function(x) {
+PolyFromBbox <- function(x, crs = 4326) {
     # creates sf geometry from bbox vector
     vec <- c(x[1], x[2],
              x[3], x[2],
@@ -104,12 +177,11 @@ PolyFromBbox <- function(x) {
              x[1], x[4],
              x[1], x[2])
     mat <- matrix(vec, ncol = 2, byrow = TRUE)
-    out <- sf::st_as_sfc(list(sf::st_polygon(list(mat))), crs = 4326)
+    out <- sf::st_as_sfc(list(sf::st_polygon(list(mat))), crs = crs)
     return(out)
 }
 
-#' @export
 grepOptions <- function(pattern) {
     opt <- options()
-    opt[grep(pattern, names(opt))]
+    return(opt[grep(pattern, names(opt))])
 }

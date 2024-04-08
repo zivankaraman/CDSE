@@ -4,15 +4,15 @@ output:
   pdf_document:
     df_print: tibble
     toc: yes
-    toc_depth: 1
+    toc_depth: '2'
     fig_caption: yes
   html_document:
     toc: yes
-    toc_depth: '1'
+    toc_depth: '2'
     df_print: paged
   word_document:
     toc: yes
-    toc_depth: '1'
+    toc_depth: '2'
 urlcolor: blue
 vignette: >
     %\VignetteIndexEntry{Worked examples using CDSE API wrapper}  
@@ -48,7 +48,7 @@ The main functions allow to search the catalog of available imagery from the Sen
 
 # API authentication
 
-Most of the API functions require OAuth2 authentication. The recommended procedure is to obtain an authentication client object from the `GetOAuthClient` function, and to pass it as the `client` argument to the functions requiring the authentication. For more detailed information, you are invited to consult the "`Before you start`" document.
+Most of the API functions require OAuth2 authentication. The recommended procedure is to obtain an authentication client object from the `GetOAuthClient` function and pass it as the `client` argument to the functions requiring the authentication. For more detailed information, you are invited to consult the "`Before you start`" document.
 
 ```{r label = "GetOAuthClient"}
 id <- Sys.getenv("CDSE_ID")
@@ -79,8 +79,7 @@ The imagery catalog can be searched by spatial and temporal extent for every col
 dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31", 
-                        collection = "sentinel-2-l2a", with_geometry = TRUE, 
-                        client = OAuthClient)
+    collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
 images
 ```
 
@@ -94,14 +93,14 @@ knitr::opts_knit$set(global.device = FALSE)
 library(maps)
 days <- range(as.Date(images$acquisitionDate))
 maps::map(database = "world", col = "lightgrey", fill = TRUE, mar = c(0, 0, 4, 0),
-          xlim = c(3, 9), ylim = c(47.5, 51.5))
+    xlim = c(3, 9), ylim = c(47.5, 51.5))
 plot(sf::st_geometry(aoi), add = TRUE, col = "red", border = FALSE)
 plot(sf::st_geometry(images), add = TRUE)
 title(main = sprintf("AOI coverage by image tiles for period %s", 
-                     paste(days, collapse = " / ")), line = 1L)
+    paste(days, collapse = " / ")), line = 1L, cex.main = 0.75)
 ```
 
-Some tiles cover only a small fraction of the area of interest, while the others cover almost the entire area.
+Some tiles cover only a small fraction of the area of interest, while others cover almost the entire area.
 
 ```{r label = "summary AOI coverage"}
 summary(images$areaCoverage)
@@ -112,6 +111,37 @@ The tile number can be obtained from the image attribute `sourceId`, as explaine
 ```{r label = "by tileNumber"}
 tileNumber <- substring(images$sourceId, 39, 44)
 by(images$areaCoverage, INDICES = tileNumber, FUN = summary)
+```
+
+## Catalog by season
+
+Sometimes one can be interested in only a given period of each year, for example, the images taken during the summer months (June to August). We can filter an existing image catalog *a posteriori* using the `SeasonalFilter` function.
+
+```{r label = "seasonal filter on catalog"}
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+images <- SearchCatalog(aoi = aoi, from = "2021-01-01", to = "2023-12-31", 
+    collection = "sentinel-2-l2a", with_geometry = FALSE, filter = "eo:cloud_cover < 5", 
+    client = OAuthClient)
+dim(images)
+summer_images <- SeasonalFilter(images, from = "2021-06-01", to = "2023-08-31")
+dim(summer_images)
+```
+
+It is also possible to query the API directly on the desired seasonal periods by using a vectorized version of the `SearchCatalog` function. The vectorized versions allow running a series of queries having the same parameter values except for either time range, AOI, or the bounding box parameters, using `lapply` or similar function, and thus potentially also using the parallel processing.
+
+```{r label = "seasonal query on catalog"}
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+seasons <- SeasonalTimerange(from = "2021-06-01", to = "2023-08-31")
+lst_summer_images <- lapply(seasons, SearchCatalogByTimerange, aoi = aoi, 
+    collection = "sentinel-2-l2a", filter = "eo:cloud_cover < 5", with_geometry = FALSE, 
+    client = OAuthClient)
+summer_images <- do.call(rbind, lst_summer_images)
+dim(summer_images)
+summer_images <- summer_images[rev(order(summer_images$acquisitionDate)), ]
+row.names(summer_images) <- NULL
+summer_images
 ```
 
 \newpage
@@ -130,7 +160,9 @@ It is beyond the scope of this document to provide guidance for writing scripts,
 
 \newpage
 
-# Retrieving AOI satellite image as a raster object
+# Retrieving images
+
+## Retrieving AOI satellite image as a raster object
 
 One of the most important features of the API is its ability to extract only the part of the images covering the area of interest. If the AOI is small as in the example below, this is a significant gain in efficiency (download, local processing) compared to getting the whole tile image and processing it locally.
 
@@ -138,8 +170,7 @@ One of the most important features of the API is its ability to extract only the
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 images <- SearchCatalog(aoi = aoi, from = "2021-05-01", to = "2021-05-31", 
-                        collection = "sentinel-2-l2a", with_geometry = TRUE, 
-                        client = OAuthClient)
+    collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
 images
 summary(images$areaCoverage)
 ```
@@ -149,31 +180,147 @@ As the area is small, it is systematically fully covered by all available images
 ```{r label = "retrieve the NDVI image", fig.cap = "Central Park NDVI raster"}
 day <- images[order(images$tileCloudCover), ]$acquisitionDate[1]
 script_file <- system.file("scripts", "NDVI_float32.js", package = "CDSE")
-ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file, 
-                       collection = "sentinel-2-l2a", format = "image/tiff", 
-                       mosaicking_order = "leastCC", resolution = 10, 
-                       mask = TRUE, buffer = 100, client = OAuthClient)
+ras <- GetImage(aoi = aoi, time_range = day, script = script_file, 
+    collection = "sentinel-2-l2a", format = "image/tiff", mosaicking_order = "leastCC", 
+    resolution = 10, mask = TRUE, buffer = 100, client = OAuthClient)
 ras
 ras[ras < 0] <- 0
-terra::plot(ras, main = paste("Central Park NDVI on", day),
-            col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
+terra::plot(ras, main = paste("Central Park NDVI on", day), cex.main = 0.75,
+    col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
 
 ```
+
+## Retrieving AOI satellite image as an image file
+
+If we don't want to process the satellite image locally but simply use it as an image file (to include in a report or a Web page, for example), we can use the appropriate script that will render a three-band raster for RGB layers (or one for black-and-white image). Here we specify the area of interest by its bounding box instead of the exact geometry. We also demonstrate that the evaluation script can be passed as a single character string, and provide the number of pixels in the output image rather than the size of individual pixels - it makes more sense if the image is intended for display and not processing.
+
+```{r label="retrieve RGB image", fig.cap="Central Park image as PNG file", fig.width=5, fig.height=3, warning=FALSE}
+bbox <- as.numeric(sf::st_bbox(aoi))
+script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", 
+    package = "CDSE")), collapse = "\n")
+cat(c(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE"), n = 15), 
+    "..."), sep = "\n")
+png <- tempfile("img", fileext = ".png")
+GetImage(bbox = bbox, time_range = day, script = script_text, 
+    collection = "sentinel-2-l2a", file = png, format = "image/png", 
+    mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
+terra::plotRGB(terra::rast(png))
+```
+
+## Retrieving a series of images in a batch
+
+It often happens that one is interested in acquiring a series of images of a particular zone (AOI or bounding box) for several dates, or the images of different areas of interest for the same date (probably located close to each other so that they are visited on the same day). The `GetImageBy*` functions (`GetImageByTimerange`, `GetImageByAOI`, `GetImageByBbox`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. We shall illustrate how to do this with an example.
+
+```{r label="retrieve images in parallel"}
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+cloudless_images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
+    collection = "sentinel-2-l2a", with_geometry = TRUE, filter = "eo:cloud_cover < 0.8", 
+    client = OAuthClient)
+script_file <- system.file("scripts", "NDVI_float32.js", package = "CDSE")
+days <- rev(cloudless_images$acquisitionDate)
+tmp_folder <- tempfile("dir")
+if (!dir.exists(tmp_folder)) dir.create(tmp_folder)
+cl <- parallel::makeCluster(4)
+ans <- parallel::clusterExport(cl, list("tmp_folder"), envir = environment())
+ans <- parallel::clusterEvalQ(cl, {library(CDSE)})
+lstRast <- parallel::parLapply(cl, days, fun = function(x, ...) {
+    GetImageByTimerange(x, file = sprintf("%s/img_%s.tiff", tmp_folder, x), ...)},
+    aoi = aoi, collection = "sentinel-2-l2a", script = script_file,
+    format = "image/tiff", mosaicking_order = "mostRecent", resolution = 10,
+    buffer = 0, mask = TRUE, client = OAuthClient)
+parallel::stopCluster(cl)
+par(mfrow = c(3, 4))
+ans <- sapply(seq_along(days), FUN = function(i) {
+    ras <- terra::rast(lstRast[[i]])
+    day <- days[i]
+    ras[ras < 0] <- 0
+    terra::plot(ras, main = paste("Central Park NDVI on", day), range = c(0, 1),
+        cex.main = 0.7, pax = list(cex.axis = 0.5), plg = list(cex = 0.5),
+        col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
+    })
+```
+
+In this particular example, parallelization is not necessarily beneficial as we are retrieving only 12 images, but for a large number of images, it can significantly reduce the execution time.
 
 \newpage
 
-# Retrieving AOI satellite image as an image file
+# Retrieving statistics
 
-If we don't want to process the satellite image locally but simply use as image file (to include in a report or a Web page, for example), we can use the appropriate script that will render a three-band raster for RGB layers (or one for black-and-white image). Here we specify the area of interest by its bounding box instead of the exact geometry. We also demonstrate that the evaluation script can be passed as a single character string, and provide the number of pixels in the output image rather than the size of individual pixels - it makes more sense if the image is intended for display and not processing.
+If you are only interested in calculating the average value (or some other statistic) of some index or just the raw band values, the [Statistical API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html) enables you to get statistics calculated based on satellite imagery without having to download images. You need to specify your area of interest, time period, evalscript, and which statistical measures should be calculated. The requested statistics are returned as a `data.frame` or as a `list`.
 
-```{r label = "retrieve the RGB image", fig.cap = "Central Park image as PNG file", fig.width = 5, fig.height = 3}
-bbox <- as.numeric(sf::st_bbox(aoi))
-script_text <- paste(readLines(system.file("scripts", "TrueColorS2L2A.js", 
-                                           package = "CDSE")), collapse = "\n")
-cat(c(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE"), n = 15), "..."), sep = "\n")
-png <- tempfile("img", fileext = ".png")
-GetArchiveImage(bbox = bbox, time_range = day, script = script_text, 
-                collection = "sentinel-2-l2a", file = png, format = "image/png", 
-                mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
-terra::plotRGB(terra::rast(png))
+## Statistical evalscripts
+
+All general rules for building evalscripts apply. However, there are some specifics when using evalscripts with the Statistical API:
+
+-   The `evaluatePixel()` function must, in addition to other output, always return also `dataMask` output. This output defines which pixels are excluded from calculations. For more details and an example, see here.
+
+-   The default value of `sampleType` is `FLOAT32`.
+
+-   The output.bands parameter in the `setup()` function can be an array. This makes it possible to specify custom names for the output bands and different output `dataMask` for different outputs.
+
+## Retrieving simple statistics
+
+Besides the time range, you have to specify the way you want the values to be aggregated over time. For this you use the `aggregation_period` argument, providing the number of days over which the statistics are calculated. The default value is one, producing the daily statistics. If the last interval in the given time range isn't divisible by the provided aggregation interval, you can skip the last interval (default behavior), shorten the last interval so that it ends at the end of the provided time range, or extend the last interval over the end of the provided time range so that all intervals are of equal duration. This is controlled by the value of the `lastIntervalBehavior` argument.
+
+```{r label="simple statistics"}
+
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+script_file <- system.file("scripts", "NDVI_CLOUDS_STAT.js", package = "CDSE")
+daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
+    resolution = 100, aggregation_period = 1, client = OAuthClient)
+weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
+    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    resolution = 100, aggregation_period = 7, client = OAuthClient)
+weekly_stats_extended <- GetStatistics(aoi = aoi, 
+    time_range = c("2023-07-01", "2023-07-31"), collection = "sentinel-2-l2a", 
+    script = script_file, mosaicking_order = "leastCC", resolution = 100, 
+    aggregation_period = 7, lastIntervalBehavior = "EXTEND", client = OAuthClient)
+daily_stats
+weekly_stats
+weekly_stats_extended
 ```
+
+## Retrieving statistics with percentiles
+
+Besides the basic statistics (min, max, mean, stDev), one can also request to compute the percentiles. If the percentiles requested are 25, 50, and 75, the corresponding output is renamed 'q1', 'median', and 'q3'.
+
+```{r label="simple statistics and percentiles"}
+daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
+    resolution = 100, aggregation_period = 1, percentiles = c(25, 50, 75), 
+    client = OAuthClient)
+head(daily_stats, n = 10)
+weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
+    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    resolution = 100, aggregation_period = 7, percentiles = seq(10, 90, by = 10), 
+    client = OAuthClient)
+head(weekly_stats, n = 10)
+```
+
+## Retrieving a series of statistics in a batch
+
+Just as when retrieving satellite images, one can be interested in acquiring a series of statistics for a particular zone (AOI or bounding box) for several dates, or the statistics of different zones for the same periods. The `GetStatisticsBy*` functions (`GetStatisticsByTimerange`, `GetStatisticsByAOI`, `GetStatisticsByBbox`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. The following example illustrates how to do this.
+
+```{r label="series of statistics"}
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+script_file <- system.file("scripts", "NDVI_dataMask_float32.js", package = "CDSE")
+seasons <- SeasonalTimerange(from = "2020-06-01", to = "2023-08-31")
+lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi, 
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC", 
+    resolution = 100, aggregation_period = 7L, client = OAuthClient)
+weekly_stats <- do.call(rbind, lst_stats)
+weekly_stats <- weekly_stats[order(weekly_stats$from), ]
+row.names(weekly_stats) <- NULL
+head(weekly_stats)
+```
+
+
+# Copernicus Data Space Ecosystem services status
+
+If you encounter any connection issues while using this package, please check your internet connection first. If your internet connection is working fine, you can also check the status of the Copernicus Data Space Ecosystem services by visiting [this](https://dashboard.dataspace.copernicus.eu/#/service-health) webpage. It provides a quasi real-time status of the various services provided. Once you are on the webpage, scroll down to Sentinel Hub, and pay particular attention to the Process API (used for retrieving images), Catalog API (used for catalog searches), and Statistical API (used for retrieving statistics).
+
+[![Copernicus Data Space Ecosystem Service Health](service_health.png)](https://dashboard.dataspace.copernicus.eu/#/service-health)
