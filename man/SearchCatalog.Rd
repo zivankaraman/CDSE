@@ -15,6 +15,7 @@ SearchCatalog(
   collection,
   as_data_frame = TRUE,
   with_geometry = TRUE,
+  filter = NULL,
   client,
   token,
   url = getOption("CDSE.catalog_url")
@@ -44,6 +45,9 @@ Must be one of the collections returned by \code{GetCollections}.}
 
 \item{with_geometry}{logical indicating if the granule geometries should be included in the data.frame. Default: TRUE}
 
+\item{filter}{character, CQL2 text filter. Use the function \code{GetQueryables} to find out which filters
+can bu used with the collection. Default: NULL (no filtering)}
+
 \item{client}{OAuth client object to use for authentication.}
 
 \item{token}{OAuth token character string to use for authentication.
@@ -64,13 +68,15 @@ If no images found, a \code{NULL} value is returned.
 }
 \examples{
 \dontrun{
- #EXAMPLE1
- dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
- aoi <- sf::read_sf(dsn, as_tibble = FALSE)
- images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
-            collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+          collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+images_cloudless <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+          filter = "eo:cloud_cover < 5",
+          collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
 }
 }
 \seealso{
-\code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetArchiveImage}}
+\code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetQueryables}}, \code{\link[CDSE]{GetImage}}
 }

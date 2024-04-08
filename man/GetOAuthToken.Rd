@@ -27,10 +27,9 @@ The token can be used in queries requiring the authentication.
 }
 \examples{
 \dontrun{
- #EXAMPLE1
- id <- "..."
- secret <- "..."
- token <- GetOAuthToken(id = id, secret = secret)
+id <- "..."
+secret <- "..."
+token <- GetOAuthToken(id = id, secret = secret)
 }
 }
 \seealso{

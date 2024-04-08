@@ -27,10 +27,9 @@ The client can be used in queries requiring the authentication.
 }
 \examples{
 \dontrun{
- #EXAMPLE1
- id <- "..."
- secret <- "..."
- OAuthClient <- GetOAuthClient(id = id, secret = secret)
+id <- "..."
+secret <- "..."
+OAuthClient <- GetOAuthClient(id = id, secret = secret)
 }
 }
 \seealso{

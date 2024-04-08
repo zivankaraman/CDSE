@@ -1,5 +1,6 @@
-#' @name CDSE-package
-#' @aliases CDSE
+#' @name CDSE
+# @name CDSE-package
+# @aliases CDSE
 #' @docType package
 #' @author Zivan Karaman <zivan.karaman@gmail.com>
 # @seealso \link{ca630}, \code{\link{sp1}, \link{sp2}, \link{sp3}, \link{sp4}, \link{sp5}}

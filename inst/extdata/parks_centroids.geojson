@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "parks_centroids",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "centralpark" }, "geometry": { "type": "Point", "coordinates": [ -73.965572686140618, 40.782461187201498 ] } },
+{ "type": "Feature", "properties": { "name": "hydepark" }, "geometry": { "type": "Point", "coordinates": [ -0.163744379843532, 51.506891819276802 ] } },
+{ "type": "Feature", "properties": { "name": "vincennes" }, "geometry": { "type": "Point", "coordinates": [ 2.440863478611589, 48.83135786665229 ] } }
+]
+}

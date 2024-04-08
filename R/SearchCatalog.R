@@ -17,6 +17,8 @@
 #'     Must be one of the collections returned by \code{GetCollections}.
 #' @param as_data_frame logical indicating if the result should be returned as data frame. Default: TRUE
 #' @param with_geometry logical indicating if the granule geometries should be included in the data.frame. Default: TRUE
+#' @param filter character, CQL2 text filter. Use the function \code{GetQueryables} to find out which filters
+#'      can bu used with the collection. Default: NULL (no filtering)
 #' @param client OAuth client object to use for authentication.
 #' @param token OAuth token character string to use for authentication.
 #'
@@ -26,14 +28,16 @@
 #' @details If no images found, a \code{NULL} value is returned.
 #' @examples
 #' \dontrun{
-#'  #EXAMPLE1
-#'  dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
-#'  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-#'  images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
-#'             collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+#' dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+#' aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+#' images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+#'           collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+#' images_cloudless <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+#'           filter = "eo:cloud_cover < 5",
+#'           collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
 #' }
 #' @seealso
-#'  \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetArchiveImage}}
+#'  \code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{GetQueryables}}, \code{\link[CDSE]{GetImage}}
 #' @rdname SearchCatalog
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
@@ -43,8 +47,8 @@
 #' @importFrom httr2 request req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform resp_body_json
 #' @importFrom lutz tz_lookup_coords
 #' @importFrom lubridate with_tz
-SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE, with_geometry = TRUE, client, token,
-                          url = getOption("CDSE.catalog_url")) {
+SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE, with_geometry = TRUE,
+                          filter = NULL, client, token, url = getOption("CDSE.catalog_url")) {
     # Only one of either intersects or bbox may be specified.
     if (!missing(aoi) & !missing(bbox)) {
         stop("Only one of either aoi or bbox may be specified.")
@@ -53,9 +57,9 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
         stop("Either aoi or bbox must be specified.")
     }
 
-    # Check bbox is valid
+    # Check bbox is valid (and transform as.numeric if needed)
     if (!missing(bbox)) {
-        CheckBbox(bbox)
+        bbox <- CheckBbox(bbox)
     }
 
     # authentication
@@ -86,6 +90,7 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
         # -> wrap collections in a list and use auto_unbox = TRUE
         bdy <- list("bbox" = bbox, "datetime" = period, "collections" = list(collection), "limit" = limes)
     } else { # query by aoi / intersects
+        aoi <- CheckAOI(aoi)
         # convert to WGS84 first to get longitude/latitude coordinates
         bounds <- sf::st_transform(sf::st_geometry(aoi), crs = 4326)
         # bounding box
@@ -97,6 +102,13 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
         bdy <- list("intersects" = jsonlite::fromJSON(geom), "datetime" = period, "collections" = list(collection), "limit" = limes)
     }
 
+    # filter
+    if (!is.null(filter)) {
+        bdy$filter <- filter
+        bdy$`filter-lang` <- "cql2-text"
+    }
+    # cat(jsonlite::toJSON(bdy, auto_unbox = TRUE), file = "clipboard")
+    # cat(jsonlite::toJSON(bdy, auto_unbox = TRUE), file = "bdy.json")
     # build the request
     req <- httr2::request(paste0(url, "search"))
     req <- httr2::req_body_json(req, data = bdy, auto_unbox = TRUE)
@@ -113,6 +125,7 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
         if (length(grep("SSL peer certificate", resp[1])) == 1L) {
             req <- httr2::req_options(req, ssl_verifyhost = 0L, ssl_verifypeer = 0L)
             resp <- httr2::req_perform(req)
+            warning("Host SSL certificate seems to have an issue (probably expired)")
         } else {
             stop(LastError())
         }

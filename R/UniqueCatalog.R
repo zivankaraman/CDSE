@@ -11,21 +11,23 @@
 #' User can specify a subset of columns to include in the output through the \code{keep} parameter.
 #' @examples
 #' \dontrun{
-#'  #EXAMPLE1
-#'  dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
-#'  aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-#'  images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
-#'             collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
-#'  best_daily <- UniqueCatalog(images, by = "areaCoverage")
+#' dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+#' aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+#' images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+#'           collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+#' best_daily <- UniqueCatalog(images, by = "areaCoverage",
+#'                 keep = c("acquisitionDate", "tileCloudCover", "areaCoverage", "satellite"))
 #' }
-#' @seealso
-#'  \code{\link[CDSE]{SearchCatalog}}
+#' @seealso \code{\link[CDSE]{SearchCatalog}}
 #' @rdname UniqueCatalog
 #' @export
 #' @importFrom stats aggregate
 UniqueCatalog <- function(imageCatalog, by = c("areaCoverage", "tileCloudCover"), keep = names(imageCatalog)) {
     by <- match.arg(by, choices = c("areaCoverage", "tileCloudCover"))
     if (by == "areaCoverage") {
+        if (is.na(match("areaCoverage", names(imageCatalog)))) {
+            stop("'areaCoverage' is not present in the image catalog, it was probably created using 'with_geometry = FALSE'")
+        }
         # get image with maximal area coverage for the day
         agg1 <- stats::aggregate(areaCoverage ~ acquisitionDate, data = imageCatalog, FUN = max)
         tmp <- merge.data.frame(agg1, imageCatalog, by = c("acquisitionDate", "areaCoverage"), sort = FALSE)
