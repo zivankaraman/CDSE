@@ -23,6 +23,12 @@ SafeNull <- function(x) {
     return(ifelse(is.null(x), NA, x))
 }
 
+CheckCredential <- function(x) {
+    x <- as.character(x)
+    if (is.na(x) || is.null(x) || (length(x) == 0L)) x <- ""
+    return(x)
+}
+
 CheckLengthIs2 <- function(x) {
     # if one value only provided, replicate it twice (use it for both X and Y)
     if (length(x) == 1L) {
