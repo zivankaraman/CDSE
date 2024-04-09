@@ -18,6 +18,8 @@
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client oauth_flow_client_credentials
 GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
+    id <- CheckCredential(id)
+    secret <- CheckCredential(secret)
     if (id == "" || secret == "") {
         suppressWarnings(system(command = paste("open", system.file("doc", "BeforeYouStart.pdf", package = "CDSE")), wait = FALSE))
         stop("The provided credentials are not valid, please consult the 'BeforeYouStart' document.")
@@ -49,6 +51,8 @@ GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
 #' @importFrom httr2 oauth_client
 GetOAuthClient <- function(id, secret, url = getOption("CDSE.auth_url")) {
+    id <- CheckCredential(id)
+    secret <- CheckCredential(secret)
     if (id == "" || secret == "") {
         suppressWarnings(system(command = paste("open", system.file("doc", "BeforeYouStart.pdf", package = "CDSE")), wait = FALSE))
         stop("The provided credentials are not valid, please consult the 'BeforeYouStart' document.")
