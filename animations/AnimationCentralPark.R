@@ -44,7 +44,7 @@ fg <- "#DDDDDD"
 bg <- "#444444"
 for (i in 1:12) {
     day <- monthly$acquisitionDate[i]
-    ras <- GetArchiveImage(aoi = aoi, time_range = day, script = script_file,
+    ras <- GetImage(aoi = aoi, time_range = day, script = script_file,
                        collection = "sentinel-2-l2a", format = "image/tiff",
                        mosaicking_order = "leastCC", resolution = 10,
                        mask = TRUE, buffer = 100, client = OAuthClient)
