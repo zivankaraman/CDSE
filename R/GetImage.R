@@ -88,11 +88,9 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
     if (!missing(resolution)) {
         resolution <- CheckLengthIs2(resolution)
     }
-
     # check or get the first (default) value if not specified
     mosaicking_order <- CheckMosaicking(mosaicking_order[1])
     format <- CheckFormat(format[1])
-
     if (missing(aoi)) { # query by bbox
         # make bounds from bbox
         bounds <- PolyFromBbox(bbox)
@@ -103,26 +101,11 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
         # bounding box
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
     # add buffer if required
     if (buffer > 0) {
         bounds <- sf::st_buffer(bounds, dist = buffer, joinStyle = "MITRE", mitreLimit = 999999)
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
-    # get the number of pixels required
-    # boundsPlanar <- Flatten(bounds)
-    # if (buffer > 0) {
-    #     boundsPlanar <- sf::st_buffer(boundsPlanar, dist = buffer, joinStyle = "MITRE", mitreLimit = 999999)
-    #     bbox <- as.numeric(sf::st_bbox(sf::st_transform(boundsPlanar, crs = 4326)))
-    # }
-    # dims <- apply(matrix(as.numeric(sf::st_bbox(boundsPlanar)), ncol = 2), 1, diff)
-    # pixels <- ceiling(dims/resolution)
-    #
-    # dims.m <- apply(matrix(as.numeric(sf::st_bbox(boundsPlanar)), ncol = 2), 1, diff)
-    # dims.d <- apply(matrix(as.numeric(bbox), ncol = 2), 1, diff)
-    # res <- resolution * dims.d / dims.m
-
     # get the time range
     period <- MakeTimeRange(time_range)
     data <- list(
@@ -142,17 +125,13 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
                       data = data)
     }
     # responses
-    # if (missing(responses)) {
-        responses <- list(list(identifier = "default", format = list(type = format[1])))
-    # }
+    responses <- list(list(identifier = "default", format = list(type = format[1])))
     # build output part of the request
     if (missing(resolution)) { # use width and height provided
         # check the size of pixels
         yc <- mean(c(bbox[2], bbox[4]))
         dummy_rast <- terra::rast(nrows = pixels[2], ncols =  pixels[1], crs = sf::st_as_text(sf::st_crs(bounds)),
                                   extent = terra::ext(bbox[c(1, 3, 2, 4)]))
-        # dummy_rast <- terra::rast(nrows = pixels[2], ncols =  pixels[1], crs = terra::crs(terra::vect(bounds)),
-        #                           extent = terra::ext(bbox[c(1, 3, 2, 4)]))
         pixSize <- terra::res(dummy_rast) * DegLength(yc)
         pixSize <- pixSize * 1.001 # adjust for small discrepancy between SH and our values
         if (any(pixSize > 1500)) {
@@ -169,12 +148,8 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
         res <- resolution / DegLength(lat)
         # check the number of pixels
         yc <- mean(c(bbox[2], bbox[4]))
-        # browser()
-        # dummy_rast <- terra::rast(xmin = bbox[1], xmax = bbox[3], ymin = bbox[2], ymax = bbox[4],
-        #                           crs = sf::st_crs(bounds), resolution = resolution / DegLength(yc))
         dummy_rast <- terra::rast(xmin = bbox[1], xmax = bbox[3], ymin = bbox[2], ymax = bbox[4],
                                   crs = sf::st_as_text(sf::st_crs(bounds)), resolution = resolution / DegLength(yc))
-
         dims <- dim(dummy_rast)[1:2]
         if (any(dims > 2500)) {
             msg <- sprintf("The requested image dimension (%d x %d) exceeds the allowed maximum (2500 pixels).", dims[1], dims[2])
@@ -184,26 +159,22 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
         output <- list(resx = res[1], resy = res[2],
                        responses = responses)
     }
-
     # read the evalscript from file if needed
     if (file.exists(script)) {
         script <- paste(readLines(script), collapse = "\n")
     }
     # make the request body
     bdy <- list(input = input, output = output, evalscript = script)
-
     # build the request
     req <- httr2::request(url)
     req <- httr2::req_headers(req, Accept = format)
     req <- httr2::req_body_json(req, bdy)
-
     # select the appropriate authentication method
     if (missing(client)) {
         req <- httr2::req_auth_bearer_token(req, token = as.character(token))
     } else {
         req <- httr2::req_oauth_client_credentials(req, client = client)
     }
-
     # run the request
     resp <- try(httr2::req_perform(req), silent = TRUE)
     if (inherits(resp, "try-error")) {

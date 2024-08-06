@@ -20,12 +20,16 @@ Windows and MacOS binary packages are available from here.
 
 ### Development version
 
-You can install the latest development version of `CDSE` from GitHub with:
+You can install the latest development version of `CDSE` from [GitHub](https://github.com/zivankaraman/CDSE) with:
 
 ``` r
 require(remotes)
 install_github("zivankaraman/CDSE")
 ```
+
+## Usage
+
+Read through the [Articles](https://zivankaraman.github.io/CDSE/) to learn how to use the package.
 
 ## License
 

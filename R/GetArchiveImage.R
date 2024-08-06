@@ -110,26 +110,11 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         # bounding box
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
     # add buffer if required
     if (buffer > 0) {
         bounds <- sf::st_buffer(bounds, dist = buffer, joinStyle = "MITRE", mitreLimit = 999999)
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
-    # get the number of pixels required
-    # boundsPlanar <- Flatten(bounds)
-    # if (buffer > 0) {
-    #     boundsPlanar <- sf::st_buffer(boundsPlanar, dist = buffer, joinStyle = "MITRE", mitreLimit = 999999)
-    #     bbox <- as.numeric(sf::st_bbox(sf::st_transform(boundsPlanar, crs = 4326)))
-    # }
-    # dims <- apply(matrix(as.numeric(sf::st_bbox(boundsPlanar)), ncol = 2), 1, diff)
-    # pixels <- ceiling(dims/resolution)
-    #
-    # dims.m <- apply(matrix(as.numeric(sf::st_bbox(boundsPlanar)), ncol = 2), 1, diff)
-    # dims.d <- apply(matrix(as.numeric(bbox), ncol = 2), 1, diff)
-    # res <- resolution * dims.d / dims.m
-
     # get the time range
     period <- MakeTimeRange(time_range)
     data <- list(
@@ -149,9 +134,7 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
                       data = data)
     }
     # responses
-    # if (missing(responses)) {
-        responses <- list(list(identifier = "default", format = list(type = format[1])))
-    # }
+    responses <- list(list(identifier = "default", format = list(type = format[1])))
     # build output part of the request
     if (missing(resolution)) { # use width and height provided
         # check the size of pixels
@@ -174,12 +157,8 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         res <- resolution / DegLength(lat)
         # check the number of pixels
         yc <- mean(c(bbox[2], bbox[4]))
-        # browser()
-        # dummy_rast <- terra::rast(xmin = bbox[1], xmax = bbox[3], ymin = bbox[2], ymax = bbox[4],
-        #                           crs = sf::st_crs(bounds), resolution = resolution / DegLength(yc))
         dummy_rast <- terra::rast(xmin = bbox[1], xmax = bbox[3], ymin = bbox[2], ymax = bbox[4],
                                   crs = sf::st_as_text(sf::st_crs(bounds)), resolution = resolution / DegLength(yc))
-
         dims <- dim(dummy_rast)[1:2]
         if (any(dims > 2500)) {
             msg <- sprintf("The requested image dimension (%d x %d) exceeds the allowed maximum (2500 pixels).", dims[1], dims[2])
@@ -189,28 +168,22 @@ GetArchiveImage <- function(aoi, bbox, time_range, collection, script, file = NU
         output <- list(resx = res[1], resy = res[2],
                        responses = responses)
     }
-
-
-
     # read the evalscript from file if needed
     if (file.exists(script)) {
         script <- paste(readLines(script), collapse = "\n")
     }
     # make the request body
     bdy <- list(input = input, output = output, evalscript = script)
-
     # build the request
     req <- httr2::request(url)
     req <- httr2::req_headers(req, Accept = format)
     req <- httr2::req_body_json(req, bdy)
-
     # select the appropriate authentication method
     if (missing(client)) {
         req <- httr2::req_auth_bearer_token(req, token = as.character(token))
     } else {
         req <- httr2::req_oauth_client_credentials(req, client = client)
     }
-
     # run the request
     resp <- try(httr2::req_perform(req), silent = TRUE)
     if (inherits(resp, "try-error")) {

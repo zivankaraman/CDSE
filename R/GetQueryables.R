@@ -28,7 +28,6 @@
 GetQueryables <- function(collection, as_data_frame = TRUE, client, token, url = getOption("CDSE.catalog_url")) {
     # build the request
     req <- httr2::request(sprintf("%scollections/%s/queryables", url, collection))
-
     # select the appropriate authentication method
     if (missing(client)) {
         req <- httr2::req_auth_bearer_token(req, token = as.character(token))
@@ -46,9 +45,6 @@ GetQueryables <- function(collection, as_data_frame = TRUE, client, token, url =
             stop(LastError())
         }
     }
-
-    # cnt <- httr2::resp_body_json(resp, simplifyVector = FALSE)
-    # cnt$properties
     out <- jsonlite::fromJSON(httr2::resp_body_string(resp, encoding = "UTF-8"))
     props <- out$properties
     if (as_data_frame) {
@@ -69,29 +65,3 @@ GetQueryables <- function(collection, as_data_frame = TRUE, client, token, url =
     }
     return(out)
 }
-
-
-# collezioni <- GetCollections()
-# n <- nrow(collezioni)
-# lstout <- vector(mode = "list", length = n)
-# names(lstout) <- collezioni$id
-# OAuthClient <- GetOAuthClient(id = id, secret = secret)
-#
-# for (i in 1:nrow(collezioni)) {
-#     lstout[[i]] <- Queryables(collezioni$id[i], client = OAuthClient)
-# }
-#
-# nomsout <- vector(mode = "list", length = n)
-# for (i in 1:nrow(collezioni)) {
-#     nomsout[[i]] <- lapply(lstout[[i]], FUN = names)
-# }
-# unique(as.character(unlist(nomsout)))
-#
-#
-# lstout$`sentinel-1-grd`
-# lstout$`sentinel-2-l1c`
-# lstout$`sentinel-2-l2a`
-# lstout$`sentinel-3-olci`
-# lstout$`sentinel-3-slstr`
-# lstout$`sentinel-5p-l2`
-
