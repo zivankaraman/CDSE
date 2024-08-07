@@ -1,8 +1,6 @@
-# CDSE
+# CDSE <a href="https://zivankaraman.github.io/CDSE/"><img src="man/figures/logo.png" align="right"/></a>
 
-'Copernicus Data Space Ecosystem' API Wrapper
-
-## Description
+***'Copernicus Data Space Ecosystem' API Wrapper***
 
 This package provides the interface to the ['Copernicus Data Space Ecosystem' API](https://dataspace.copernicus.eu/analyse/apis), mainly for searching the catalogue of available data from Copernicus Sentinel missions and obtaining the images for just the area of interest based on selected spectral bands. The package uses the 'Sentinel Hub' RESTful [API interface](https://dataspace.copernicus.eu/analyse/apis/sentinel-hub) to access various satellite imagery archives. It allows you to access raw satellite data, rendered images, statistical analysis, and other features.
 
@@ -16,7 +14,7 @@ You can install the current stable version of `CDSE` from [CRAN](https://cran.r-
 install.packages("CDSE")
 ```
 
-Windows and MacOS binary packages are available from here.
+Windows and macOS binary packages are available from here.
 
 ### Development version
 
