@@ -1,13 +1,3 @@
-## ----label = "knitr options", include = FALSE---------------------------------
-knitr::opts_chunk$set(
-    fig.width = 7,
-    fig.height = 4,
-    out.width = "100%",
-    fig.align = "center",
-    collapse = TRUE,
-    comment = "#>"
-)
-
 ## ----label = "setup", include = FALSE-----------------------------------------
 library(CDSE)
 options(warn = -1)
@@ -146,7 +136,8 @@ weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-3
 weekly_stats_extended <- GetStatistics(aoi = aoi, 
     time_range = c("2023-07-01", "2023-07-31"), collection = "sentinel-2-l2a", 
     script = script_file, mosaicking_order = "leastCC", resolution = 100, 
-    aggregation_period = 7, lastIntervalBehavior = "EXTEND", client = OAuthClient)
+    aggregation_period = 1, aggregation_unit = "w", lastIntervalBehavior = "EXTEND", 
+    client = OAuthClient)
 daily_stats
 weekly_stats
 weekly_stats_extended

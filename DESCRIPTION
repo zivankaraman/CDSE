@@ -1,7 +1,7 @@
 Package: CDSE
 Type: Package
 Title: 'Copernicus Data Space Ecosystem' API Wrapper
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Zivan", "Karaman", , "zivan.karaman@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-8933-4589"))
@@ -14,10 +14,10 @@ Description: Provides interface to the 'Copernicus Data Space Ecosystem' API
     statistical analysis, and other features.
 Depends: R (>= 3.6.0)
 Imports: geojsonsf, grDevices, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils
-URL: https://github.com/zivankaraman/CDSE
+URL: https://zivankaraman.github.io/CDSE/, https://github.com/zivankaraman/CDSE
 BugReports: https://github.com/zivankaraman/CDSE/issues
-License: AGPL-3 + file LICENSE
+License: AGPL-3
 Encoding: UTF-8
 Config/build/clean-inst-doc: FALSE
-RoxygenNote: 7.2.2
+RoxygenNote: 7.3.2
 Suggests: maps, parallel, tibble

@@ -1,7 +1,7 @@
 #' @name CDSE
 # @name CDSE-package
 # @aliases CDSE
-#' @docType package
+# @docType package
 #' @author Zivan Karaman <zivan.karaman@gmail.com>
 # @seealso \link{ca630}, \code{\link{sp1}, \link{sp2}, \link{sp3}, \link{sp4}, \link{sp5}}
 #'
@@ -36,7 +36,7 @@
 #' invited to consult the \code{"Before you start"} document.
 #'
 #' @section Project homepage:
-#' \url{https://github.com/zivankaraman/CDSE}
+#' \url{https://zivankaraman.github.io/CDSE/}, \url{https://github.com/zivankaraman/CDSE}
 #'
 #' @section Issues:
 #' For bug reports and feature requests please use the tracker \url{https://github.com/zivankaraman/CDSE/issues}

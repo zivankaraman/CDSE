@@ -202,7 +202,7 @@ terra::plotRGB(terra::rast(png))
 
 It often happens that one is interested in acquiring a series of images of a particular zone (AOI or bounding box) for several dates, or the images of different areas of interest for the same date (probably located close to each other so that they are visited on the same day). The `GetImageBy*` functions (`GetImageByTimerange`, `GetImageByAOI`, `GetImageByBbox`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. We shall illustrate how to do this with an example.
 
-```{r label="retrieve images in parallel"}
+```{r label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 cloudless_images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",

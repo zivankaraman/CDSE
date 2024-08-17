@@ -97,6 +97,7 @@ CheckAOI <- function(aoi) {
         } else {
             out <- aoi
         }
+        out <- sf::st_as_sf(out)
     }
     if (is.null(out)) {
         stop("invalid 'aoi' value")
