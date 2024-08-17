@@ -252,7 +252,7 @@ All general rules for building evalscripts apply. However, there are some specif
 
 ## Retrieving simple statistics
 
-Besides the time range, you have to specify the way you want the values to be aggregated over time. For this you use the `aggregation_period` argument, providing the number of days over which the statistics are calculated. The default value is one, producing the daily statistics. If the last interval in the given time range isn't divisible by the provided aggregation interval, you can skip the last interval (default behavior), shorten the last interval so that it ends at the end of the provided time range, or extend the last interval over the end of the provided time range so that all intervals are of equal duration. This is controlled by the value of the `lastIntervalBehavior` argument.
+Besides the time range, you have to specify the way you want the values to be aggregated over time. For this you use the `aggregation_period` and `aggregation_unit` arguments. The `aggregation_unit` must be one of `day`, `week`, `month` or `year`, and the `aggregation_period` providing the number of `aggregation_units` (days, weeks, ...) over which the statistics are calculated. The default values are "1" and "day", producing the daily statistics. If the last interval in the given time range isn't divisible by the provided aggregation interval, you can skip the last interval (default behavior), shorten the last interval so that it ends at the end of the provided time range, or extend the last interval over the end of the provided time range so that all intervals are of equal duration. This is controlled by the value of the `lastIntervalBehavior` argument.
 
 ```{r label="simple statistics"}
 
@@ -268,11 +268,14 @@ weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-3
 weekly_stats_extended <- GetStatistics(aoi = aoi, 
     time_range = c("2023-07-01", "2023-07-31"), collection = "sentinel-2-l2a", 
     script = script_file, mosaicking_order = "leastCC", resolution = 100, 
-    aggregation_period = 7, lastIntervalBehavior = "EXTEND", client = OAuthClient)
+    aggregation_period = 1, aggregation_unit = "w", lastIntervalBehavior = "EXTEND", 
+    client = OAuthClient)
 daily_stats
 weekly_stats
 weekly_stats_extended
 ```
+
+In this example we have demonstrated that a week can be specified as either 7 days or 1 week. 
 
 ## Retrieving statistics with percentiles
 

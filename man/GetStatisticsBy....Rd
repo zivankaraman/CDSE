@@ -16,12 +16,14 @@ GetStatisticsByTimerange(
   bbox,
   collection,
   script,
-  mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
+  mosaicking_order = c("mostRecent", "leastRecent", "leastCC")[1],
   pixels,
   resolution,
   buffer = 0,
   percentiles = NULL,
   aggregation_period = 1L,
+  aggregation_unit = c("day", "week", "month", "year")[1],
+  lastIntervalBehavior = c("SKIP", "SHORTEN", "EXTEND")[1],
   as_data_frame = TRUE,
   client,
   token,
@@ -33,12 +35,14 @@ GetStatisticsByAOI(
   time_range,
   collection,
   script,
-  mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
+  mosaicking_order = c("mostRecent", "leastRecent", "leastCC")[1],
   pixels,
   resolution,
   buffer = 0,
   percentiles = NULL,
   aggregation_period = 1L,
+  aggregation_unit = c("day", "week", "month", "year")[1],
+  lastIntervalBehavior = c("SKIP", "SHORTEN", "EXTEND")[1],
   as_data_frame = TRUE,
   client,
   token,
@@ -50,12 +54,14 @@ GetStatisticsByBbox(
   time_range,
   collection,
   script,
-  mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
+  mosaicking_order = c("mostRecent", "leastRecent", "leastCC")[1],
   pixels,
   resolution,
   buffer = 0,
   percentiles = NULL,
   aggregation_period = 1L,
+  aggregation_unit = c("day", "week", "month", "year")[1],
+  lastIntervalBehavior = c("SKIP", "SHORTEN", "EXTEND")[1],
   as_data_frame = TRUE,
   client,
   token,
@@ -78,8 +84,12 @@ Must be one of the collections returned by \code{GetCollections}.}
 
 \item{script}{a length one character string containing the evaluation script or the name of the file containing the script.}
 
-\item{mosaicking_order}{character indicating the order in which tiles are overlapped from which the output result is mosaicked.
-Must be one of "mostRecent", "leastRecent", or "leastCC". Default: "mostRecent"}
+\item{mosaicking_order}{character indicating the order in which tiles are overlapped from
+which the output result is mosaicked.
+Must be one of "mostRecent", "leastRecent", or "leastCC".
+Partial matching is used, that is,
+only enough initial letters of each string element are needed to guarantee unique
+recognition. Default: "mostRecent"}
 
 \item{pixels}{integer scalar or length-two vector indicating the request image width and height.
 Values must be integers between 1 and 2500.}
@@ -95,7 +105,26 @@ Values must be integers between 1 and 2500.}
 \item{percentiles}{numeric vector indicating which percentile values should be computed.
 Default: NULL, don't compute any percentiles.}
 
-\item{aggregation_period}{the length of the aggregation period in days. Default: 1}
+\item{aggregation_period}{the length of the aggregation period in \code{aggregation_unit}
+(days by default). Default: 1}
+
+\item{aggregation_unit}{character indicating the the unit of the aggregation period,
+must be one of "day", "week", "month", or "year". Partial matching is used, that is,
+only enough initial letters of each string element are needed to guarantee unique
+recognition (here just the first letter is enough). Default: "day"}
+
+\item{lastIntervalBehavior}{character indicating the behavior of the last interval if the
+    given \code{time_range} isn't divisible by the provided \code{aggregation_period.}
+    Must be one of:
+\itemize{
+    \item{\code{SKIP}}{ - skip the last interval (default behavior)}
+    \item{\code{SHORTEN}}{ - shortens the last interval so that it ends at the end of provided \code{time_range}}
+    \item{\code{EXTEND}}{ - extends the last interval over the end of the provided time range so that all intervals are of equal duration}
+}
+
+    Partial matching is used, that is,
+    only enough initial letters of each string element are needed to guarantee unique
+    recognition. Default: "SKIP"}
 
 \item{as_data_frame}{logical indicating if the result should be returned as data frame. Default: TRUE}
 
@@ -111,22 +140,31 @@ Default: NULL, don't compute any percentiles.}
 \code{data.frame} or \code{list} with statistical values.
 }
 \description{
-These functions retrieve simple statistics for the area of interest calculated based on satellite imagery
-    without having to download images.
-    They are simple wrappers around the 'GetStatistics' function with arguments organized in a way
-    that facilitates calling the function in a vectorized manner (using 'lapply' or similar function)
+These functions retrieve simple statistics for the area of interest calculated
+    based on satellite imagery without having to download images.
+    They are simple wrappers around the \code{GetStatistics} function with arguments organized in a way
+    that facilitates calling the function in a vectorized manner (using \code{lapply} or similar function)
     and thus potentially also the parallelization.
 }
 \details{
-The values are aggregated over the period (number of days) given by the \code{aggregation_period} argument.
-   The default value 1 provides daily statistics. The statistics are returned only for the days when the data is
-   available (the days of the satellite overpass).
+The values are aggregated over the period (number of \code{aggregation_units})
+   given by the \code{aggregation_period} argument.
+   The default values provide daily statistics. The statistics are returned only for the
+   \code{aggregation_units} (days, weeks, months, years) when the data is
+   available. This can be determined by the days of the satellite overpasses, but also
+   by the calculations done in the evaluation script.
 
    The scripts used for the Statistical API have some additional requirements: the \code{evaluatePixel()}
        function must, in addition to other output, always also return dataMask output.
        This output defines which pixels are excluded from calculations.
    For more information please visit the online documentation
    \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html}.
+
+   If a \code{time_range} is not divisible by an \code{aggregation_period}, the last ("not full") time
+   interval will be dismissed by default (SKIP option). The user can instead set the
+   \code{lastIntervalBehavior} to SHORTEN (shortens the last interval so that it ends at the end
+   of the provided time range) or EXTEND (extends the last interval over the end of the
+   provided time range so that all the intervals are of equal duration).
 
    If percentiles requested are 25, 50, and 75, the columns are renamed 'q1', 'median', and 'q3'.
 
@@ -152,5 +190,5 @@ head(weekly_stats)
 }
 }
 \seealso{
-\code{\link[CDSE]{GetCollections}}, \code{\link[CDSE]{SearchCatalog}}, \code{\link[CDSE]{GetStatistics}}
+\code{\link[CDSE]{GetStatistics}}
 }

@@ -35,12 +35,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="active nav-item"><a class="nav-link" href="../articles/CDSE.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/BeforeYouStart.html">Before you start</a></li>
-    <li><a class="dropdown-item" href="../articles/UsingCDSE.html">Using 'Copernicus Data Space Ecosystem' API Wrapper</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,8 +65,8 @@
       <img src="../logo.png" class="logo" alt=""><h1>Using 'Copernicus Data Space Ecosystem' API Wrapper</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/zivankaraman/CDSE/blob/HEAD/vignettes/UsingCDSE.Rmd" class="external-link"><code>vignettes/UsingCDSE.Rmd</code></a></small>
-      <div class="d-none name"><code>UsingCDSE.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/zivankaraman/CDSE/blob/HEAD/vignettes/CDSE.Rmd" class="external-link"><code>vignettes/CDSE.Rmd</code></a></small>
+      <div class="d-none name"><code>CDSE.Rmd</code></div>
     </div>
 
     
@@ -242,7 +242,7 @@ and showing the region of interest in red.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"AOI coverage by image tiles for period %s"</span>, </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">days</span>, collapse <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span>, line <span class="op">=</span> <span class="fl">1L</span>, cex.main <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="UsingCDSE_files/figure-html/plot%20AOI%20coverage-1.png" alt="Luxembourg image tiles coverage" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/plot%20AOI%20coverage-1.png" alt="Luxembourg image tiles coverage" width="100%"><p class="caption">
 Luxembourg image tiles coverage
 </p>
 </div>
@@ -500,14 +500,14 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file96915665155f </span></span>
+<span><span class="co">#&gt; name        : file133b89fd8a0c </span></span>
 <span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
 <span><span class="co">#&gt; max value   :        0.9507549</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ras</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Central Park NDVI on"</span>, <span class="va">day</span><span class="op">)</span>, cex.main <span class="op">=</span> <span class="fl">0.75</span>,</span>
 <span>    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"yellow"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="UsingCDSE_files/figure-html/retrieve%20the%20NDVI%20image-1.png" alt="Central Park NDVI raster" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/retrieve%20the%20NDVI%20image-1.png" alt="Central Park NDVI raster" width="100%"><p class="caption">
 Central Park NDVI raster
 </p>
 </div>
@@ -552,7 +552,7 @@ more sense if the image is intended for display and not processing.</p>
 <span>    mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, pixels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">600</span>, <span class="fl">950</span><span class="op">)</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plotRGB.html" class="external-link">plotRGB</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">png</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="UsingCDSE_files/figure-html/retrieve%20RGB%20image-1.png" alt="Central Park image as PNG file" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/retrieve%20RGB%20image-1.png" alt="Central Park image as PNG file" width="100%"><p class="caption">
 Central Park image as PNG file
 </p>
 </div>
@@ -598,7 +598,11 @@ illustrate how to do this with an example.</p>
 <span>        cex.main <span class="op">=</span> <span class="fl">0.7</span>, pax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex.axis <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, plg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"yellow"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p><img src="UsingCDSE_files/figure-html/retrieve%20images%20in%20parallel-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="CDSE_files/figure-html/retrieve%20images%20in%20parallel-1.png" alt="Central Park monthly NDVI" width="100%"><p class="caption">
+Central Park monthly NDVI
+</p>
+</div>
 <p>In this particular example, parallelization is not necessarily
 beneficial as we are retrieving only 12 images, but for a large number
 of images, it can significantly reduce the execution time.</p>
@@ -638,8 +642,12 @@ outputs.</p></li>
 </h3>
 <p>Besides the time range, you have to specify the way you want the
 values to be aggregated over time. For this you use the
-<code>aggregation_period</code> argument, providing the number of days
-over which the statistics are calculated. The default value is one,
+<code>aggregation_period</code> and <code>aggregation_unit</code>
+arguments. The <code>aggregation_unit</code> must be one of
+<code>day</code>, <code>week</code>, <code>month</code> or
+<code>year</code>, and the <code>aggregation_period</code> providing the
+number of <code>aggregation_units</code> (days, weeks, …) over which the
+statistics are calculated. The default values are “1” and “day”,
 producing the daily statistics. If the last interval in the given time
 range isn’t divisible by the provided aggregation interval, you can skip
 the last interval (default behavior), shorten the last interval so that
@@ -661,7 +669,8 @@ are of equal duration. This is controlled by the value of the
 <span><span class="va">weekly_stats_extended</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, </span>
 <span>    time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>, collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, </span>
 <span>    script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, resolution <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>    aggregation_period <span class="op">=</span> <span class="fl">7</span>, lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span>    aggregation_period <span class="op">=</span> <span class="fl">1</span>, aggregation_unit <span class="op">=</span> <span class="st">"w"</span>, lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, </span>
+<span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">daily_stats</span></span>
 <span><span class="co">#&gt;          date     output        band min         mean          max        stDev</span></span>
 <span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value   0  0.210216716 6.509659e-01 1.700419e-01</span></span>
@@ -759,6 +768,8 @@ are of equal duration. This is controlled by the value of the
 <span><span class="co">#&gt; 8   0.1979783        1120         704</span></span>
 <span><span class="co">#&gt; 9   0.2998643        1120         704</span></span>
 <span><span class="co">#&gt; 10  0.1531686        1120         704</span></span></code></pre></div>
+<p>In this example we have demonstrated that a week can be specified as
+either 7 days or 1 week.</p>
 </div>
 <div class="section level3">
 <h3 id="retrieving-statistics-with-percentiles">Retrieving statistics with percentiles<a class="anchor" aria-label="anchor" href="#retrieving-statistics-with-percentiles"></a>

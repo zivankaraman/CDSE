@@ -17,11 +17,11 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/CDSE.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/BeforeYouStart.html">Before you start</a></li>
-    <li><a class="dropdown-item" href="../articles/UsingCDSE.html">Using 'Copernicus Data Space Ecosystem' API Wrapper</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -52,13 +52,14 @@
 <span>  <span class="va">time_range</span>,</span>
 <span>  <span class="va">collection</span>,</span>
 <span>  <span class="va">script</span>,</span>
-<span>  mosaicking_order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mostRecent"</span>, <span class="st">"leastRecent"</span>, <span class="st">"leastCC"</span><span class="op">)</span>,</span>
+<span>  mosaicking_order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mostRecent"</span>, <span class="st">"leastRecent"</span>, <span class="st">"leastCC"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>  <span class="va">pixels</span>,</span>
 <span>  <span class="va">resolution</span>,</span>
 <span>  buffer <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  percentiles <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aggregation_period <span class="op">=</span> <span class="fl">1L</span>,</span>
-<span>  lastIntervalBehavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SKIP"</span>, <span class="st">"SHORTEN"</span>, <span class="st">"EXTEND"</span><span class="op">)</span>,</span>
+<span>  aggregation_unit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"day"</span>, <span class="st">"week"</span>, <span class="st">"month"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  lastIntervalBehavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SKIP"</span>, <span class="st">"SHORTEN"</span>, <span class="st">"EXTEND"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>  as_data_frame <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">client</span>,</span>
 <span>  <span class="va">token</span>,</span>
@@ -99,8 +100,12 @@ Must be one of the collections returned by <code>GetCollections</code>.</p></dd>
 
 
 <dt id="arg-mosaicking-order">mosaicking_order<a class="anchor" aria-label="anchor" href="#arg-mosaicking-order"></a></dt>
-<dd><p>character indicating the order in which tiles are overlapped from which the output result is mosaicked.
-Must be one of "mostRecent", "leastRecent", or "leastCC". Default: "mostRecent"</p></dd>
+<dd><p>character indicating the order in which tiles are overlapped from
+which the output result is mosaicked.
+Must be one of "mostRecent", "leastRecent", or "leastCC".
+Partial matching is used, that is,
+only enough initial letters of each string element are needed to guarantee unique
+recognition. Default: "mostRecent"</p></dd>
 
 
 <dt id="arg-pixels">pixels<a class="anchor" aria-label="anchor" href="#arg-pixels"></a></dt>
@@ -111,8 +116,8 @@ Values must be integers between 1 and 2500.</p></dd>
 <dt id="arg-resolution">resolution<a class="anchor" aria-label="anchor" href="#arg-resolution"></a></dt>
 <dd><p>numeric scalar or length-two vector indicating the spatial resolution of the request image
     in horizontal and vertical direction (in meters).</p>
-<p>Only one of the arguments "pixels" or "resolution" must be set at the same time.
-    If the argument "pixels" or "resolution" is scalar, the same value is used for horizontal and vertical direction (width and height).</p></dd>
+<p>Only one of the arguments <code>pixels</code> or <code>resolution</code> must be set at the same time.
+    If the argument <code>pixels</code> or <code>resolution</code> is scalar, the same value is used for horizontal and vertical direction (width and height).</p></dd>
 
 
 <dt id="arg-buffer">buffer<a class="anchor" aria-label="anchor" href="#arg-buffer"></a></dt>
@@ -125,11 +130,26 @@ Default: NULL, don't compute any percentiles.</p></dd>
 
 
 <dt id="arg-aggregation-period">aggregation_period<a class="anchor" aria-label="anchor" href="#arg-aggregation-period"></a></dt>
-<dd><p>the length of the aggregation period in days. Default: 1</p></dd>
+<dd><p>the length of the aggregation period in <code>aggregation_unit</code>
+(days by default). Default: 1</p></dd>
+
+
+<dt id="arg-aggregation-unit">aggregation_unit<a class="anchor" aria-label="anchor" href="#arg-aggregation-unit"></a></dt>
+<dd><p>character indicating the the unit of the aggregation period,
+must be one of "day", "week", "month", or "year". Partial matching is used, that is,
+only enough initial letters of each string element are needed to guarantee unique
+recognition (here just the first letter is enough). Default: "day"</p></dd>
 
 
 <dt id="arg-lastintervalbehavior">lastIntervalBehavior<a class="anchor" aria-label="anchor" href="#arg-lastintervalbehavior"></a></dt>
-<dd><p>= c("SKIP", "SHORTEN", "EXTEND")</p></dd>
+<dd><p>character indicating the behavior of the last interval if the
+    given <code>time_range</code> isn't divisible by the provided <code>aggregation_period.</code>
+    Must be one of:</p><ul><li><p><code>SKIP</code> - skip the last interval (default behavior)</p></li>
+<li><p><code>SHORTEN</code> - shortens the last interval so that it ends at the end of provided <code>time_range</code></p></li>
+<li><p><code>EXTEND</code> - extends the last interval over the end of the provided time range so that all intervals are of equal duration</p></li>
+</ul><p>Partial matching is used, that is,
+    only enough initial letters of each string element are needed to guarantee unique
+    recognition. Default: "SKIP"</p></dd>
 
 
 <dt id="arg-as-data-frame">as_data_frame<a class="anchor" aria-label="anchor" href="#arg-as-data-frame"></a></dt>
@@ -155,14 +175,22 @@ Default: NULL, don't compute any percentiles.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The values are aggregated over the period (number of days) given by the <code>aggregation_period</code> argument.
-   The default value 1 provides daily statistics. The statistics are returned only for the days when the data is
-   available (the days of the satellite overpass).</p>
+    <p>The values are aggregated over the period (number of <code>aggregation_units</code>)
+   given by the <code>aggregation_period</code> argument.
+   The default values provide daily statistics. The statistics are returned only for the
+   <code>aggregation_units</code> (days, weeks, months, years) when the data is
+   available. This can be determined by the days of the satellite overpasses, but also
+   by the calculations done in the evaluation script.</p>
 <p>The scripts used for the Statistical API have some additional requirements: the <code>evaluatePixel()</code>
        function must, in addition to other output, always also return dataMask output.
        This output defines which pixels are excluded from calculations.
    For more information please visit the online documentation
    <a href="https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html" class="external-link">https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html</a>.</p>
+<p>If a <code>time_range</code> is not divisible by an <code>aggregation_period</code>, the last ("not full") time
+   interval will be dismissed by default (SKIP option). The user can instead set the
+   <code>lastIntervalBehavior</code> to SHORTEN (shortens the last interval so that it ends at the end
+   of the provided time range) or EXTEND (extends the last interval over the end of the
+   provided time range so that all the intervals are of equal duration).</p>
 <p>If percentiles requested are 25, 50, and 75, the columns are renamed 'q1', 'median', and 'q3'.</p>
     </div>
     <div class="section level2">
@@ -179,12 +207,15 @@ Default: NULL, don't compute any percentiles.</p></dd>
 <span class="r-in"><span><span class="va">daily_stats</span> <span class="op">&lt;-</span> <span class="fu">GetStatistics</span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span></span>
 <span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">1</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># specify week as 7 days</span></span></span>
 <span class="r-in"><span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="fu">GetStatistics</span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>,mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span></span>
 <span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># specify week as 1 week</span></span></span>
 <span class="r-in"><span><span class="va">weekly_stats_extended</span> <span class="op">&lt;-</span> <span class="fu">GetStatistics</span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span></span>
-<span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7</span>, lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">1</span>, aggregation_unit <span class="op">=</span> <span class="st">"w"</span>,</span></span>
+<span class="r-in"><span>  lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
