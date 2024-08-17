@@ -6,13 +6,6 @@ output:
     toc: yes
     toc_depth: '2'
     fig_caption: yes
-  html_document:
-    toc: yes
-    toc_depth: '2'
-    df_print: paged
-  word_document:
-    toc: yes
-    toc_depth: '2'
 urlcolor: blue
 vignette: >
     %\VignetteIndexEntry{Worked examples using CDSE API wrapper}  
@@ -20,7 +13,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r label = "knitr options", include = FALSE}
+```{r label = "knitr options", include = FALSE, purl = FALSE}
 knitr::opts_chunk$set(
     fig.width = 7,
     fig.height = 4,
@@ -35,8 +28,6 @@ knitr::opts_chunk$set(
 library(CDSE)
 options(warn = -1)
 ```
-
-### *Compiled on `r Sys.time()`.*
 
 \newpage
 
@@ -106,7 +97,7 @@ Some tiles cover only a small fraction of the area of interest, while others cov
 summary(images$areaCoverage)
 ```
 
-The tile number can be obtained from the image attribute `sourceId`, as explained [here](https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/naming-convention). We can therefore summarize the distribution of area coverage by tile number, and see which tiles provide the best coverage of the AOI.
+The tile number can be obtained from the image attribute `sourceId`, as explained [here](https://sentiwiki.copernicus.eu/web/s2-products). We can therefore summarize the distribution of area coverage by tile number, and see which tiles provide the best coverage of the AOI.
 
 ```{r label = "by tileNumber"}
 tileNumber <- substring(images$sourceId, 39, 44)
@@ -317,7 +308,6 @@ weekly_stats <- weekly_stats[order(weekly_stats$from), ]
 row.names(weekly_stats) <- NULL
 head(weekly_stats)
 ```
-
 
 # Copernicus Data Space Ecosystem services status
 

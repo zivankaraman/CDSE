@@ -41,13 +41,11 @@ Point2Bbox <- function(x, y = NULL, size, crs = 4326) {
 
     }
     pts <- sf::st_as_sf(data.frame(xcoord, ycoord), coords = 1:2, crs = crs)
-
     crs_units <- sf::st_crs(crs, parameters = TRUE)$units_gdal
     if (is.na(match(crs_units, c("degree", "matre")))) {
         msg <- sprintf("The crs unit is expected to be either 'degree' or 'metre', not '%s', results might be incorrect", crs_units)
         warning(msg)
     }
-
     # size
     size <- rep_len(size, 2)
     if (crs_units == "degree") {
@@ -59,10 +57,8 @@ Point2Bbox <- function(x, y = NULL, size, crs = 4326) {
         }
         size <-  size / deg_size
     }
-
     delta_x <- size[, 1, drop = TRUE] / 2.0
     delta_y <- size[, 2, drop = TRUE] / 2.0
-
     mat <- cbind(xcoord - delta_x, ycoord - delta_y, xcoord + delta_x, ycoord + delta_y)
     dimnames(mat) <- list(NULL, c("xmin", "ymin", "xmax", "ymax"))
     out <- lapply(1:nrow(mat), function(i) mat[i, , drop = TRUE])

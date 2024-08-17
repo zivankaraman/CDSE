@@ -79,17 +79,14 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
     if (missing(aoi) & missing(bbox)) {
         stop("Either aoi or bbox must be specified.")
     }
-
     # Check bbox is valid (and transform as.numeric if needed)
     if (!missing(bbox)) {
         bbox <- CheckBbox(bbox)
     }
-
     # authentication
     if (missing(client) & missing(token)) {
         stop("Either client or token must be specified.")
     }
-
     # Only one of either pixels or resolution may be specified.
     if (!missing(pixels) & !missing(resolution)) {
         stop("Only one of either pixels or resolution may be specified.")
@@ -103,11 +100,9 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
     if (!missing(resolution)) {
         resolution <- CheckLengthIs2(resolution)
     }
-
     # check or get the first (default) value if not specified
     mosaicking_order <- CheckMosaicking(mosaicking_order[1])
     lastIntervalBehavior <- lastIntervalBehavior[1]
-
     if (missing(aoi)) { # query by bbox
         # make bounds from bbox
         bounds <- PolyFromBbox(bbox)
@@ -118,19 +113,16 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
         # bounding box
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
     # add buffer if required
     if (buffer > 0) {
         bounds <- sf::st_buffer(bounds, dist = buffer, joinStyle = "MITRE", mitreLimit = 999999)
         bbox <- as.numeric(sf::st_bbox(bounds))
     }
-
     data <- list(
         list(
             dataFilter = list(mosaickingOrder = mosaicking_order[1]),
             type = collection)
     )
-
     # build input part of the request
     if (missing(aoi)) { # query by bbox
         input <- list(bounds = list(bbox = bbox,
@@ -142,13 +134,10 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
                                     properties = list(crs = "http://www.opengis.net/def/crs/OGC/1.3/CRS84")),
                       data = data)
     }
-
     # aggregation
-
     # get the time range
     period <- MakeTimeRange(time_range)
     aggregationInterval <- list(of = sprintf("P%dD", aggregation_period), lastIntervalBehavior = lastIntervalBehavior)
-
     # build output part of the request
     if (missing(resolution)) { # use width and height provided
         output <- list(width = pixels[1], height = pixels[2])
@@ -158,15 +147,12 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
         res <- as.numeric(resolution / DegLength(lat))
         output <- list(resx = res[1], resy = res[2])
     }
-
     # read the evalscript from file if needed
     if (file.exists(script)) {
         script <- paste(readLines(script), collapse = "\n")
     }
-
     aggregation <- list(timeRange = period, aggregationInterval = aggregationInterval, evalscript = script)
     aggregation <- c(aggregation, output)
-
     # make the request body
     if (is.null(percentiles)) {
         bdy <- list(input = input, aggregation = aggregation)
@@ -175,21 +161,16 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
         # make the request body
         bdy <- list(input = input, aggregation = aggregation, calculations = calculations)
     }
-
-    # cat(jsonlite::toJSON(bdy, auto_unbox = TRUE, digits = 22, null = "null"), file = "body.json")
-
     # build the request
     req <- httr2::request(url)
     req <- httr2::req_headers(req, "Content-Type" = "application/json", Accept = "*/*")
     req <- httr2::req_body_json(req, bdy)
-
     # select the appropriate authentication method
     if (missing(client)) {
         req <- httr2::req_auth_bearer_token(req, token = as.character(token))
     } else {
         req <- httr2::req_oauth_client_credentials(req, client = client)
     }
-
     # run the request
     resp <- try(httr2::req_perform(req), silent = TRUE)
     if (inherits(resp, "try-error")) {
@@ -201,7 +182,6 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
             stop(LastError())
         }
     }
-
     # process the response
     cnt <- httr2::resp_body_json(resp)
     lst <- cnt$data
@@ -209,27 +189,19 @@ GetStatistics <- function(aoi, bbox, time_range, collection, script,
         GetStatsOuput <- function(x, aggregation_period) {
             GetStatsParams <- function(band, y, output) {
                 df <- data.frame(output = output, band = band, y$bands[[band]]$stats, stringsAsFactors = FALSE)
-                # # df <- df[, c(1:3, 4, 11, 12, 6, 10, 5, 7, 8, 9)]
-                # df <- df[, c(1:2, 3, 10, 11, 5, 9, 4, 6, 7, 8)]
-                # names(df)[4:7] <- c("q1", "median", "mean", "q3")
-
                 cNames <- names(df)
                 colStart <- c("output", "band", "min")
                 colEnd <- c("max", "stDev", "sampleCount", "noDataCount")
-
                 iperc <- grep("percentiles", cNames)
                 perc <- as.numeric(sub("percentiles.", "", cNames[iperc]))
                 df[, iperc] <- df[, iperc[order(perc)]]
                 names(df)[iperc] <- sub("percentiles", "P", names(df)[iperc[order(perc)]])
-
                 iperc <- sort(iperc)
                 perc <- sort(perc)
-                # names(df)[iperc] <- sprintf("P%02.0f", perc)
                 dfout <- cbind(df[, colStart, drop = FALSE],
                                df[, iperc[perc <= 50], drop = FALSE],
                                df[, "mean", drop = FALSE],
                                df[, iperc[perc > 50], drop = FALSE],df[, colEnd, drop = FALSE])
-
                 if ((length(perc) == 3L) && all.equal(perc, c(25, 50, 75))) {
                     names(dfout)[names(dfout) == "P.25.0"] <- "q1"
                     names(dfout)[names(dfout) == "P.50.0"] <- "median"

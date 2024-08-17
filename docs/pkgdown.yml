@@ -1,0 +1,10 @@
+pandoc: 3.1.11
+pkgdown: 2.1.0
+pkgdown_sha: ~
+articles:
+  BeforeYouStart: BeforeYouStart.html
+  UsingCDSE: UsingCDSE.html
+last_built: 2024-08-07T17:08Z
+urls:
+  reference: https://zivankaraman.github.io/CDSE/reference
+  article: https://zivankaraman.github.io/CDSE/articles
