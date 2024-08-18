@@ -1,6 +1,5 @@
 # CDSE 0.2.1
 
-*Date: 2024-08-16*
 
 -   Created package website with pkgdown
 -   Added aggregation period units choice to statistical values
@@ -9,7 +8,6 @@
 
 # CDSE 0.2.0
 
-*Date: 2024-04-30*
 
 -   Added Statistical API wrapper
 -   Added CSL2 filter to image catalog search
@@ -18,6 +16,5 @@
 
 # CDSE 0.1.0
 
-*Date: 2023-12-05*
 
 -   Initial CRAN submission.

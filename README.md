@@ -18,7 +18,7 @@ Windows and macOS binary packages are available from here.
 
 ### Development version
 
-You can install the latest development version of `CDSE` from [GitHub](https://github.com/zivankaraman/CDSE) with:
+You can install the development version of `CDSE` with latest features from [GitHub](https://github.com/zivankaraman/CDSE) with:
 
 ``` r
 # install.packages("remotes")
@@ -33,4 +33,4 @@ Once you have set up your working environment, the [Get started](https://zivanka
 
 ## License
 
-This package is released under [AGPLv3](https://cran.r-project.org/web/licenses/AGPL-3).
+This package is released under [AGPL-3](https://cran.r-project.org/web/licenses/AGPL-3).
