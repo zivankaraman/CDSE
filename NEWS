@@ -1,8 +1,0 @@
-Changes in version 0.2.0 _(2024-04-30)_
-    - Added Statistical API wrapper
-    - Added CSL2 filter to image catalog search
-    - Added seasonal filtering for image catalog
-    - Improved documentation
-
-Changes in version 0.1.0 _(2023-12-05)_
-    - Initial release
