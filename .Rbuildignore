@@ -1,4 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^animations/*
 ^.github/*
+^animations/*
+^docs/*
+^vignettes/*
