@@ -93,7 +93,7 @@ GetImage(bbox = bbox, time_range = day, script = script_text,
     mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
 terra::plotRGB(terra::rast(png))
 
-## ----label="retrieve images in parallel"--------------------------------------
+## ----label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"----
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 cloudless_images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
