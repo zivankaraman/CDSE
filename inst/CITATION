@@ -1,0 +1,18 @@
+year <- format(Sys.time(), "%Y")
+abs <- trimws(gsub("\\s+", " ", meta$Description))
+abs <- gsub("'", "", abs)
+pkg <- meta$Package
+doi <- paste0("10.32614/CRAN.package.", pkg)
+
+bibentry(
+  "Manual",
+  header = paste0("To cite '", pkg, "' in publications use:"),
+  title = paste0("{", pkg, "}: ", gsub("'", "", meta$Title)),
+  doi = doi,
+  author = c(person("Zivan", "Karaman")),
+  year = year,
+  version = meta$Version,
+  url = unlist(strsplit(meta$URL, ","))[1],
+  abstract = abs,
+  key = paste0("R-", pkg)
+)

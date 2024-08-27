@@ -79,10 +79,10 @@
 #' @param lastIntervalBehavior character indicating the behavior of the last interval if the
 #'     given \code{time_range} isn't divisible by the provided \code{aggregation_period.}
 #'     Must be one of:
-#' \itemize{
-#'     \item{\code{SKIP}}{ - skip the last interval (default behavior)}
-#'     \item{\code{SHORTEN}}{ - shortens the last interval so that it ends at the end of provided \code{time_range}}
-#'     \item{\code{EXTEND}}{ - extends the last interval over the end of the provided time range so that all intervals are of equal duration}
+#' \describe{
+#'     \item{\code{SKIP}}{- skip the last interval (default behavior)}
+#'     \item{\code{SHORTEN}}{- shortens the last interval so that it ends at the end of provided \code{time_range}}
+#'     \item{\code{EXTEND}}{- extends the last interval over the end of the provided time range so that all intervals are of equal duration}
 #' }
 #'
 #'     Partial matching is used, that is,

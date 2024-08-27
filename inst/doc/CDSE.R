@@ -96,11 +96,21 @@ terra::plotRGB(terra::rast(png))
 ## ----label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"----
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-cloudless_images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
-    collection = "sentinel-2-l2a", with_geometry = TRUE, filter = "eo:cloud_cover < 0.8", 
-    client = OAuthClient)
+images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
+                        collection = "sentinel-2-l2a", with_geometry = TRUE, 
+                        filter = "eo:cloud_cover < 5", client = OAuthClient)
+# Get the day with the minimal cloud cover for every month -----------------------------
+tmp1 <- images[, c("tileCloudCover", "acquisitionDate")]
+tmp1$month <- lubridate::month(images$acquisitionDate)
+agg1 <- stats::aggregate(tileCloudCover ~ month, data = tmp1, FUN = min)
+tmp2 <- merge.data.frame(agg1, tmp1, by = c("month", "tileCloudCover"), sort = FALSE)
+# in case of ties, get an arbitrary date (here the smallest acquisitionDate, 
+# could also be the biggest)
+agg2 <- stats::aggregate(acquisitionDate ~ month, data = tmp2, FUN = min)
+monthly <- merge.data.frame(agg2, tmp2, by = c("acquisitionDate", "month"), sort = FALSE)
+days <- monthly$acquisitionDate
+# Retrieve images in parallel ----------------------------------------------------------
 script_file <- system.file("scripts", "NDVI_float32.js", package = "CDSE")
-days <- rev(cloudless_images$acquisitionDate)
 tmp_folder <- tempfile("dir")
 if (!dir.exists(tmp_folder)) dir.create(tmp_folder)
 cl <- parallel::makeCluster(4)
@@ -112,6 +122,7 @@ lstRast <- parallel::parLapply(cl, days, fun = function(x, ...) {
     format = "image/tiff", mosaicking_order = "mostRecent", resolution = 10,
     buffer = 0, mask = TRUE, client = OAuthClient)
 parallel::stopCluster(cl)
+# Plot the images ----------------------------------------------------------------------
 par(mfrow = c(3, 4))
 ans <- sapply(seq_along(days), FUN = function(i) {
     ras <- terra::rast(lstRast[[i]])
@@ -165,5 +176,5 @@ lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi,
 weekly_stats <- do.call(rbind, lst_stats)
 weekly_stats <- weekly_stats[order(weekly_stats$from), ]
 row.names(weekly_stats) <- NULL
-head(weekly_stats)
+head(weekly_stats, n = 5)
 
