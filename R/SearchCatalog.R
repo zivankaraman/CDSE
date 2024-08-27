@@ -162,8 +162,10 @@ SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE,
                 bounds <- PolyFromBbox(bbox)
             }
             doIntersect <- unlist(sf::st_intersects(sf::st_geometry(bounds), geom_col))
-            out[doIntersect, "areaCoverage"] <- 100.0 * sf::st_area(sf::st_intersection(sf::st_geometry(bounds), geom_col)) /
-                sf::st_area(sf::st_geometry(bounds))
+            # round to avoid areaCoverage not equal 100
+            out[doIntersect, "areaCoverage"] <- round(100.0 *
+                sf::st_area(sf::st_intersection(sf::st_geometry(bounds), geom_col)) /
+                sf::st_area(sf::st_geometry(bounds)), 3)
             sf::st_geometry(out) <- geom_col
             col_ord <- c("acquisitionDate", "tileCloudCover",  "areaCoverage", "satellite",
                          "acquisitionTimestampUTC", "acquisitionTimestampLocal", "sourceId",

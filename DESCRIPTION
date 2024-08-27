@@ -11,7 +11,8 @@ Description: Provides interface to the 'Copernicus Data Space Ecosystem' API
     based on selected spectral bands. The package uses the 'Sentinel Hub' REST API interface
     <https://dataspace.copernicus.eu/analyse/apis/sentinel-hub> that provides access to various 
     satellite imagery archives. It allows you to access raw satellite data, rendered images, 
-    statistical analysis, and other features.
+    statistical analysis, and other features. 
+    This package is in no way officially related to or endorsed by Copernicus.
 Depends: R (>= 3.6.0)
 Imports: geojsonsf, grDevices, httr2, jsonlite, lubridate, lutz, sf, stats, terra, utils
 URL: https://zivankaraman.github.io/CDSE/, https://github.com/zivankaraman/CDSE

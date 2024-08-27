@@ -144,10 +144,17 @@ recognition (here just the first letter is enough). Default: "day"</p></dd>
 <dt id="arg-lastintervalbehavior">lastIntervalBehavior<a class="anchor" aria-label="anchor" href="#arg-lastintervalbehavior"></a></dt>
 <dd><p>character indicating the behavior of the last interval if the
     given <code>time_range</code> isn't divisible by the provided <code>aggregation_period.</code>
-    Must be one of:</p><ul><li><p><code>SKIP</code> - skip the last interval (default behavior)</p></li>
-<li><p><code>SHORTEN</code> - shortens the last interval so that it ends at the end of provided <code>time_range</code></p></li>
-<li><p><code>EXTEND</code> - extends the last interval over the end of the provided time range so that all intervals are of equal duration</p></li>
-</ul><p>Partial matching is used, that is,
+    Must be one of:</p><dl><dt><code>SKIP</code></dt>
+<dd><p>- skip the last interval (default behavior)</p></dd>
+
+    <dt><code>SHORTEN</code></dt>
+<dd><p>- shortens the last interval so that it ends at the end of provided <code>time_range</code></p></dd>
+
+    <dt><code>EXTEND</code></dt>
+<dd><p>- extends the last interval over the end of the provided time range so that all intervals are of equal duration</p></dd>
+
+
+</dl><p>Partial matching is used, that is,
     only enough initial letters of each string element are needed to guarantee unique
     recognition. Default: "SKIP"</p></dd>
 
@@ -224,7 +231,7 @@ recognition (here just the first letter is enough). Default: "day"</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Zivan Karaman.</p>
+  <p>Developed by <a href="https://github.com/zivankaraman/" class="external-link">Zivan Karaman</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
