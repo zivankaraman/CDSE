@@ -6,11 +6,13 @@ This package provides the interface to the ['Copernicus Data Space Ecosystem' AP
 
 This package is in no way officially related to or endorsed by Copernicus.
 
+
 ## Installation
 
 ### Stable version
 
-You can install the current stable version of `CDSE` from [CRAN](https://cran.r-project.org/package=CDSE):
+You can install the current stable version of `CDSE` from 
+[CRAN](https://cran.r-project.org/package=CDSE):
 
 ``` r
 install.packages("CDSE")
@@ -20,7 +22,8 @@ Windows and macOS binary packages are available from here.
 
 ### Development version
 
-You can install the development version of `CDSE` including latest features from [GitHub](https://github.com/zivankaraman/CDSE):
+You can install the development version of `CDSE` including latest features from 
+[GitHub](https://github.com/zivankaraman/CDSE):
 
 ``` r
 # install.packages("remotes")
@@ -43,7 +46,8 @@ If you use this package in a publication, I would greatly appreciate it if you c
 
 To cite 'CDSE' in publications use:
 
-Karaman Z (2024). CDSE: Copernicus Data Space Ecosystem API Wrapper. [doi:10.32614/CRAN.package.CDSE](https://doi.org/10.32614/CRAN.package.CDSE), <https://zivankaraman.github.io/CDSE/>.
+Karaman Z (2024). CDSE: Copernicus Data Space Ecosystem API Wrapper. [doi:10.32614/CRAN.package.CDSE](https://doi.org/10.32614/CRAN.package.CDSE), 
+<https://zivankaraman.github.io/CDSE/>.
 
 A BibTeX entry for LaTeX users is
 
