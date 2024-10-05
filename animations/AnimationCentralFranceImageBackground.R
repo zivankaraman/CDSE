@@ -35,25 +35,36 @@ tmp2 <- merge.data.frame(agg1, tmp1, by = c("month", "tileCloudCover"), sort = F
 # in case of ties, get an arbitrary date (here the smallest acquisitionDate, could also be the biggest)
 agg2 <- stats::aggregate(acquisitionDate ~ month, data = tmp2, FUN = min)
 monthly <- merge.data.frame(agg2, tmp2, by = c("acquisitionDate", "month"), sort = FALSE)
-# fix December, image is cloudy
+# fix December, the default image is cloudy
 december <- subset(images, acquisitionDate == "2022-12-11", c(acquisitionDate, tileCloudCover))
 december$month <- 12
 monthly[12, ] <- december[, c("acquisitionDate", "month", "tileCloudCover", "geometry")]
 
 # Retrieve the best monthly NDVI images ------------------------------------------------
-# Adjust bbox
-delta <- c(-0.006438451, -0.015924629,  0.025753803,  0.018623719)
-bb <- st_bbox(fields) + delta
-size <- 1920
-pix <- 1920 / 4
+size <- 1920L       # max dimension (number of pixels) of the output image
+pix <- 1920L / 4L   # raster resolution (this is largely sufficient)
+bb <- st_bbox(fields)
 lstBackground <- lapply(1:12, FUN = function(i) {
     day <- monthly$acquisitionDate[i]
     ras <- GetImage(bbox = bb, time_range = day, script = script_file,
                     collection = "sentinel-2-l2a", format = "image/tiff",
                     mosaicking_order = "leastCC", pixels = pix,
-                    buffer = 0, client = OAuthClient)
+                    buffer = 2000, client = OAuthClient)
+    # use 2km buffer around the AOI
     wrap(ras)
 })
+# Determine the aspect ratio and dimensions for the output image
+ras <- unwrap(lstBackground[[1]])
+ex <- as.vector(terra::ext(ras))
+bl <- st_sfc(st_point(c(ex[1], ex[3])), crs = 4326)     # bottom left
+tl <- st_sfc(st_point(c(ex[1], ex[4])), crs = 4326)     # top left
+br <- st_sfc(st_point(c(ex[2], ex[3])), crs = 4326)     # bottom right
+tr <- st_sfc(st_point(c(ex[2], ex[4])), crs = 4326)     # top right
+width <- as.numeric(st_distance(tl, tr))
+height <- as.numeric(st_distance(tl, bl))
+big <- max(width, height)
+w <- as.integer(size * width / big)
+h <- as.integer(size * height / big)
 
 # Get monthly statistics ---------------------------------------------------------------
 
@@ -147,15 +158,15 @@ for (i in 1:12) {
     m <- months[i]
     tmp <- subset(dat, from == m)
     fp <- file.path(folder, sprintf("month%2.2d.png", i))
-    png(fp, pointsize = 40, height = size, width = size, bg = "transparent")
+    png(fp, pointsize = 40, height = h, width = w, bg = "transparent")
     par(cex.axis = 0.6, col.axis = farben$axis)
     ras <- unwrap(lstBackground[[i]])
     plotRGB(ras)
     plot(tmp["median"],
          breaks = seq(0, 1, by = 0.01),
          pal = colorRampPalette(c("darkred", "yellow", "darkgreen"))(100),
-         border = farben$border, lwd = 2, cex.axis = 0.6,
-         key.pos = 1, main = "", reset = FALSE, add = TRUE)
+         border = farben$border, lwd = 2,
+         key.pos = NULL, main = "", reset = FALSE, add = TRUE)
     title(main = month.name[i], cex.main = 1, line = 1, col.main = farben$main)
     mtext(subTitle, side = 1, adj = 0, line = 3, col = farben$sub, cex = 0.6, font = 4)
     leg <- fields::setupLegend(legend.shrink = 0.5)
