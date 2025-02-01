@@ -139,13 +139,13 @@ summer_images
 
 # Scripts
 
-As we shall see in the examples below, we have to provide a `script` argument to the `GetArchiveImage` function.
+As we shall see in the examples below, we have to provide a `script` argument to the `GetImage` function.
 
 An evalscript (or "custom script") is a piece of JavaScript code that defines how the satellite data shall be processed by the API and what values the service shall return. It is a required part of any request involving data processing, such as retrieving an image of the area of interest.
 
 The evaluation scripts can use any JavaScript function or language structures, along with certain utility functions provided by the API for user convenience. Chrome V8 JavaScript engine is used for running the evalscripts.
 
-The evaluation scripts are passed as the `script` argument to the `GetArchiveImage` function. It has to be either a character string containing the evaluation script or the name of the file containing the script. The `scripts` folder of this package contains a few examples of evaluation scripts.
+The evaluation scripts are passed as the `script` argument to the `GetImage` function. It has to be either a character string containing the evaluation script or the name of the file containing the script. The `scripts` folder of this package contains a few examples of evaluation scripts.
 
 It is beyond the scope of this document to provide guidance for writing scripts, we encourage users to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation. You can find a big collection of custom scripts that you can readily use in this [repository](https://custom-scripts.sentinel-hub.com/).
 
