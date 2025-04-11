@@ -34,7 +34,7 @@ GetCollections <- function(as_data_frame = TRUE, url = getOption("CDSE.catalog_u
             title = collezioni$title,
             description = collezioni$description,
             since = sapply(collezioni$extent$temporal$interval, "[", 1),
-            instrument = unlist(collezioni$summaries$instrument),
+            instrument = sapply(collezioni$summaries$instrument, FUN = paste, collapse = "/"),
             gsd = sapply(collezioni$summaries$gsd, FUN = function(x) SafeNull(x)),
             bands = sapply(collezioni$summaries$`eo:bands`, FUN = function(x) ifelse(is.null(x), NA, nrow(x))),
             constellation = sapply(collezioni$summaries$constellation, FUN = function(x) SafeNull(x)),
