@@ -1,7 +1,7 @@
 Package: CDSE
 Type: Package
 Title: 'Copernicus Data Space Ecosystem' API Wrapper
-Version: 0.2.1
+Version: 0.2.1.9000
 Authors@R: 
     person("Zivan", "Karaman", , "zivan.karaman@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-8933-4589"))

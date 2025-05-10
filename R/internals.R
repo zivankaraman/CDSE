@@ -113,18 +113,17 @@ CheckBbox <- function(bbox) {
     }
     # check class and length
     if (length(class(bbox)) > 1L || !inherits(bbox, "numeric") || (length(bbox) != 4L)) {
-            stop("Invalid value of 'bbox' argument, must be a numeric vector of length 4.")
+        stop("Invalid value of 'bbox' argument, must be a numeric vector of length 4.")
     }
     # convert to matrix for easier range checks
-    mat <- matrix(bbox, ncol = 2, byrow = TRUE)
-    if (any(mat[, 1] > 90 | mat[, 1] < -90) ||
-        any(mat[, 2] > 180 | mat[, 2] < -180) ||
+    mat <- matrix(bbox, ncol = 2, byrow = TRUE, dimnames = list(c("min", "max"), c("long", "lat")))
+    if (any(mat[, 1] > 180 | mat[, 1] < -180) ||
+        any(mat[, 2] > 90 | mat[, 2] < -90) ||
         any(mat[1, ] > mat[2, ])) {
         stop("Invalid values in 'bbox', must be longitude/latitude of lower-left/upper-right corner.")
     }
     return(bbox)
 }
-
 DegLength <- function(latitude) {
     # Computes the length (in meters) of one degree of longitude (X) and one degree of latitude (Y)
     #     at a given "latitude" using the WGS 84 ellipsoid parameters.
