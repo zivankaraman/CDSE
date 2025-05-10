@@ -1,3 +1,8 @@
+# CDSE 0.2.1.9000
+
+-   Adapted `GetCollections` to deal with multi-instrument collections like 'Sentinel 3 Synergy L2'
+-   Fixed internal function `CheckBbox`
+
 # CDSE 0.2.1 (2024-08-16)
 
 -   Created package website with pkgdown
