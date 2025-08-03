@@ -1,4 +1,6 @@
 ## ----label = "setup", include = FALSE-----------------------------------------
+library(sf)
+library(terra)
 library(CDSE)
 options(warn = -1)
 
@@ -59,7 +61,65 @@ summer_images <- do.call(rbind, lst_summer_images)
 dim(summer_images)
 summer_images <- summer_images[rev(order(summer_images$acquisitionDate)), ]
 row.names(summer_images) <- NULL
-summer_images
+head(summer_images)
+
+## ----label="spectral indices"-------------------------------------------------
+si <- rsi::spectral_indices() # get spectral indices
+# NDVI
+ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
+ndvi_script <- MakeEvalScript(ndvi) # generates the script
+# GDVI
+gdvi <- subset(si, short_name == "GDVI") # creates one-row data.frame
+# GDVI requires an extra argument provided by the user
+gdvi_script <- MakeEvalScript(gdvi, nexp = 2) # generates the script
+
+## ----label="spectral indices by short_name"-----------------------------------
+gdvi_script <- MakeEvalScript("GDVI", nexp = 2)
+
+## ----label="custom spectral indices"------------------------------------------
+custom_def <- list(bands = c("R", "G", "B"),
+                   formula = "0.3 * R + 0.59 * G + 0.11 * B",
+                   # long_name = "Greyscale image",
+                   platforms = "Sentinel-2")
+custom_script <- paste(MakeEvalScript(custom_def), collapse = "\n")
+
+## ----label="compare greyscale and RGB images"---------------------------------
+# select the day with smallest cloud cover
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+images <- SearchCatalog(aoi = aoi, from = "2023-06-01", to = "2023-08-31",
+                        collection = "sentinel-2-l2a", with_geometry = TRUE,
+                        client = OAuthClient)
+day <- images[order(images$tileCloudCover), ][["acquisitionDate"]][1]
+# get the greyscale image
+grey_file <- file.path(tempdir(), "grey.tif")
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = custom_script, file = grey_file,
+         collection = "sentinel-2-l2a", format = "image/tiff",
+         mosaicking_order = "leastCC", resolution = 20,
+         mask = FALSE, buffer = 100, client = OAuthClient)
+# get the RGB image
+script_file <- system.file("scripts", "TrueColorS2L2A.js", package = "CDSE")
+rgb_file <- file.path(tempdir(), "rgb.tif")
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = script_file, file = rgb_file,
+         collection = "sentinel-2-l2a", format = "image/tiff",
+         mosaicking_order = "leastCC", resolution = 20,
+         mask = FALSE, buffer = 100, client = OAuthClient)
+# Import the rasters
+rgb_img <- terra::rast(rgb_file)
+grey_img <- terra::rast(grey_file)
+# Rescale greyscale raster values to 0 - 1 range
+mM <- terra::minmax(grey_img)
+grey_img <- (grey_img - mM[1])/(mM[2] - mM[1])
+# Set up plotting window for side-by-side display
+old.par <- par(mfrow = c(1, 2))
+# Plot RGB image
+plotRGB(rgb_img)   # expects layers 1,2,3 as R,G,B
+# Plot greyscale image
+plot(grey_img, col = grey.colors(256, start = 0, end = 1), legend = FALSE, axes = FALSE, mar = 0)
+
+## ----label = "reset plot", include = FALSE------------------------------------
+# Reset plotting layout to default
+par(old.par)
 
 ## ----label = "search catalog to select image"---------------------------------
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
@@ -96,7 +156,7 @@ terra::plotRGB(terra::rast(png))
 ## ----label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"----
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
+images <- SearchCatalog(aoi = aoi, from = "2022-01-01", to = "2022-12-31",
                         collection = "sentinel-2-l2a", with_geometry = TRUE, 
                         filter = "eo:cloud_cover < 5", client = OAuthClient)
 # Get the day with the minimal cloud cover for every month -----------------------------
@@ -142,7 +202,7 @@ daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31
     collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 1, client = OAuthClient)
 weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
-    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 7, client = OAuthClient)
 weekly_stats_extended <- GetStatistics(aoi = aoi, 
     time_range = c("2023-07-01", "2023-07-31"), collection = "sentinel-2-l2a", 
@@ -160,7 +220,7 @@ daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31
     client = OAuthClient)
 head(daily_stats, n = 10)
 weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
-    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 7, percentiles = seq(10, 90, by = 10), 
     client = OAuthClient)
 head(weekly_stats, n = 10)
@@ -168,10 +228,17 @@ head(weekly_stats, n = 10)
 ## ----label="series of statistics"---------------------------------------------
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-script_file <- system.file("scripts", "NDVI_dataMask_float32.js", package = "CDSE")
+ndvi_script <- paste(MakeEvalScript(
+    list(
+        bands = c("N", "R"),
+        formula = "(N - R)/(N + R)",
+        long_name = "Normalized Difference Vegetation Index",
+        platforms = "Sentinel-2"
+    )
+), collapse = "\n")
 seasons <- SeasonalTimerange(from = "2020-06-01", to = "2023-08-31")
 lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi, 
-    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC", 
+    collection = "sentinel-2-l2a", script = ndvi_script, mosaicking_order = "leastCC", 
     resolution = 100, aggregation_period = 7L, client = OAuthClient)
 weekly_stats <- do.call(rbind, lst_stats)
 weekly_stats <- weekly_stats[order(weekly_stats$from), ]

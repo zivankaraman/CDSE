@@ -25,6 +25,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r label = "setup", include = FALSE}
+library(sf)
+library(terra)
 library(CDSE)
 options(warn = -1)
 ```
@@ -132,22 +134,123 @@ summer_images <- do.call(rbind, lst_summer_images)
 dim(summer_images)
 summer_images <- summer_images[rev(order(summer_images$acquisitionDate)), ]
 row.names(summer_images) <- NULL
-summer_images
+head(summer_images)
 ```
 
 \newpage
 
-# Scripts
+# Evalscripts
 
-As we shall see in the examples below, we have to provide a `script` argument to the `GetImage` function.
+As we shall see in the examples below, the functions that operate on remotely sensed spectral band values, such as `GetImage` or `GetStatistics`, require an evalscript to be passed to the `script` argument.
 
-An evalscript (or "custom script") is a piece of JavaScript code that defines how the satellite data shall be processed by the API and what values the service shall return. It is a required part of any request involving data processing, such as retrieving an image of the area of interest.
+An evalscript (or "custom script") is a piece of JavaScript code that defines how the satellite data shall be processed by the API and what values the service shall return. It is a required part of any request involving data processing, such as retrieving an image of the area of interest or computing some statistical values for a given period of time.
 
-The evaluation scripts can use any JavaScript function or language structures, along with certain utility functions provided by the API for user convenience. Chrome V8 JavaScript engine is used for running the evalscripts.
+The evaluation scripts can use any JavaScript function or language structures, along with certain utility functions provided by the API for user convenience. The Chrome V8 JavaScript engine is used for running the evalscripts.
 
-The evaluation scripts are passed as the `script` argument to the `GetImage` function. It has to be either a character string containing the evaluation script or the name of the file containing the script. The `scripts` folder of this package contains a few examples of evaluation scripts.
+The evaluation scripts are passed as the `script` argument to the `GetImage`, `GetStatistics`, and other functions that require an evalscript. It has to be either a character string containing the evaluation script or the name of the file containing the script.
 
-It is beyond the scope of this document to provide guidance for writing scripts, we encourage users to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation. You can find a big collection of custom scripts that you can readily use in this [repository](https://custom-scripts.sentinel-hub.com/).
+Although it is beyond the scope of this document to provide the detailed guidance for writing evalscripts, we shall provide here some tips that can help you to use the the above mentioned functions without deep understanding of the evalscripts' internal workings. We encourage users who wish to acquire a deeper knowledge of evalscripts to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation. You can also find a large collection of custom scripts that you can readily use in this [repository](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/).
+
+## Built-in scripts
+
+The `scripts` folder of this package contains a few examples of evaluation scripts. They are very limited, both in number and scope, and their main purpose is to provide scripts that are used in documentation and examples. You can, of course, use them as a starting point to develop your own scripts by applying some relatively simple modifications (for example, starting from an NDVI script, replacing bands B04 and B08 with bands B8A and B11 will give a script for the NDMI - Normalized Difference Moisture Index).
+
+## Ready-to-use examples
+
+There is a large collection of evalscripts that you can readily use available in this [repository](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/). The scripts are grouped by satellite constellation (Sentinel-1, Sentinel-2, ...) and application field (Agriculture, Disaster management, Urban planning, ...). To use one of these scripts, the simplest way is probably to use the "*Download code*" or "*Copy code*" icons in the upper right corner of the code window (see the illustration below). Some indices come in several flavours (Visualisation vs. Raw Values); select the one that corresponds to your situation. If you want to do some further analysis of the images, use raw values; if you want to simply display the image, you can use the visualisation version (you will probably also export the result as a JPEG or PNG file). You can, of course, always get the raw values and then customise the visualisation in your R code. Other indices might have only one version; it will likely first compute the index value and then possibly transform it for visualisation - adapt based on your needs.
+
+![Using evalscript code from the repository](script_code.png)
+
+*Note:*
+
+*The repository also contains scripts for satellite collections that are not available through CDSE.*
+
+## Awesome Spectral Indices
+
+'Awesome Spectral Indices' ([ASI](https://awesome-ee-spectral-indices.readthedocs.io/en/latest/)) is a standardized, machine-readable catalogue of spectral indices used in remote sensing for Earth Observation. It currently includes over 240 spectral indices grouped into eight application domains: vegetation, water, burn, snow, soil, urban, radar, and kernel indices. Each spectral index in ASI comes with a set of attributes such as a short and long name, application domain, formula, required bands, platforms, references, date of addition, and contributor information.
+
+The `R` package [rsi](https://cran.r-project.org/package=rsi) implements an interface to the ASI collection, providing the list of indices directly in `R` as a friendly `data.frame` (actually a `tibble`). These indices can now be directly used in the 'CDSE' package to provide the evalscript to the functions that require one. For this purpose, we have developed the `MakeEvalScript` function that will generate the script for you based on the information contained in the `data.frame` of spectral indices produced by `rsi::spectral_indices()`.
+
+Here is an example showing how it works.
+
+```{r label="spectral indices"}
+si <- rsi::spectral_indices() # get spectral indices
+# NDVI
+ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
+ndvi_script <- MakeEvalScript(ndvi) # generates the script
+# GDVI
+gdvi <- subset(si, short_name == "GDVI") # creates one-row data.frame
+# GDVI requires an extra argument provided by the user
+gdvi_script <- MakeEvalScript(gdvi, nexp = 2) # generates the script
+```
+
+The value returned by the function is a character vector with each element representing one line of the script. You can best visualise the script code by `cat(gdvi_script, sep = "\n")`, or save it to a file for later use with `cat(gdvi_script, file = "GDVI.js", sep = "\n")`. To use the generated script directly in a function, you would use something like `GetImage(..., script = paste(gdvi_script, collapse = "\n"), ...)`.
+
+If the package `rsi` is installed, you can use a shortcut and just provide the `short_name` of the index as the first argument (instead of the one-row `data.frame`). Please note that the `short_name` is case-sensitive, although most of the names are in full upper-case . You of course still have to provide any additional arguments, if required, in the usual way. Here is an example:
+
+```{r label="spectral indices by short_name"}
+gdvi_script <- MakeEvalScript("GDVI", nexp = 2)
+```
+
+Finally, you can also define ad-hoc custom indices by providing a one-row `data.frame` crafted after the model produced by `rsi::spectral_indices()`. Please ensure that you respect the correct formatting, particularly when writing the formula. Since the function does not use all the attributes of spectral indices but just `bands`, `formula`, `platform` and optionally `long_name` (used as a comment in the header of the script), you can provide only this information, and it does not even have to be a `data.frame`, a simple `list` will do.
+
+We shall illustrate this with an example. Since the ASI spectral indices collection is very rich, rather than recreating an already existing index or creating a completely dummy ad-hoc index, we shall use a transformation of an RGB image into a greyscale image, based on [this](https://github.com/michaeldorman/starsExtra/blob/master/R/rgb_to_greyscale.R) code, which strictly speaking might not be a spectral index, but can illustrate the process.
+
+```{r label="custom spectral indices"}
+custom_def <- list(bands = c("R", "G", "B"),
+                   formula = "0.3 * R + 0.59 * G + 0.11 * B",
+                   # long_name = "Greyscale image",
+                   platforms = "Sentinel-2")
+custom_script <- paste(MakeEvalScript(custom_def), collapse = "\n")
+```
+
+We can now compare the greyscale and RGB images.
+
+```{r label="compare greyscale and RGB images"}
+# select the day with smallest cloud cover
+dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+images <- SearchCatalog(aoi = aoi, from = "2023-06-01", to = "2023-08-31",
+                        collection = "sentinel-2-l2a", with_geometry = TRUE,
+                        client = OAuthClient)
+day <- images[order(images$tileCloudCover), ][["acquisitionDate"]][1]
+# get the greyscale image
+grey_file <- file.path(tempdir(), "grey.tif")
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = custom_script, file = grey_file,
+         collection = "sentinel-2-l2a", format = "image/tiff",
+         mosaicking_order = "leastCC", resolution = 20,
+         mask = FALSE, buffer = 100, client = OAuthClient)
+# get the RGB image
+script_file <- system.file("scripts", "TrueColorS2L2A.js", package = "CDSE")
+rgb_file <- file.path(tempdir(), "rgb.tif")
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = script_file, file = rgb_file,
+         collection = "sentinel-2-l2a", format = "image/tiff",
+         mosaicking_order = "leastCC", resolution = 20,
+         mask = FALSE, buffer = 100, client = OAuthClient)
+# Import the rasters
+rgb_img <- terra::rast(rgb_file)
+grey_img <- terra::rast(grey_file)
+# Rescale greyscale raster values to 0 - 1 range
+mM <- terra::minmax(grey_img)
+grey_img <- (grey_img - mM[1])/(mM[2] - mM[1])
+# Set up plotting window for side-by-side display
+old.par <- par(mfrow = c(1, 2))
+# Plot RGB image
+plotRGB(rgb_img)   # expects layers 1,2,3 as R,G,B
+# Plot greyscale image
+plot(grey_img, col = grey.colors(256, start = 0, end = 1), legend = FALSE, axes = FALSE, mar = 0)
+```
+
+*Caveats:*
+
+*Kernel Spectral Indices cannot be used in this context as they do not fit into the API model (they do not operate directly on raw spectral bands).*
+
+*The indices that are not available for the Sentinel-1 or Sentinel-2 platforms cannot be used, as only the Sentinel collections are available through the CDSE API.*
+
+```{r label = "reset plot", include = FALSE}
+# Reset plotting layout to default
+par(old.par)
+```
 
 \newpage
 
@@ -205,7 +308,7 @@ It often happens that one is interested in acquiring a series of images of a par
 ```{r label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-images <- SearchCatalog(aoi = aoi, from = "2023-01-01", to = "2023-12-31",
+images <- SearchCatalog(aoi = aoi, from = "2022-01-01", to = "2022-12-31",
                         collection = "sentinel-2-l2a", with_geometry = TRUE, 
                         filter = "eo:cloud_cover < 5", client = OAuthClient)
 # Get the day with the minimal cloud cover for every month -----------------------------
@@ -243,7 +346,7 @@ ans <- sapply(seq_along(days), FUN = function(i) {
     })
 ```
 
-In this particular example, parallelization is not necessarily beneficial as we are retrieving only 12 images, but for a large number of images, it can significantly reduce the execution time. Also note that we have used the `filter` argument of the `SearchCatalog` function to limit the list of images to the tiles having cloud cover < 5%. 
+In this particular example, parallelization is not necessarily beneficial as we are retrieving only 12 images, but for a large number of images, it can significantly reduce the execution time. Also note that we have used the `filter` argument of the `SearchCatalog` function to limit the list of images to the tiles having cloud cover \< 5%.
 
 \newpage
 
@@ -255,11 +358,13 @@ If you are only interested in calculating the average value (or some other stati
 
 All general rules for building evalscripts apply. However, there are some specifics when using evalscripts with the Statistical API:
 
--   The `evaluatePixel()` function must, in addition to other output, always return also `dataMask` output. This output defines which pixels are excluded from calculations. For more details and an example, see here.
+-   The `evaluatePixel()` function must, in addition to other output, always return also `dataMask` output. This output defines which pixels are excluded from calculations. For more details and an example, see [here](https://docs.sentinel-hub.com/api/latest/api/statistical/#exclude-pixels-from-calculations-datamask-output).
 
 -   The default value of `sampleType` is `FLOAT32`.
 
 -   The output.bands parameter in the `setup()` function can be an array. This makes it possible to specify custom names for the output bands and different output `dataMask` for different outputs.
+
+It should be noted that the scripts generated by the `MakeEvalScript` function can be directly used to retrieve the statistical values.
 
 ## Retrieving simple statistics
 
@@ -274,7 +379,7 @@ daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31
     collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 1, client = OAuthClient)
 weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
-    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 7, client = OAuthClient)
 weekly_stats_extended <- GetStatistics(aoi = aoi, 
     time_range = c("2023-07-01", "2023-07-31"), collection = "sentinel-2-l2a", 
@@ -286,7 +391,7 @@ weekly_stats
 weekly_stats_extended
 ```
 
-In this example we have demonstrated that a week can be specified as either 7 days or 1 week. 
+In this example we have demonstrated that a week can be specified as either 7 days or 1 week.
 
 ## Retrieving statistics with percentiles
 
@@ -299,7 +404,7 @@ daily_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31
     client = OAuthClient)
 head(daily_stats, n = 10)
 weekly_stats <- GetStatistics(aoi = aoi, time_range = c("2023-07-01", "2023-07-31"),
-    collection = "sentinel-2-l2a", script = script_file,mosaicking_order = "leastCC",
+    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC",
     resolution = 100, aggregation_period = 7, percentiles = seq(10, 90, by = 10), 
     client = OAuthClient)
 head(weekly_stats, n = 10)
@@ -312,10 +417,17 @@ Just as when retrieving satellite images, one can be interested in acquiring a s
 ```{r label="series of statistics"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
-script_file <- system.file("scripts", "NDVI_dataMask_float32.js", package = "CDSE")
+ndvi_script <- paste(MakeEvalScript(
+    list(
+        bands = c("N", "R"),
+        formula = "(N - R)/(N + R)",
+        long_name = "Normalized Difference Vegetation Index",
+        platforms = "Sentinel-2"
+    )
+), collapse = "\n")
 seasons <- SeasonalTimerange(from = "2020-06-01", to = "2023-08-31")
 lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi, 
-    collection = "sentinel-2-l2a", script = script_file, mosaicking_order = "leastCC", 
+    collection = "sentinel-2-l2a", script = ndvi_script, mosaicking_order = "leastCC", 
     resolution = 100, aggregation_period = 7L, client = OAuthClient)
 weekly_stats <- do.call(rbind, lst_stats)
 weekly_stats <- weekly_stats[order(weekly_stats$from), ]
