@@ -298,11 +298,12 @@ We can filter an existing image catalog <em>a posteriori</em> using the
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2021-01-01"</span>, to <span class="op">=</span> <span class="st">"2023-12-31"</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="st">"eo:cloud_cover &lt; 5"</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/UniqueCatalog.html">UniqueCatalog</a></span><span class="op">(</span><span class="va">images</span>, by <span class="op">=</span> <span class="st">"tileCloudCover"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">images</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 111  10</span></span>
+<span><span class="co">#&gt; [1] 81 10</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SeasonalFilter.html">SeasonalFilter</a></span><span class="op">(</span><span class="va">images</span>, from <span class="op">=</span> <span class="st">"2021-06-01"</span>, to <span class="op">=</span> <span class="st">"2023-08-31"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 19 10</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 14 10</span></span></code></pre></div>
 <p>It is also possible to query the API directly on the desired seasonal
 periods by using a vectorized version of the <code>SearchCatalog</code>
 function. The vectorized versions allow running a series of queries
@@ -317,39 +318,72 @@ function, and thus potentially also using the parallel processing.</p>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, filter <span class="op">=</span> <span class="st">"eo:cloud_cover &lt; 5"</span>, with_geometry <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">lst_summer_images</span><span class="op">)</span></span>
+<span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/UniqueCatalog.html">UniqueCatalog</a></span><span class="op">(</span><span class="va">summer_images</span>, by <span class="op">=</span> <span class="st">"tileCloudCover"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 19 10</span></span>
+<span><span class="co">#&gt; [1] 14 10</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="va">summer_images</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">$</span><span class="va">acquisitionDate</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   acquisitionDate tileCloudCover   satellite acquisitionTimestampUTC</span></span>
-<span><span class="co">#&gt; 1      2023-08-20           0.03 sentinel-2a     2023-08-20 15:51:57</span></span>
-<span><span class="co">#&gt; 2      2023-08-20           0.00 sentinel-2a     2023-08-20 15:51:57</span></span>
-<span><span class="co">#&gt; 3      2023-07-31           2.53 sentinel-2a     2023-07-31 15:51:56</span></span>
-<span><span class="co">#&gt; 4      2023-07-31           3.96 sentinel-2a     2023-07-31 15:51:56</span></span>
-<span><span class="co">#&gt; 5      2023-07-26           0.89 sentinel-2b     2023-07-26 15:51:56</span></span>
-<span><span class="co">#&gt; 6      2023-07-26           0.59 sentinel-2b     2023-07-26 15:51:56</span></span>
-<span><span class="co">#&gt;   acquisitionTimestampLocal</span></span>
-<span><span class="co">#&gt; 1       2023-08-20 11:51:57</span></span>
-<span><span class="co">#&gt; 2       2023-08-20 11:51:57</span></span>
-<span><span class="co">#&gt; 3       2023-07-31 11:51:56</span></span>
-<span><span class="co">#&gt; 4       2023-07-31 11:51:56</span></span>
-<span><span class="co">#&gt; 5       2023-07-26 11:51:56</span></span>
-<span><span class="co">#&gt; 6       2023-07-26 11:51:56</span></span>
-<span><span class="co">#&gt;                                                            sourceId  long.min</span></span>
-<span><span class="co">#&gt; 1 S2A_MSIL2A_20230820T153821_N0509_R011_T18TWL_20230820T221958.SAFE -74.89340</span></span>
-<span><span class="co">#&gt; 2 S2A_MSIL2A_20230820T153821_N0510_R011_T18TWL_20241015T130941.SAFE -74.89340</span></span>
-<span><span class="co">#&gt; 3 S2A_MSIL2A_20230731T155141_N0510_R011_T18TWL_20240820T212405.SAFE -74.88632</span></span>
-<span><span class="co">#&gt; 4 S2A_MSIL2A_20230731T155141_N0509_R011_T18TWL_20230731T220001.SAFE -74.88632</span></span>
-<span><span class="co">#&gt; 5 S2B_MSIL2A_20230726T153819_N0509_R011_T18TWL_20230726T175732.SAFE -74.88431</span></span>
-<span><span class="co">#&gt; 6 S2B_MSIL2A_20230726T153819_N0510_R011_T18TWL_20240819T050747.SAFE -74.88431</span></span>
-<span><span class="co">#&gt;    lat.min  long.max  lat.max</span></span>
-<span><span class="co">#&gt; 1 40.55548 -73.68381 41.55110</span></span>
-<span><span class="co">#&gt; 2 40.55548 -73.68381 41.55110</span></span>
-<span><span class="co">#&gt; 3 40.55548 -73.68381 41.55107</span></span>
-<span><span class="co">#&gt; 4 40.55548 -73.68381 41.55107</span></span>
-<span><span class="co">#&gt; 5 40.55548 -73.68381 41.55107</span></span>
-<span><span class="co">#&gt; 6 40.55548 -73.68381 41.55107</span></span></code></pre></div>
+<span><span class="va">summer_images</span></span>
+<span><span class="co">#&gt;    acquisitionDate tileCloudCover   satellite acquisitionTimestampUTC</span></span>
+<span><span class="co">#&gt; 1       2023-08-20           0.00 sentinel-2a     2023-08-20 15:51:57</span></span>
+<span><span class="co">#&gt; 2       2023-07-31           2.53 sentinel-2a     2023-07-31 15:51:56</span></span>
+<span><span class="co">#&gt; 3       2023-07-26           0.59 sentinel-2b     2023-07-26 15:51:56</span></span>
+<span><span class="co">#&gt; 4       2023-07-11           4.38 sentinel-2a     2023-07-11 15:51:56</span></span>
+<span><span class="co">#&gt; 5       2023-06-01           0.00 sentinel-2a     2023-06-01 15:51:54</span></span>
+<span><span class="co">#&gt; 6       2022-08-25           1.18 sentinel-2a     2022-08-25 15:52:03</span></span>
+<span><span class="co">#&gt; 7       2022-08-03           4.58 sentinel-2b     2022-08-03 16:01:51</span></span>
+<span><span class="co">#&gt; 8       2022-07-19           1.37 sentinel-2a     2022-07-19 16:01:58</span></span>
+<span><span class="co">#&gt; 9       2022-07-11           4.92 sentinel-2b     2022-07-11 15:51:57</span></span>
+<span><span class="co">#&gt; 10      2022-06-19           1.91 sentinel-2a     2022-06-19 16:01:58</span></span>
+<span><span class="co">#&gt; 11      2022-06-06           0.99 sentinel-2a     2022-06-06 15:51:58</span></span>
+<span><span class="co">#&gt; 12      2022-06-04           2.76 sentinel-2b     2022-06-04 16:01:47</span></span>
+<span><span class="co">#&gt; 13      2021-06-16           4.74 sentinel-2b     2021-06-16 15:51:51</span></span>
+<span><span class="co">#&gt; 14      2021-06-06           0.38 sentinel-2b     2021-06-06 15:51:52</span></span>
+<span><span class="co">#&gt;    acquisitionTimestampLocal</span></span>
+<span><span class="co">#&gt; 1        2023-08-20 11:51:57</span></span>
+<span><span class="co">#&gt; 2        2023-07-31 11:51:56</span></span>
+<span><span class="co">#&gt; 3        2023-07-26 11:51:56</span></span>
+<span><span class="co">#&gt; 4        2023-07-11 11:51:56</span></span>
+<span><span class="co">#&gt; 5        2023-06-01 11:51:54</span></span>
+<span><span class="co">#&gt; 6        2022-08-25 11:52:03</span></span>
+<span><span class="co">#&gt; 7        2022-08-03 12:01:51</span></span>
+<span><span class="co">#&gt; 8        2022-07-19 12:01:58</span></span>
+<span><span class="co">#&gt; 9        2022-07-11 11:51:57</span></span>
+<span><span class="co">#&gt; 10       2022-06-19 12:01:58</span></span>
+<span><span class="co">#&gt; 11       2022-06-06 11:51:58</span></span>
+<span><span class="co">#&gt; 12       2022-06-04 12:01:47</span></span>
+<span><span class="co">#&gt; 13       2021-06-16 11:51:51</span></span>
+<span><span class="co">#&gt; 14       2021-06-06 11:51:52</span></span>
+<span><span class="co">#&gt;                                                             sourceId  long.min</span></span>
+<span><span class="co">#&gt; 1  S2A_MSIL2A_20230820T153821_N0510_R011_T18TWL_20241015T130941.SAFE -74.89340</span></span>
+<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T155141_N0510_R011_T18TWL_20240820T212405.SAFE -74.88632</span></span>
+<span><span class="co">#&gt; 3  S2B_MSIL2A_20230726T153819_N0510_R011_T18TWL_20240819T050747.SAFE -74.88431</span></span>
+<span><span class="co">#&gt; 4  S2A_MSIL2A_20230711T153821_N0510_R011_T18TWL_20241019T212830.SAFE -74.88773</span></span>
+<span><span class="co">#&gt; 5  S2A_MSIL2A_20230601T155141_N0509_R011_T18TWL_20230601T220554.SAFE -74.89199</span></span>
+<span><span class="co">#&gt; 6  S2A_MSIL2A_20220825T155151_N0510_R011_T18TWL_20240630T134356.SAFE -74.89577</span></span>
+<span><span class="co">#&gt; 7  S2B_MSIL2A_20220803T154819_N0510_R054_T18TWL_20240715T195039.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 8  S2A_MSIL2A_20220719T154951_N0510_R054_T18TWL_20240705T002349.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 9  S2B_MSIL2A_20220711T153819_N0510_R011_T18TWL_20240620T183156.SAFE -74.88525</span></span>
+<span><span class="co">#&gt; 10 S2A_MSIL2A_20220619T154821_N0510_R054_T18TWL_20240701T042207.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 11 S2A_MSIL2A_20220606T153821_N0510_R011_T18TWL_20240714T132919.SAFE -74.88136</span></span>
+<span><span class="co">#&gt; 12 S2B_MSIL2A_20220604T154809_N0510_R054_T18TWL_20240619T142906.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 13 S2B_MSIL2A_20210616T153809_N0500_R011_T18TWL_20230131T171455.SAFE -74.88136</span></span>
+<span><span class="co">#&gt; 14 S2B_MSIL2A_20210606T153809_N0500_R011_T18TWL_20230603T225907.SAFE -74.88277</span></span>
+<span><span class="co">#&gt;     lat.min  long.max  lat.max</span></span>
+<span><span class="co">#&gt; 1  40.55548 -73.68381 41.55110</span></span>
+<span><span class="co">#&gt; 2  40.55548 -73.68381 41.55107</span></span>
+<span><span class="co">#&gt; 3  40.55548 -73.68381 41.55107</span></span>
+<span><span class="co">#&gt; 4  40.55548 -73.68381 41.55108</span></span>
+<span><span class="co">#&gt; 5  40.55548 -73.68381 41.55109</span></span>
+<span><span class="co">#&gt; 6  40.55548 -73.68381 41.55111</span></span>
+<span><span class="co">#&gt; 7  40.55820 -73.68381 41.55184</span></span>
+<span><span class="co">#&gt; 8  40.55819 -73.68381 41.55184</span></span>
+<span><span class="co">#&gt; 9  40.55550 -73.69200 41.35177</span></span>
+<span><span class="co">#&gt; 10 40.55681 -73.68381 41.55184</span></span>
+<span><span class="co">#&gt; 11 40.55548 -73.68381 41.55105</span></span>
+<span><span class="co">#&gt; 12 40.55781 -73.68381 41.55184</span></span>
+<span><span class="co">#&gt; 13 40.55548 -73.68381 41.55106</span></span>
+<span><span class="co">#&gt; 14 40.55548 -73.68381 41.55106</span></span></code></pre></div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -626,7 +660,7 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file394f1520bf10 </span></span>
+<span><span class="co">#&gt; name        : file1e8f3dba8de5 </span></span>
 <span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
 <span><span class="co">#&gt; max value   :        0.9507549</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -740,7 +774,8 @@ illustrate how to do this with an example.</p>
 Central Park monthly NDVI
 </p>
 </div>
-<p>In this particular example, parallelization is not necessarily
+<div style="page-break-after: always;"></div>
+<p>In this particular example, parallelisation is not necessarily
 beneficial as we are retrieving only 12 images, but for a large number
 of images, it can significantly reduce the execution time. Also note
 that we have used the <code>filter</code> argument of the
@@ -1025,6 +1060,7 @@ example illustrates how to do this.</p>
 <span><span class="co">#&gt; 3        1120         704</span></span>
 <span><span class="co">#&gt; 4        1120         704</span></span>
 <span><span class="co">#&gt; 5        1120         704</span></span></code></pre></div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="section level2">

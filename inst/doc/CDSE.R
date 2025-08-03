@@ -46,6 +46,7 @@ aoi <- sf::read_sf(dsn, as_tibble = FALSE)
 images <- SearchCatalog(aoi = aoi, from = "2021-01-01", to = "2023-12-31", 
     collection = "sentinel-2-l2a", with_geometry = FALSE, filter = "eo:cloud_cover < 5", 
     client = OAuthClient)
+images <- UniqueCatalog(images, by = "tileCloudCover")
 dim(images)
 summer_images <- SeasonalFilter(images, from = "2021-06-01", to = "2023-08-31")
 dim(summer_images)
@@ -58,10 +59,11 @@ lst_summer_images <- lapply(seasons, SearchCatalogByTimerange, aoi = aoi,
     collection = "sentinel-2-l2a", filter = "eo:cloud_cover < 5", with_geometry = FALSE, 
     client = OAuthClient)
 summer_images <- do.call(rbind, lst_summer_images)
+summer_images <- UniqueCatalog(summer_images, by = "tileCloudCover")
 dim(summer_images)
 summer_images <- summer_images[rev(order(summer_images$acquisitionDate)), ]
 row.names(summer_images) <- NULL
-head(summer_images)
+summer_images
 
 ## ----label="spectral indices"-------------------------------------------------
 si <- rsi::spectral_indices() # get spectral indices
