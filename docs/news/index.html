@@ -38,10 +38,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3" id="cdse-03o">CDSE 0.3.O<a class="anchor" aria-label="anchor" href="#cdse-03o"></a></h2>
-<ul><li>Adapted <code>GetCollections</code> to deal with multi-instrument collections like ‘Sentinel 3 Synergy L2’</li>
-<li>Added <code>MakeEvalScript</code> function that generates evalscript from the spectral indices defined in the package <code>rsi</code>
-</li>
+<ul><li>Adapted <code>GetCollections</code> to handle multi-instrument collections like ‘Sentinel 3 Synergy L2’</li>
+<li>Added <code>MakeEvalScript</code> function that creates evalscript from spectral indices defined in the <code>rsi</code> package</li>
 <li>Expanded documentation on evalscripts</li>
+<li>Requests that fail are automatically retried in case of error 429 (“too many requests”, often used for rate limiting) or 503 (“service unavailable’)</li>
 <li>Fixed internal function <code>CheckBbox</code>
 </li>
 </ul></div>
