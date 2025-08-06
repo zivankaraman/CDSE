@@ -298,9 +298,9 @@ cat(c(readLines(system.file("scripts", "TrueColorS2L2A.js", package = "CDSE"), n
     "..."), sep = "\n")
 png <- tempfile("img", fileext = ".png")
 GetImage(bbox = bbox, time_range = day, script = script_text, 
-    collection = "sentinel-2-l2a", file = png, format = "image/png", 
+    collection = "sentinel-2-l2a", file = png, format = "image/png", buffer = 100,
     mosaicking_order = "leastCC", pixels = c(600, 950), client = OAuthClient)
-terra::plotRGB(terra::rast(png))
+terra::plotRGB(terra::flip(terra::rast(png), direction = "vertical"))
 ```
 
 ## Retrieving a series of images in a batch
