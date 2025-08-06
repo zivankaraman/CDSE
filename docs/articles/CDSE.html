@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Using 'Copernicus Data Space Ecosystem' API Wrapper • CDSE</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using 'Copernicus Data Space Ecosystem' API Wrapper">
 </head>
 <body>
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CDSE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,38 +123,42 @@ argument <code>as_data_frame</code> to <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">collections</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetCollections.html">GetCollections</a></span><span class="op">(</span>as_data_frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">collections</span></span>
-<span><span class="co">#&gt;                   id                title</span></span>
-<span><span class="co">#&gt; 1     sentinel-2-l1c       Sentinel 2 L1C</span></span>
-<span><span class="co">#&gt; 2 sentinel-3-olci-l2   Sentinel 3 OLCI L2</span></span>
-<span><span class="co">#&gt; 3    sentinel-3-olci      Sentinel 3 OLCI</span></span>
-<span><span class="co">#&gt; 4   sentinel-3-slstr     Sentinel 3 SLSTR</span></span>
-<span><span class="co">#&gt; 5     sentinel-1-grd       Sentinel 1 GRD</span></span>
-<span><span class="co">#&gt; 6     sentinel-2-l2a       Sentinel 2 L2A</span></span>
-<span><span class="co">#&gt; 7     sentinel-5p-l2 Sentinel 5 Precursor</span></span>
-<span><span class="co">#&gt;                                                    description</span></span>
-<span><span class="co">#&gt; 1                     Sentinel 2 imagery processed to level 1C</span></span>
-<span><span class="co">#&gt; 2 Sentinel 3 data derived from imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 3                   Sentinel 3 imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 4                  Sentinel 3 imagery captured by SLSTR sensor</span></span>
-<span><span class="co">#&gt; 5                     Sentinel 1 Ground Range Detected Imagery</span></span>
-<span><span class="co">#&gt; 6                     Sentinel 2 imagery processed to level 2A</span></span>
-<span><span class="co">#&gt; 7      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
+<span><span class="co">#&gt;                      id                 title</span></span>
+<span><span class="co">#&gt; 1        sentinel-2-l1c        Sentinel 2 L1C</span></span>
+<span><span class="co">#&gt; 2    sentinel-3-olci-l2    Sentinel 3 OLCI L2</span></span>
+<span><span class="co">#&gt; 3       sentinel-3-olci       Sentinel 3 OLCI</span></span>
+<span><span class="co">#&gt; 4      sentinel-3-slstr      Sentinel 3 SLSTR</span></span>
+<span><span class="co">#&gt; 5 sentinel-3-synergy-l2 Sentinel 3 Synergy L2</span></span>
+<span><span class="co">#&gt; 6        sentinel-1-grd        Sentinel 1 GRD</span></span>
+<span><span class="co">#&gt; 7        sentinel-2-l2a        Sentinel 2 L2A</span></span>
+<span><span class="co">#&gt; 8        sentinel-5p-l2  Sentinel 5 Precursor</span></span>
+<span><span class="co">#&gt;                                                                    description</span></span>
+<span><span class="co">#&gt; 1                                     Sentinel 2 imagery processed to level 1C</span></span>
+<span><span class="co">#&gt; 2                 Sentinel 3 data derived from imagery captured by OLCI sensor</span></span>
+<span><span class="co">#&gt; 3                                   Sentinel 3 imagery captured by OLCI sensor</span></span>
+<span><span class="co">#&gt; 4                                  Sentinel 3 imagery captured by SLSTR sensor</span></span>
+<span><span class="co">#&gt; 5 Sentinel 3 data derived from imagery captured by both OLCI and SLSTR sensors</span></span>
+<span><span class="co">#&gt; 6                                     Sentinel 1 Ground Range Detected Imagery</span></span>
+<span><span class="co">#&gt; 7                                     Sentinel 2 imagery processed to level 2A</span></span>
+<span><span class="co">#&gt; 8                      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
 <span><span class="co">#&gt;                  since instrument  gsd bands constellation long.min lat.min</span></span>
 <span><span class="co">#&gt; 1 2015-11-01T00:00:00Z        msi   10    13    sentinel-2     -180     -56</span></span>
 <span><span class="co">#&gt; 2 2016-04-17T11:33:13Z       olci  300    NA          &lt;NA&gt;     -180     -85</span></span>
 <span><span class="co">#&gt; 3 2016-04-17T11:33:13Z       olci  300    21          &lt;NA&gt;     -180     -85</span></span>
 <span><span class="co">#&gt; 4 2016-04-17T11:33:13Z      slstr 1000    11          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt; 5 2014-10-03T00:00:00Z      c-sar   NA    NA    sentinel-1     -180     -85</span></span>
-<span><span class="co">#&gt; 6 2016-11-01T00:00:00Z        msi   10    12    sentinel-2     -180     -56</span></span>
-<span><span class="co">#&gt; 7 2018-04-30T00:18:50Z    tropomi 5500    NA          &lt;NA&gt;     -180     -85</span></span>
+<span><span class="co">#&gt; 5 2016-04-17T11:33:13Z olci/slstr  300    NA          &lt;NA&gt;     -180     -85</span></span>
+<span><span class="co">#&gt; 6 2014-10-03T00:00:00Z      c-sar   NA    NA    sentinel-1     -180     -85</span></span>
+<span><span class="co">#&gt; 7 2016-11-01T00:00:00Z        msi   10    12    sentinel-2     -180     -56</span></span>
+<span><span class="co">#&gt; 8 2018-04-30T00:18:50Z    tropomi 5500    NA          &lt;NA&gt;     -180     -85</span></span>
 <span><span class="co">#&gt;   long.max lat.max</span></span>
 <span><span class="co">#&gt; 1      180      83</span></span>
 <span><span class="co">#&gt; 2      180      85</span></span>
 <span><span class="co">#&gt; 3      180      85</span></span>
 <span><span class="co">#&gt; 4      180      85</span></span>
 <span><span class="co">#&gt; 5      180      85</span></span>
-<span><span class="co">#&gt; 6      180      83</span></span>
-<span><span class="co">#&gt; 7      180      85</span></span></code></pre></div>
+<span><span class="co">#&gt; 6      180      85</span></span>
+<span><span class="co">#&gt; 7      180      83</span></span>
+<span><span class="co">#&gt; 8      180      85</span></span></code></pre></div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="section level2">
@@ -179,7 +182,7 @@ argument.</p>
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2023-07-01"</span>, to <span class="op">=</span> <span class="st">"2023-07-31"</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">TRUE</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">images</span></span>
-<span><span class="co">#&gt; Simple feature collection with 70 features and 11 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 140 features and 11 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 4.357925 ymin: 48.58836 xmax: 7.775117 ymax: 50.54532</span></span>
@@ -187,48 +190,48 @@ argument.</p>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    acquisitionDate tileCloudCover areaCoverage   satellite</span></span>
 <span><span class="co">#&gt; 1       2023-07-31          98.87        1.845 sentinel-2a</span></span>
-<span><span class="co">#&gt; 2       2023-07-31          99.85       20.346 sentinel-2a</span></span>
-<span><span class="co">#&gt; 3       2023-07-31          99.74        5.934 sentinel-2a</span></span>
-<span><span class="co">#&gt; 4       2023-07-31          99.94       16.324 sentinel-2a</span></span>
-<span><span class="co">#&gt; 5       2023-07-31          99.91       92.463 sentinel-2a</span></span>
-<span><span class="co">#&gt; 6       2023-07-31          99.41       22.236 sentinel-2a</span></span>
-<span><span class="co">#&gt; 7       2023-07-28          99.99        4.986 sentinel-2a</span></span>
-<span><span class="co">#&gt; 8       2023-07-28          99.99        5.659 sentinel-2a</span></span>
-<span><span class="co">#&gt; 9       2023-07-28          99.99        4.294 sentinel-2a</span></span>
-<span><span class="co">#&gt; 10      2023-07-28         100.00        6.855 sentinel-2a</span></span>
+<span><span class="co">#&gt; 2       2023-07-31          98.87        1.845 sentinel-2a</span></span>
+<span><span class="co">#&gt; 3       2023-07-31          99.85       20.346 sentinel-2a</span></span>
+<span><span class="co">#&gt; 4       2023-07-31          99.85       20.346 sentinel-2a</span></span>
+<span><span class="co">#&gt; 5       2023-07-31          99.74        5.934 sentinel-2a</span></span>
+<span><span class="co">#&gt; 6       2023-07-31          99.74        5.934 sentinel-2a</span></span>
+<span><span class="co">#&gt; 7       2023-07-31          99.94       16.324 sentinel-2a</span></span>
+<span><span class="co">#&gt; 8       2023-07-31          99.94       16.324 sentinel-2a</span></span>
+<span><span class="co">#&gt; 9       2023-07-31          99.91       92.463 sentinel-2a</span></span>
+<span><span class="co">#&gt; 10      2023-07-31          99.91       92.463 sentinel-2a</span></span>
 <span><span class="co">#&gt;    acquisitionTimestampUTC acquisitionTimestampLocal</span></span>
 <span><span class="co">#&gt; 1      2023-07-31 10:47:29       2023-07-31 12:47:29</span></span>
-<span><span class="co">#&gt; 2      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
-<span><span class="co">#&gt; 3      2023-07-31 10:47:23       2023-07-31 12:47:23</span></span>
-<span><span class="co">#&gt; 4      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
-<span><span class="co">#&gt; 5      2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
-<span><span class="co">#&gt; 6      2023-07-31 10:47:09       2023-07-31 12:47:09</span></span>
-<span><span class="co">#&gt; 7      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
-<span><span class="co">#&gt; 8      2023-07-28 10:37:27       2023-07-28 12:37:27</span></span>
-<span><span class="co">#&gt; 9      2023-07-28 10:37:21       2023-07-28 12:37:21</span></span>
-<span><span class="co">#&gt; 10     2023-07-28 10:37:20       2023-07-28 12:37:20</span></span>
+<span><span class="co">#&gt; 2      2023-07-31 10:47:29       2023-07-31 12:47:29</span></span>
+<span><span class="co">#&gt; 3      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
+<span><span class="co">#&gt; 4      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
+<span><span class="co">#&gt; 5      2023-07-31 10:47:23       2023-07-31 12:47:23</span></span>
+<span><span class="co">#&gt; 6      2023-07-31 10:47:22       2023-07-31 12:47:22</span></span>
+<span><span class="co">#&gt; 7      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
+<span><span class="co">#&gt; 8      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
+<span><span class="co">#&gt; 9      2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
+<span><span class="co">#&gt; 10     2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
 <span><span class="co">#&gt;                                                             sourceId long.min</span></span>
-<span><span class="co">#&gt; 1  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFQ_20230731T202459.SAFE 4.357925</span></span>
-<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGQ_20230731T202459.SAFE 5.714101</span></span>
-<span><span class="co">#&gt; 3  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULV_20230731T202459.SAFE 6.230946</span></span>
-<span><span class="co">#&gt; 4  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFR_20230731T202459.SAFE 4.382698</span></span>
-<span><span class="co">#&gt; 5  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGR_20230731T202459.SAFE 5.763559</span></span>
-<span><span class="co">#&gt; 6  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULA_20230731T202459.SAFE 6.178682</span></span>
-<span><span class="co">#&gt; 7  S2A_MSIL2A_20230728T102601_N0509_R108_T31UGQ_20230728T180355.SAFE 5.880056</span></span>
-<span><span class="co">#&gt; 8  S2A_MSIL2A_20230728T102601_N0509_R108_T32ULV_20230728T180355.SAFE 6.234494</span></span>
-<span><span class="co">#&gt; 9  S2A_MSIL2A_20230728T102601_N0509_R108_T31UGQ_20230728T164605.SAFE 6.218396</span></span>
-<span><span class="co">#&gt; 10 S2A_MSIL2A_20230728T102601_N0509_R108_T31UGR_20230728T180355.SAFE 6.219516</span></span>
+<span><span class="co">#&gt; 1  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFQ_20241021T055741.SAFE 4.357925</span></span>
+<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFQ_20230731T202459.SAFE 4.357925</span></span>
+<span><span class="co">#&gt; 3  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGQ_20241021T055741.SAFE 5.714101</span></span>
+<span><span class="co">#&gt; 4  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGQ_20230731T202459.SAFE 5.714101</span></span>
+<span><span class="co">#&gt; 5  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULV_20230731T202459.SAFE 6.230946</span></span>
+<span><span class="co">#&gt; 6  S2A_MSIL2A_20230731T103631_N0510_R008_T32ULV_20241021T055741.SAFE 6.230946</span></span>
+<span><span class="co">#&gt; 7  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFR_20241021T055741.SAFE 4.382698</span></span>
+<span><span class="co">#&gt; 8  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFR_20230731T202459.SAFE 4.382698</span></span>
+<span><span class="co">#&gt; 9  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGR_20230731T202459.SAFE 5.763559</span></span>
+<span><span class="co">#&gt; 10 S2A_MSIL2A_20230731T103631_N0510_R008_T31UGR_20241021T055741.SAFE 5.763559</span></span>
 <span><span class="co">#&gt;     lat.min long.max  lat.max                       geometry</span></span>
 <span><span class="co">#&gt; 1  48.62983 5.904558 49.64443 POLYGON ((4.385187 49.64443...</span></span>
-<span><span class="co">#&gt; 2  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
-<span><span class="co">#&gt; 3  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
-<span><span class="co">#&gt; 4  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
-<span><span class="co">#&gt; 5  49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span>
-<span><span class="co">#&gt; 6  49.53174 7.752769 50.54532 POLYGON ((6.178682 50.51809...</span></span>
-<span><span class="co">#&gt; 7  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
-<span><span class="co">#&gt; 8  48.63304 7.775117 49.62896 POLYGON ((6.259211 49.62026...</span></span>
-<span><span class="co">#&gt; 9  49.36204 7.285031 49.60696 POLYGON ((6.254038 49.60696...</span></span>
-<span><span class="co">#&gt; 10 49.48568 7.279271 49.67956 POLYGON ((7.27598 49.48568,...</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  48.62983 5.904558 49.64443 POLYGON ((4.385187 49.64443...</span></span>
+<span><span class="co">#&gt; 3  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
+<span><span class="co">#&gt; 4  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
+<span><span class="co">#&gt; 5  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
+<span><span class="co">#&gt; 6  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
+<span><span class="co">#&gt; 7  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
+<span><span class="co">#&gt; 8  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
+<span><span class="co">#&gt; 9  49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span>
+<span><span class="co">#&gt; 10 49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span></code></pre></div>
 <p>We can visualize the coverage of the area of interest by the
 satellite image tiles by plotting the footprints of the available images
 and showing the region of interest in red.</p>
@@ -251,7 +254,7 @@ others cover almost the entire area.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">areaCoverage</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   1.845   5.603  15.113  19.758  20.346  92.463</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.845   5.595  15.113  19.758  20.346  92.463</span></span></code></pre></div>
 <p>The tile number can be obtained from the image attribute
 <code>sourceId</code>, as explained <a href="https://sentiwiki.copernicus.eu/web/s2-products" class="external-link">here</a>. We can
 therefore summarize the distribution of area coverage by tile number,
@@ -269,19 +272,19 @@ and see which tiles provide the best coverage of the AOI.</p>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGQ</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.294   4.909  12.706  12.586  20.346  20.346 </span></span>
+<span><span class="co">#&gt;   4.294   4.899  12.706  12.587  20.346  20.346 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGR</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.855  15.607  54.299  53.426  92.463  92.463 </span></span>
+<span><span class="co">#&gt;   6.855  15.565  54.299  53.426  92.463  92.463 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULA</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.169  14.950  18.814  17.972  22.236  22.236 </span></span>
+<span><span class="co">#&gt;   6.169  14.922  18.814  17.972  22.236  22.236 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULV</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.944   5.603   5.819   5.723   5.934   5.934</span></span></code></pre></div>
+<span><span class="co">#&gt;   4.944   5.595   5.819   5.723   5.934   5.934</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="catalog-by-season">Catalog by season<a class="anchor" aria-label="anchor" href="#catalog-by-season"></a>
 </h3>
@@ -295,8 +298,9 @@ We can filter an existing image catalog <em>a posteriori</em> using the
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2021-01-01"</span>, to <span class="op">=</span> <span class="st">"2023-12-31"</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="st">"eo:cloud_cover &lt; 5"</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/UniqueCatalog.html">UniqueCatalog</a></span><span class="op">(</span><span class="va">images</span>, by <span class="op">=</span> <span class="st">"tileCloudCover"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">images</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 77 10</span></span>
+<span><span class="co">#&gt; [1] 81 10</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SeasonalFilter.html">SeasonalFilter</a></span><span class="op">(</span><span class="va">images</span>, from <span class="op">=</span> <span class="st">"2021-06-01"</span>, to <span class="op">=</span> <span class="st">"2023-08-31"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 14 10</span></span></code></pre></div>
@@ -314,23 +318,24 @@ function, and thus potentially also using the parallel processing.</p>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, filter <span class="op">=</span> <span class="st">"eo:cloud_cover &lt; 5"</span>, with_geometry <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">lst_summer_images</span><span class="op">)</span></span>
+<span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/UniqueCatalog.html">UniqueCatalog</a></span><span class="op">(</span><span class="va">summer_images</span>, by <span class="op">=</span> <span class="st">"tileCloudCover"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 14 10</span></span>
 <span><span class="va">summer_images</span> <span class="op">&lt;-</span> <span class="va">summer_images</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">$</span><span class="va">acquisitionDate</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="va">summer_images</span></span>
 <span><span class="co">#&gt;    acquisitionDate tileCloudCover   satellite acquisitionTimestampUTC</span></span>
-<span><span class="co">#&gt; 1       2023-08-20           0.03 sentinel-2a     2023-08-20 15:51:57</span></span>
-<span><span class="co">#&gt; 2       2023-07-31           3.96 sentinel-2a     2023-07-31 15:51:56</span></span>
-<span><span class="co">#&gt; 3       2023-07-26           0.89 sentinel-2b     2023-07-26 15:51:56</span></span>
-<span><span class="co">#&gt; 4       2023-07-11           4.49 sentinel-2a     2023-07-11 15:51:56</span></span>
+<span><span class="co">#&gt; 1       2023-08-20           0.00 sentinel-2a     2023-08-20 15:51:57</span></span>
+<span><span class="co">#&gt; 2       2023-07-31           2.53 sentinel-2a     2023-07-31 15:51:56</span></span>
+<span><span class="co">#&gt; 3       2023-07-26           0.59 sentinel-2b     2023-07-26 15:51:56</span></span>
+<span><span class="co">#&gt; 4       2023-07-11           4.38 sentinel-2a     2023-07-11 15:51:56</span></span>
 <span><span class="co">#&gt; 5       2023-06-01           0.00 sentinel-2a     2023-06-01 15:51:54</span></span>
-<span><span class="co">#&gt; 6       2022-08-25           1.69 sentinel-2a     2022-08-25 15:52:03</span></span>
+<span><span class="co">#&gt; 6       2022-08-25           1.18 sentinel-2a     2022-08-25 15:52:03</span></span>
 <span><span class="co">#&gt; 7       2022-08-03           4.58 sentinel-2b     2022-08-03 16:01:51</span></span>
 <span><span class="co">#&gt; 8       2022-07-19           1.37 sentinel-2a     2022-07-19 16:01:58</span></span>
-<span><span class="co">#&gt; 9       2022-07-11           4.89 sentinel-2b     2022-07-11 15:51:57</span></span>
+<span><span class="co">#&gt; 9       2022-07-11           4.92 sentinel-2b     2022-07-11 15:51:57</span></span>
 <span><span class="co">#&gt; 10      2022-06-19           1.91 sentinel-2a     2022-06-19 16:01:58</span></span>
-<span><span class="co">#&gt; 11      2022-06-06           1.00 sentinel-2a     2022-06-06 15:51:58</span></span>
+<span><span class="co">#&gt; 11      2022-06-06           0.99 sentinel-2a     2022-06-06 15:51:58</span></span>
 <span><span class="co">#&gt; 12      2022-06-04           2.76 sentinel-2b     2022-06-04 16:01:47</span></span>
 <span><span class="co">#&gt; 13      2021-06-16           4.74 sentinel-2b     2021-06-16 15:51:51</span></span>
 <span><span class="co">#&gt; 14      2021-06-06           0.38 sentinel-2b     2021-06-06 15:51:52</span></span>
@@ -350,18 +355,18 @@ function, and thus potentially also using the parallel processing.</p>
 <span><span class="co">#&gt; 13       2021-06-16 11:51:51</span></span>
 <span><span class="co">#&gt; 14       2021-06-06 11:51:52</span></span>
 <span><span class="co">#&gt;                                                             sourceId  long.min</span></span>
-<span><span class="co">#&gt; 1  S2A_MSIL2A_20230820T153821_N0509_R011_T18TWL_20230820T221958.SAFE -74.89340</span></span>
-<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T155141_N0509_R011_T18TWL_20230731T220001.SAFE -74.88632</span></span>
-<span><span class="co">#&gt; 3  S2B_MSIL2A_20230726T153819_N0509_R011_T18TWL_20230726T175732.SAFE -74.88431</span></span>
-<span><span class="co">#&gt; 4  S2A_MSIL2A_20230711T153821_N0509_R011_T18TWL_20230711T233752.SAFE -74.88773</span></span>
+<span><span class="co">#&gt; 1  S2A_MSIL2A_20230820T153821_N0510_R011_T18TWL_20241015T130941.SAFE -74.89340</span></span>
+<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T155141_N0510_R011_T18TWL_20240820T212405.SAFE -74.88632</span></span>
+<span><span class="co">#&gt; 3  S2B_MSIL2A_20230726T153819_N0510_R011_T18TWL_20240819T050747.SAFE -74.88431</span></span>
+<span><span class="co">#&gt; 4  S2A_MSIL2A_20230711T153821_N0510_R011_T18TWL_20241019T212830.SAFE -74.88773</span></span>
 <span><span class="co">#&gt; 5  S2A_MSIL2A_20230601T155141_N0509_R011_T18TWL_20230601T220554.SAFE -74.89199</span></span>
-<span><span class="co">#&gt; 6  S2A_MSIL2A_20220825T155151_N0400_R011_T18TWL_20220825T220800.SAFE -74.89577</span></span>
-<span><span class="co">#&gt; 7  S2B_MSIL2A_20220803T154819_N0400_R054_T18TWL_20220804T065759.SAFE -75.00023</span></span>
-<span><span class="co">#&gt; 8  S2A_MSIL2A_20220719T154951_N0400_R054_T18TWL_20220719T234155.SAFE -75.00023</span></span>
-<span><span class="co">#&gt; 9  S2B_MSIL2A_20220711T153819_N0400_R011_T18TWL_20220711T182252.SAFE -74.88525</span></span>
-<span><span class="co">#&gt; 10 S2A_MSIL2A_20220619T154821_N0400_R054_T18TWL_20220619T232314.SAFE -75.00023</span></span>
-<span><span class="co">#&gt; 11 S2A_MSIL2A_20220606T153821_N0400_R011_T18TWL_20220606T230911.SAFE -74.88136</span></span>
-<span><span class="co">#&gt; 12 S2B_MSIL2A_20220604T154809_N0400_R054_T18TWL_20220604T201432.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 6  S2A_MSIL2A_20220825T155151_N0510_R011_T18TWL_20240630T134356.SAFE -74.89577</span></span>
+<span><span class="co">#&gt; 7  S2B_MSIL2A_20220803T154819_N0510_R054_T18TWL_20240715T195039.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 8  S2A_MSIL2A_20220719T154951_N0510_R054_T18TWL_20240705T002349.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 9  S2B_MSIL2A_20220711T153819_N0510_R011_T18TWL_20240620T183156.SAFE -74.88525</span></span>
+<span><span class="co">#&gt; 10 S2A_MSIL2A_20220619T154821_N0510_R054_T18TWL_20240701T042207.SAFE -75.00023</span></span>
+<span><span class="co">#&gt; 11 S2A_MSIL2A_20220606T153821_N0510_R011_T18TWL_20240714T132919.SAFE -74.88136</span></span>
+<span><span class="co">#&gt; 12 S2B_MSIL2A_20220604T154809_N0510_R054_T18TWL_20240619T142906.SAFE -75.00023</span></span>
 <span><span class="co">#&gt; 13 S2B_MSIL2A_20210616T153809_N0500_R011_T18TWL_20230131T171455.SAFE -74.88136</span></span>
 <span><span class="co">#&gt; 14 S2B_MSIL2A_20210606T153809_N0500_R011_T18TWL_20230603T225907.SAFE -74.88277</span></span>
 <span><span class="co">#&gt;     lat.min  long.max  lat.max</span></span>
@@ -383,31 +388,186 @@ function, and thus potentially also using the parallel processing.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="scripts">Scripts<a class="anchor" aria-label="anchor" href="#scripts"></a>
+<h2 id="evalscripts">Evalscripts<a class="anchor" aria-label="anchor" href="#evalscripts"></a>
 </h2>
-<p>As we shall see in the examples below, we have to provide a
-<code>script</code> argument to the <code>GetArchiveImage</code>
-function.</p>
+<p>As we shall see in the examples below, the functions that operate on
+remotely sensed spectral band values, such as <code>GetImage</code> or
+<code>GetStatistics</code>, require an evalscript to be passed to the
+<code>script</code> argument.</p>
 <p>An evalscript (or “custom script”) is a piece of JavaScript code that
 defines how the satellite data shall be processed by the API and what
 values the service shall return. It is a required part of any request
 involving data processing, such as retrieving an image of the area of
-interest.</p>
+interest or computing some statistical values for a given period of
+time.</p>
 <p>The evaluation scripts can use any JavaScript function or language
 structures, along with certain utility functions provided by the API for
-user convenience. Chrome V8 JavaScript engine is used for running the
-evalscripts.</p>
+user convenience. The Chrome V8 JavaScript engine is used for running
+the evalscripts.</p>
 <p>The evaluation scripts are passed as the <code>script</code> argument
-to the <code>GetArchiveImage</code> function. It has to be either a
-character string containing the evaluation script or the name of the
-file containing the script. The <code>scripts</code> folder of this
-package contains a few examples of evaluation scripts.</p>
-<p>It is beyond the scope of this document to provide guidance for
-writing scripts, we encourage users to consult the API <a href="https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/" class="external-link">Beginners
+to the <code>GetImage</code>, <code>GetStatistics</code>, and other
+functions that require an evalscript. It has to be either a character
+string containing the evaluation script or the name of the file
+containing the script.</p>
+<p>Although it is beyond the scope of this document to provide the
+detailed guidance for writing evalscripts, we shall provide here some
+tips that can help you to use the the above mentioned functions without
+deep understanding of the evalscripts’ internal workings. We encourage
+users who wish to acquire a deeper knowledge of evalscripts to consult
+the API <a href="https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/" class="external-link">Beginners
 Guide</a> and <a href="https://docs.sentinel-hub.com/api/latest/evalscript/" class="external-link">Evalscript
-(custom script)</a> documentation. You can find a big collection of
-custom scripts that you can readily use in this <a href="https://custom-scripts.sentinel-hub.com/" class="external-link">repository</a>.</p>
+(custom script)</a> documentation. You can also find a large collection
+of custom scripts that you can readily use in this <a href="https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/" class="external-link">repository</a>.</p>
+<div class="section level3">
+<h3 id="built-in-scripts">Built-in scripts<a class="anchor" aria-label="anchor" href="#built-in-scripts"></a>
+</h3>
+<p>The <code>scripts</code> folder of this package contains a few
+examples of evaluation scripts. They are very limited, both in number
+and scope, and their main purpose is to provide scripts that are used in
+documentation and examples. You can, of course, use them as a starting
+point to develop your own scripts by applying some relatively simple
+modifications (for example, starting from an NDVI script, replacing
+bands B04 and B08 with bands B8A and B11 will give a script for the NDMI
+- Normalized Difference Moisture Index).</p>
+</div>
+<div class="section level3">
+<h3 id="ready-to-use-examples">Ready-to-use examples<a class="anchor" aria-label="anchor" href="#ready-to-use-examples"></a>
+</h3>
+<p>There is a large collection of evalscripts that you can readily use
+available in this <a href="https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/" class="external-link">repository</a>.
+The scripts are grouped by satellite constellation (Sentinel-1,
+Sentinel-2, …) and application field (Agriculture, Disaster management,
+Urban planning, …). To use one of these scripts, the simplest way is
+probably to use the “<em>Download code</em>” or “<em>Copy code</em>”
+icons in the upper right corner of the code window (see the illustration
+below). Some indices come in several flavours (Visualisation vs. Raw
+Values); select the one that corresponds to your situation. If you want
+to do some further analysis of the images, use raw values; if you want
+to simply display the image, you can use the visualisation version (you
+will probably also export the result as a JPEG or PNG file). You can, of
+course, always get the raw values and then customise the visualisation
+in your R code. Other indices might have only one version; it will
+likely first compute the index value and then possibly transform it for
+visualisation - adapt based on your needs.</p>
+<div class="float">
+<img src="script_code.png" alt="Using evalscript code from the repository"><div class="figcaption">Using evalscript code from the repository</div>
+</div>
+<p><em>Note:</em></p>
+<p><em>The repository also contains scripts for satellite collections
+that are not available through CDSE.</em></p>
+</div>
+<div class="section level3">
+<h3 id="awesome-spectral-indices">Awesome Spectral Indices<a class="anchor" aria-label="anchor" href="#awesome-spectral-indices"></a>
+</h3>
+<p>‘Awesome Spectral Indices’ (<a href="https://awesome-ee-spectral-indices.readthedocs.io/en/latest/" class="external-link">ASI</a>)
+is a standardized, machine-readable catalogue of spectral indices used
+in remote sensing for Earth Observation. It currently includes over 240
+spectral indices grouped into eight application domains: vegetation,
+water, burn, snow, soil, urban, radar, and kernel indices. Each spectral
+index in ASI comes with a set of attributes such as a short and long
+name, application domain, formula, required bands, platforms,
+references, date of addition, and contributor information.</p>
+<p>The <code>R</code> package <a href="https://cran.r-project.org/package=rsi" class="external-link">rsi</a> implements an
+interface to the ASI collection, providing the list of indices directly
+in <code>R</code> as a friendly <code>data.frame</code> (actually a
+<code>tibble</code>). These indices can now be directly used in the
+‘CDSE’ package to provide the evalscript to the functions that require
+one. For this purpose, we have developed the <code>MakeEvalScript</code>
+function that will generate the script for you based on the information
+contained in the <code>data.frame</code> of spectral indices produced by
+<code><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">rsi::spectral_indices()</a></code>.</p>
+<p>Here is an example showing how it works.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">si</span> <span class="op">&lt;-</span> <span class="fu">rsi</span><span class="fu">::</span><span class="fu"><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">spectral_indices</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># get spectral indices</span></span>
+<span><span class="co"># NDVI</span></span>
+<span><span class="va">ndvi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">si</span>, <span class="va">short_name</span> <span class="op">==</span> <span class="st">"NDVI"</span><span class="op">)</span> <span class="co"># creates one-row data.frame</span></span>
+<span><span class="va">ndvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">ndvi</span><span class="op">)</span> <span class="co"># generates the script</span></span>
+<span><span class="co"># GDVI</span></span>
+<span><span class="va">gdvi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">si</span>, <span class="va">short_name</span> <span class="op">==</span> <span class="st">"GDVI"</span><span class="op">)</span> <span class="co"># creates one-row data.frame</span></span>
+<span><span class="co"># GDVI requires an extra argument provided by the user</span></span>
+<span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">gdvi</span>, nexp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># generates the script</span></span></code></pre></div>
+<p>The value returned by the function is a character vector with each
+element representing one line of the script. You can best visualise the
+script code by <code>cat(gdvi_script, sep = "\n")</code>, or save it to
+a file for later use with
+<code>cat(gdvi_script, file = "GDVI.js", sep = "\n")</code>. To use the
+generated script directly in a function, you would use something like
+<code>GetImage(..., script = paste(gdvi_script, collapse = "\n"), ...)</code>.</p>
+<p>If the package <code>rsi</code> is installed, you can use a shortcut
+and just provide the <code>short_name</code> of the index as the first
+argument (instead of the one-row <code>data.frame</code>). Please note
+that the <code>short_name</code> is case-sensitive, although most of the
+names are in full upper-case . You of course still have to provide any
+additional arguments, if required, in the usual way. Here is an
+example:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="st">"GDVI"</span>, nexp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, you can also define ad-hoc custom indices by providing a
+one-row <code>data.frame</code> crafted after the model produced by
+<code><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">rsi::spectral_indices()</a></code>. Please ensure that you respect the
+correct formatting, particularly when writing the formula. Since the
+function does not use all the attributes of spectral indices but just
+<code>bands</code>, <code>formula</code>, <code>platform</code> and
+optionally <code>long_name</code> (used as a comment in the header of
+the script), you can provide only this information, and it does not even
+have to be a <code>data.frame</code>, a simple <code>list</code> will
+do.</p>
+<p>We shall illustrate this with an example. Since the ASI spectral
+indices collection is very rich, rather than recreating an already
+existing index or creating a completely dummy ad-hoc index, we shall use
+a transformation of an RGB image into a greyscale image, based on <a href="https://github.com/michaeldorman/starsExtra/blob/master/R/rgb_to_greyscale.R" class="external-link">this</a>
+code, which strictly speaking might not be a spectral index, but can
+illustrate the process.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">custom_def</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bands <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="st">"G"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
+<span>                   formula <span class="op">=</span> <span class="st">"0.3 * R + 0.59 * G + 0.11 * B"</span>,</span>
+<span>                   <span class="co"># long_name = "Greyscale image",</span></span>
+<span>                   platforms <span class="op">=</span> <span class="st">"Sentinel-2"</span><span class="op">)</span></span>
+<span><span class="va">custom_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">custom_def</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
+<p>We can now compare the greyscale and RGB images.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># select the day with smallest cloud cover</span></span>
+<span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
+<span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2023-06-01"</span>, to <span class="op">=</span> <span class="st">"2023-08-31"</span>,</span>
+<span>                        collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                        client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span><span class="va">day</span> <span class="op">&lt;-</span> <span class="va">images</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">tileCloudCover</span><span class="op">)</span>, <span class="op">]</span><span class="op">[[</span><span class="st">"acquisitionDate"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co"># get the greyscale image</span></span>
+<span><span class="va">grey_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"grey.tif"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">custom_script</span>, file <span class="op">=</span> <span class="va">grey_file</span>,</span>
+<span>         collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, format <span class="op">=</span> <span class="st">"image/tiff"</span>,</span>
+<span>         mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, resolution <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>         mask <span class="op">=</span> <span class="cn">FALSE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span><span class="co"># get the RGB image</span></span>
+<span><span class="va">script_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"TrueColorS2L2A.js"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
+<span><span class="va">rgb_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"rgb.tif"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">script_file</span>, file <span class="op">=</span> <span class="va">rgb_file</span>,</span>
+<span>         collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, format <span class="op">=</span> <span class="st">"image/tiff"</span>,</span>
+<span>         mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, resolution <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>         mask <span class="op">=</span> <span class="cn">FALSE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
+<span><span class="co"># Import the rasters</span></span>
+<span><span class="va">rgb_img</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">rgb_file</span><span class="op">)</span></span>
+<span><span class="va">grey_img</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">grey_file</span><span class="op">)</span></span>
+<span><span class="co"># Rescale greyscale raster values to 0 - 1 range</span></span>
+<span><span class="va">mM</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/minmax.html" class="external-link">minmax</a></span><span class="op">(</span><span class="va">grey_img</span><span class="op">)</span></span>
+<span><span class="va">grey_img</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">grey_img</span> <span class="op">-</span> <span class="va">mM</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">mM</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">mM</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># Set up plotting window for side-by-side display</span></span>
+<span><span class="va">old.par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Plot RGB image</span></span>
+<span><span class="fu">plotRGB</span><span class="op">(</span><span class="va">rgb_img</span><span class="op">)</span>   <span class="co"># expects layers 1,2,3 as R,G,B</span></span>
+<span><span class="co"># Plot greyscale image</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">grey_img</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">256</span>, start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, axes <span class="op">=</span> <span class="cn">FALSE</span>, mar <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p><img src="CDSE_files/figure-html/compare%20greyscale%20and%20RGB%20images-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><em>Caveats:</em></p>
+<p><em>Kernel Spectral Indices cannot be used in this context as they do
+not fit into the API model (they do not operate directly on raw spectral
+bands).</em></p>
+<p><em>The indices that are not available for the Sentinel-1 or
+Sentinel-2 platforms cannot be used, as only the Sentinel collections
+are available through the CDSE API.</em></p>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="retrieving-images">Retrieving images<a class="anchor" aria-label="anchor" href="#retrieving-images"></a>
@@ -420,7 +580,7 @@ extract only the part of the images covering the area of interest. If
 the AOI is small as in the example below, this is a significant gain in
 efficiency (download, local processing) compared to getting the whole
 tile image and processing it locally.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2021-05-01"</span>, to <span class="op">=</span> <span class="st">"2021-05-31"</span>, </span>
@@ -487,7 +647,7 @@ below by replacing all negative values with zero. The size of the pixels
 is specified directly by the <code>resolution</code> argument. We are
 also adding a 100-meter <code>buffer</code> around the area of interest
 and <code>mask</code>ing the pixels outside of the AOI.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">day</span> <span class="op">&lt;-</span> <span class="va">images</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">tileCloudCover</span><span class="op">)</span>, <span class="op">]</span><span class="op">$</span><span class="va">acquisitionDate</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">script_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"NDVI_float32.js"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">ras</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">script_file</span>, </span>
@@ -500,7 +660,7 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file31eb642c7e71 </span></span>
+<span><span class="co">#&gt; name        : file849d2151dc74 </span></span>
 <span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
 <span><span class="co">#&gt; max value   :        0.9507549</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -524,7 +684,7 @@ exact geometry. We also demonstrate that the evaluation script can be
 passed as a single character string, and provide the number of pixels in
 the output image rather than the size of individual pixels - it makes
 more sense if the image is intended for display and not processing.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bbox</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">script_text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"TrueColorS2L2A.js"</span>, </span>
 <span>    package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
@@ -570,10 +730,10 @@ The <code>GetImageBy*</code> functions
 specifically crafted for being called from a <code>lapply</code>-like
 function, and thus potentially be executed in parallel. We shall
 illustrate how to do this with an example.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2023-01-01"</span>, to <span class="op">=</span> <span class="st">"2023-12-31"</span>,</span>
+<span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2022-01-01"</span>, to <span class="op">=</span> <span class="st">"2022-12-31"</span>,</span>
 <span>                        collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                        filter <span class="op">=</span> <span class="st">"eo:cloud_cover &lt; 5"</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="co"># Get the day with the minimal cloud cover for every month -----------------------------</span></span>
@@ -614,7 +774,8 @@ illustrate how to do this with an example.</p>
 Central Park monthly NDVI
 </p>
 </div>
-<p>In this particular example, parallelization is not necessarily
+<div style="page-break-after: always;"></div>
+<p>In this particular example, parallelisation is not necessarily
 beneficial as we are retrieving only 12 images, but for a large number
 of images, it can significantly reduce the execution time. Also note
 that we have used the <code>filter</code> argument of the
@@ -642,7 +803,7 @@ some specifics when using evalscripts with the Statistical API:</p>
 <li><p>The <code>evaluatePixel()</code> function must, in addition to
 other output, always return also <code>dataMask</code> output. This
 output defines which pixels are excluded from calculations. For more
-details and an example, see here.</p></li>
+details and an example, see <a href="https://docs.sentinel-hub.com/api/latest/api/statistical/#exclude-pixels-from-calculations-datamask-output" class="external-link">here</a>.</p></li>
 <li><p>The default value of <code>sampleType</code> is
 <code>FLOAT32</code>.</p></li>
 <li><p>The output.bands parameter in the <code>setup()</code> function
@@ -650,6 +811,9 @@ can be an array. This makes it possible to specify custom names for the
 output bands and different output <code>dataMask</code> for different
 outputs.</p></li>
 </ul>
+<p>It should be noted that the scripts generated by the
+<code>MakeEvalScript</code> function can be directly used to retrieve
+the statistical values.</p>
 </div>
 <div class="section level3">
 <h3 id="retrieving-simple-statistics">Retrieving simple statistics<a class="anchor" aria-label="anchor" href="#retrieving-simple-statistics"></a>
@@ -669,7 +833,7 @@ it ends at the end of the provided time range, or extend the last
 interval over the end of the provided time range so that all intervals
 are of equal duration. This is controlled by the value of the
 <code>lastIntervalBehavior</code> argument.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -678,7 +842,7 @@ are of equal duration. This is controlled by the value of the
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">1</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span>
-<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>,mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
+<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">weekly_stats_extended</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, </span>
 <span>    time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>, collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, </span>
@@ -686,102 +850,102 @@ are of equal duration. This is controlled by the value of the
 <span>    aggregation_period <span class="op">=</span> <span class="fl">1</span>, aggregation_unit <span class="op">=</span> <span class="st">"w"</span>, lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">daily_stats</span></span>
-<span><span class="co">#&gt;          date     output        band min         mean          max        stDev</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value   0  0.210216716 6.509659e-01 1.700419e-01</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover   0 21.028846154 5.900000e+01 1.413258e+01</span></span>
-<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value   0  0.001150263 7.140577e-02 6.540354e-03</span></span>
-<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover  65 65.000000000 6.500000e+01 0.000000e+00</span></span>
-<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value   0  0.590745587 9.372641e-01 3.130056e-01</span></span>
-<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover   0  0.040865385 1.000000e+00 1.979783e-01</span></span>
-<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value   0  0.000207250 2.914758e-03 5.075671e-04</span></span>
-<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover  65 65.000000000 6.500000e+01 0.000000e+00</span></span>
-<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value   0  0.581748619 9.156258e-01 3.050726e-01</span></span>
-<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover   0  0.031250000 1.000000e+00 1.739926e-01</span></span>
-<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value   0  0.564096934 9.704262e-01 3.135816e-01</span></span>
-<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover   0  1.117788462 4.400000e+01 4.049344e+00</span></span>
-<span><span class="co">#&gt; 13 2023-07-16 statistics  ndvi_value   0  0.011152588 3.966460e-02 5.850098e-03</span></span>
-<span><span class="co">#&gt; 14 2023-07-16 statistics cloud_cover  65 73.283653846 1.000000e+02 1.457742e+01</span></span>
-<span><span class="co">#&gt; 15 2023-07-19 statistics  ndvi_value   0  0.000000000 0.000000e+00 0.000000e+00</span></span>
-<span><span class="co">#&gt; 16 2023-07-19 statistics cloud_cover  65 65.000000000 6.500000e+01 0.000000e+00</span></span>
-<span><span class="co">#&gt; 17 2023-07-21 statistics  ndvi_value   0  0.341615600 8.719050e-01 2.366125e-01</span></span>
-<span><span class="co">#&gt; 18 2023-07-21 statistics cloud_cover   0 18.954326923 1.000000e+02 2.746379e+01</span></span>
-<span><span class="co">#&gt; 19 2023-07-24 statistics  ndvi_value   0  0.318054891 6.846920e-01 1.865030e-01</span></span>
-<span><span class="co">#&gt; 20 2023-07-24 statistics cloud_cover   0  7.204326923 6.500000e+01 1.404899e+01</span></span>
-<span><span class="co">#&gt; 21 2023-07-26 statistics  ndvi_value   0  0.549814982 8.600247e-01 2.815753e-01</span></span>
-<span><span class="co">#&gt; 22 2023-07-26 statistics cloud_cover   0  0.040865385 1.000000e+00 1.979783e-01</span></span>
-<span><span class="co">#&gt; 23 2023-07-29 statistics  ndvi_value   0  0.361753207 8.230490e-01 2.353884e-01</span></span>
-<span><span class="co">#&gt; 24 2023-07-29 statistics cloud_cover   0 14.906250000 6.500000e+01 2.139831e+01</span></span>
-<span><span class="co">#&gt; 25 2023-07-31 statistics  ndvi_value   0  0.574829539 9.039569e-01 2.998643e-01</span></span>
-<span><span class="co">#&gt; 26 2023-07-31 statistics cloud_cover   0  0.024038462 1.000000e+00 1.531686e-01</span></span>
-<span><span class="co">#&gt;    sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1         1120         704</span></span>
-<span><span class="co">#&gt; 2         1120         704</span></span>
-<span><span class="co">#&gt; 3         1120         704</span></span>
-<span><span class="co">#&gt; 4         1120         704</span></span>
-<span><span class="co">#&gt; 5         1120         704</span></span>
-<span><span class="co">#&gt; 6         1120         704</span></span>
-<span><span class="co">#&gt; 7         1120         704</span></span>
-<span><span class="co">#&gt; 8         1120         704</span></span>
-<span><span class="co">#&gt; 9         1120         704</span></span>
-<span><span class="co">#&gt; 10        1120         704</span></span>
-<span><span class="co">#&gt; 11        1120         704</span></span>
-<span><span class="co">#&gt; 12        1120         704</span></span>
-<span><span class="co">#&gt; 13        1120         704</span></span>
-<span><span class="co">#&gt; 14        1120         704</span></span>
-<span><span class="co">#&gt; 15        1120         704</span></span>
-<span><span class="co">#&gt; 16        1120         704</span></span>
-<span><span class="co">#&gt; 17        1120         704</span></span>
-<span><span class="co">#&gt; 18        1120         704</span></span>
-<span><span class="co">#&gt; 19        1120         704</span></span>
-<span><span class="co">#&gt; 20        1120         704</span></span>
-<span><span class="co">#&gt; 21        1120         704</span></span>
-<span><span class="co">#&gt; 22        1120         704</span></span>
-<span><span class="co">#&gt; 23        1120         704</span></span>
-<span><span class="co">#&gt; 24        1120         704</span></span>
-<span><span class="co">#&gt; 25        1120         704</span></span>
-<span><span class="co">#&gt; 26        1120         704</span></span>
+<span><span class="co">#&gt;          date     output        band          min        mean          max</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value  0.000000000  0.29693709   0.78141010</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover  0.000000000 11.49759615  59.00000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value  0.000000000  0.00130794   0.08091214</span></span>
+<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value  0.000000000  0.59277750   0.94132596</span></span>
+<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover  0.000000000  0.03125000   1.00000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value  0.009024903  0.01435550   0.01816181</span></span>
+<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value  0.000000000  0.58623717   0.92305928</span></span>
+<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover  0.000000000  0.03846154   1.00000000</span></span>
+<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value  0.000000000  0.56409693   0.97042620</span></span>
+<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover  0.000000000  1.11778846  44.00000000</span></span>
+<span><span class="co">#&gt; 13 2023-07-16 statistics  ndvi_value  0.000000000  0.02039137   0.04840916</span></span>
+<span><span class="co">#&gt; 14 2023-07-16 statistics cloud_cover 65.000000000 73.26442308 100.00000000</span></span>
+<span><span class="co">#&gt; 15 2023-07-19 statistics  ndvi_value  0.000000000  0.00000000   0.00000000</span></span>
+<span><span class="co">#&gt; 16 2023-07-19 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
+<span><span class="co">#&gt; 17 2023-07-21 statistics  ndvi_value  0.000000000  0.34102285   0.87586755</span></span>
+<span><span class="co">#&gt; 18 2023-07-21 statistics cloud_cover  0.000000000 18.92067308 100.00000000</span></span>
+<span><span class="co">#&gt; 19 2023-07-24 statistics  ndvi_value  0.000000000  0.31690014   0.68750000</span></span>
+<span><span class="co">#&gt; 20 2023-07-24 statistics cloud_cover  0.000000000  7.19230769  65.00000000</span></span>
+<span><span class="co">#&gt; 21 2023-07-26 statistics  ndvi_value  0.000000000  0.55108924   0.86418003</span></span>
+<span><span class="co">#&gt; 22 2023-07-26 statistics cloud_cover  0.000000000  0.03846154   2.00000000</span></span>
+<span><span class="co">#&gt; 23 2023-07-29 statistics  ndvi_value  0.000000000  0.36109372   0.82380843</span></span>
+<span><span class="co">#&gt; 24 2023-07-29 statistics cloud_cover  0.000000000 14.87500000  65.00000000</span></span>
+<span><span class="co">#&gt; 25 2023-07-31 statistics  ndvi_value  0.000000000  0.57417085   0.90863669</span></span>
+<span><span class="co">#&gt; 26 2023-07-31 statistics cloud_cover  0.000000000  0.05528846  11.00000000</span></span>
+<span><span class="co">#&gt;           stDev sampleCount noDataCount</span></span>
+<span><span class="co">#&gt; 1   0.202025826        1120         704</span></span>
+<span><span class="co">#&gt; 2  16.430652463        1120         704</span></span>
+<span><span class="co">#&gt; 3   0.007348936        1120         704</span></span>
+<span><span class="co">#&gt; 4   0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 5   0.314693450        1120         704</span></span>
+<span><span class="co">#&gt; 6   0.173992636        1120         704</span></span>
+<span><span class="co">#&gt; 7   0.001601320        1120         704</span></span>
+<span><span class="co">#&gt; 8   0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 9   0.307616006        1120         704</span></span>
+<span><span class="co">#&gt; 10  0.192307692        1120         704</span></span>
+<span><span class="co">#&gt; 11  0.313581645        1120         704</span></span>
+<span><span class="co">#&gt; 12  4.049343598        1120         704</span></span>
+<span><span class="co">#&gt; 13  0.006433569        1120         704</span></span>
+<span><span class="co">#&gt; 14 14.578444429        1120         704</span></span>
+<span><span class="co">#&gt; 15  0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 16  0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 17  0.237646086        1120         704</span></span>
+<span><span class="co">#&gt; 18 27.417550449        1120         704</span></span>
+<span><span class="co">#&gt; 19  0.187236765        1120         704</span></span>
+<span><span class="co">#&gt; 20 14.153401958        1120         704</span></span>
+<span><span class="co">#&gt; 21  0.282648355        1120         704</span></span>
+<span><span class="co">#&gt; 22  0.204425881        1120         704</span></span>
+<span><span class="co">#&gt; 23  0.236225583        1120         704</span></span>
+<span><span class="co">#&gt; 24 21.364594858        1120         704</span></span>
+<span><span class="co">#&gt; 25  0.300636446        1120         704</span></span>
+<span><span class="co">#&gt; 26  0.575393606        1120         704</span></span>
 <span><span class="va">weekly_stats</span></span>
 <span><span class="co">#&gt;         from         to     output        band min        mean         max</span></span>
-<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59074559   0.9372641</span></span>
-<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover   0  0.04086538   1.0000000</span></span>
-<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58174862   0.9156258</span></span>
-<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
-<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34161560   0.8719050</span></span>
-<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 18.95432692 100.0000000</span></span>
-<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0  0.54981498   0.8600247</span></span>
-<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0  0.04086538   1.0000000</span></span>
+<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59277750   0.9413260</span></span>
+<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
+<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58623717   0.9230593</span></span>
+<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover   0  0.03846154   1.0000000</span></span>
+<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34102285   0.8758675</span></span>
+<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 18.92067308 100.0000000</span></span>
+<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0  0.55108924   0.8641800</span></span>
+<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0  0.03846154   2.0000000</span></span>
 <span><span class="co">#&gt;        stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1  0.3130056        1120         704</span></span>
-<span><span class="co">#&gt; 2  0.1979783        1120         704</span></span>
-<span><span class="co">#&gt; 3  0.3050726        1120         704</span></span>
-<span><span class="co">#&gt; 4  0.1739926        1120         704</span></span>
-<span><span class="co">#&gt; 5  0.2366125        1120         704</span></span>
-<span><span class="co">#&gt; 6 27.4637931        1120         704</span></span>
-<span><span class="co">#&gt; 7  0.2815753        1120         704</span></span>
-<span><span class="co">#&gt; 8  0.1979783        1120         704</span></span>
+<span><span class="co">#&gt; 1  0.3146934        1120         704</span></span>
+<span><span class="co">#&gt; 2  0.1739926        1120         704</span></span>
+<span><span class="co">#&gt; 3  0.3076160        1120         704</span></span>
+<span><span class="co">#&gt; 4  0.1923077        1120         704</span></span>
+<span><span class="co">#&gt; 5  0.2376461        1120         704</span></span>
+<span><span class="co">#&gt; 6 27.4175504        1120         704</span></span>
+<span><span class="co">#&gt; 7  0.2826484        1120         704</span></span>
+<span><span class="co">#&gt; 8  0.2044259        1120         704</span></span>
 <span><span class="va">weekly_stats_extended</span></span>
 <span><span class="co">#&gt;          from         to     output        band min        mean         max</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59074559   0.9372641</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 2023-07-07 statistics cloud_cover   0  0.04086538   1.0000000</span></span>
-<span><span class="co">#&gt; 3  2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58174862   0.9156258</span></span>
-<span><span class="co">#&gt; 4  2023-07-08 2023-07-14 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
-<span><span class="co">#&gt; 5  2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34161560   0.8719050</span></span>
-<span><span class="co">#&gt; 6  2023-07-15 2023-07-21 statistics cloud_cover   0 18.95432692 100.0000000</span></span>
-<span><span class="co">#&gt; 7  2023-07-22 2023-07-28 statistics  ndvi_value   0  0.54981498   0.8600247</span></span>
-<span><span class="co">#&gt; 8  2023-07-22 2023-07-28 statistics cloud_cover   0  0.04086538   1.0000000</span></span>
-<span><span class="co">#&gt; 9  2023-07-29 2023-08-04 statistics  ndvi_value   0  0.57482954   0.9039569</span></span>
-<span><span class="co">#&gt; 10 2023-07-29 2023-08-04 statistics cloud_cover   0  0.02403846   1.0000000</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59277750   0.9413260</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 2023-07-07 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58623717   0.9230593</span></span>
+<span><span class="co">#&gt; 4  2023-07-08 2023-07-14 statistics cloud_cover   0  0.03846154   1.0000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34102285   0.8758675</span></span>
+<span><span class="co">#&gt; 6  2023-07-15 2023-07-21 statistics cloud_cover   0 18.92067308 100.0000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-22 2023-07-28 statistics  ndvi_value   0  0.55108924   0.8641800</span></span>
+<span><span class="co">#&gt; 8  2023-07-22 2023-07-28 statistics cloud_cover   0  0.03846154   2.0000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-29 2023-08-04 statistics  ndvi_value   0  0.57417085   0.9086367</span></span>
+<span><span class="co">#&gt; 10 2023-07-29 2023-08-04 statistics cloud_cover   0  0.05528846  11.0000000</span></span>
 <span><span class="co">#&gt;         stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1   0.3130056        1120         704</span></span>
-<span><span class="co">#&gt; 2   0.1979783        1120         704</span></span>
-<span><span class="co">#&gt; 3   0.3050726        1120         704</span></span>
-<span><span class="co">#&gt; 4   0.1739926        1120         704</span></span>
-<span><span class="co">#&gt; 5   0.2366125        1120         704</span></span>
-<span><span class="co">#&gt; 6  27.4637931        1120         704</span></span>
-<span><span class="co">#&gt; 7   0.2815753        1120         704</span></span>
-<span><span class="co">#&gt; 8   0.1979783        1120         704</span></span>
-<span><span class="co">#&gt; 9   0.2998643        1120         704</span></span>
-<span><span class="co">#&gt; 10  0.1531686        1120         704</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   0.3146934        1120         704</span></span>
+<span><span class="co">#&gt; 2   0.1739926        1120         704</span></span>
+<span><span class="co">#&gt; 3   0.3076160        1120         704</span></span>
+<span><span class="co">#&gt; 4   0.1923077        1120         704</span></span>
+<span><span class="co">#&gt; 5   0.2376461        1120         704</span></span>
+<span><span class="co">#&gt; 6  27.4175504        1120         704</span></span>
+<span><span class="co">#&gt; 7   0.2826484        1120         704</span></span>
+<span><span class="co">#&gt; 8   0.2044259        1120         704</span></span>
+<span><span class="co">#&gt; 9   0.3006364        1120         704</span></span>
+<span><span class="co">#&gt; 10  0.5753936        1120         704</span></span></code></pre></div>
 <p>In this example we have demonstrated that a week can be specified as
 either 7 days or 1 week.</p>
 </div>
@@ -792,66 +956,66 @@ either 7 days or 1 week.</p>
 request to compute the percentiles. If the percentiles requested are 25,
 50, and 75, the corresponding output is renamed ‘q1’, ‘median’, and
 ‘q3’.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">daily_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">1</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">daily_stats</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          date     output        band min          q1     median         mean</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value   0  0.06187625  0.1854656  0.210216716</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover   0  9.00000000 20.0000000 21.028846154</span></span>
-<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value   0  0.00000000  0.0000000  0.001150263</span></span>
-<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover  65 65.00000000 65.0000000 65.000000000</span></span>
-<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value   0  0.39318886  0.7291402  0.590745587</span></span>
-<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover   0  0.00000000  0.0000000  0.040865385</span></span>
-<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value   0  0.00000000  0.0000000  0.000207250</span></span>
-<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover  65 65.00000000 65.0000000 65.000000000</span></span>
-<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value   0  0.38260868  0.7194318  0.581748619</span></span>
-<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover   0  0.00000000  0.0000000  0.031250000</span></span>
-<span><span class="co">#&gt;            q3          max        stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1   0.3439528  0.650965929 1.700419e-01        1120         704</span></span>
-<span><span class="co">#&gt; 2  32.0000000 59.000000000 1.413258e+01        1120         704</span></span>
-<span><span class="co">#&gt; 3   0.0000000  0.071405768 6.540354e-03        1120         704</span></span>
-<span><span class="co">#&gt; 4  65.0000000 65.000000000 0.000000e+00        1120         704</span></span>
-<span><span class="co">#&gt; 5   0.8292812  0.937264144 3.130056e-01        1120         704</span></span>
-<span><span class="co">#&gt; 6   0.0000000  1.000000000 1.979783e-01        1120         704</span></span>
-<span><span class="co">#&gt; 7   0.0000000  0.002914758 5.075671e-04        1120         704</span></span>
-<span><span class="co">#&gt; 8  65.0000000 65.000000000 0.000000e+00        1120         704</span></span>
-<span><span class="co">#&gt; 9   0.8155493  0.915625751 3.050726e-01        1120         704</span></span>
-<span><span class="co">#&gt; 10  0.0000000  1.000000000 1.739926e-01        1120         704</span></span>
+<span><span class="co">#&gt;          date     output        band          min          q1      median</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value  0.000000000  0.13500306  0.27183646</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value  0.000000000  0.00000000  0.00000000</span></span>
+<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 65.000000000 65.00000000 65.00000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value  0.000000000  0.40708151  0.72846061</span></span>
+<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value  0.009024903  0.01335559  0.01449275</span></span>
+<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 65.000000000 65.00000000 65.00000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value  0.000000000  0.39752251  0.72366148</span></span>
+<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
+<span><span class="co">#&gt;           mean          q3         max        stDev sampleCount noDataCount</span></span>
+<span><span class="co">#&gt; 1   0.29693709  0.46695372  0.78141010  0.202025826        1120         704</span></span>
+<span><span class="co">#&gt; 2  11.49759615 27.00000000 59.00000000 16.430652463        1120         704</span></span>
+<span><span class="co">#&gt; 3   0.00130794  0.00000000  0.08091214  0.007348936        1120         704</span></span>
+<span><span class="co">#&gt; 4  65.00000000 65.00000000 65.00000000  0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 5   0.59277750  0.83494651  0.94132596  0.314693450        1120         704</span></span>
+<span><span class="co">#&gt; 6   0.03125000  0.00000000  1.00000000  0.173992636        1120         704</span></span>
+<span><span class="co">#&gt; 7   0.01435550  0.01541287  0.01816181  0.001601320        1120         704</span></span>
+<span><span class="co">#&gt; 8  65.00000000 65.00000000 65.00000000  0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 9   0.58623717  0.82233500  0.92305928  0.307616006        1120         704</span></span>
+<span><span class="co">#&gt; 10  0.03846154  0.00000000  1.00000000  0.192307692        1120         704</span></span>
 <span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span>
-<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>,mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
+<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weekly_stats</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         from         to     output        band min     P.10.0    P.20.0</span></span>
-<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0 0.00000000 0.2386117</span></span>
+<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0 0.00000000 0.2409204</span></span>
 <span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0 0.00000000 0.2473698</span></span>
+<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0 0.00000000 0.2461283</span></span>
 <span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0 0.03113456 0.1101370</span></span>
+<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0 0.03198843 0.1107902</span></span>
 <span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0 0.00000000 0.2345048</span></span>
+<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0 0.00000000 0.2372815</span></span>
 <span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
 <span><span class="co">#&gt;      P.30.0    P.40.0    P.50.0        mean     P.60.0     P.70.0     P.80.0</span></span>
-<span><span class="co">#&gt; 1 0.5270270 0.6485913 0.7291402  0.59074559  0.7688466  0.8111159  0.8490484</span></span>
-<span><span class="co">#&gt; 2 0.0000000 0.0000000 0.0000000  0.04086538  0.0000000  0.0000000  0.0000000</span></span>
-<span><span class="co">#&gt; 3 0.5275056 0.6426682 0.7194318  0.58174862  0.7583096  0.7922882  0.8290598</span></span>
-<span><span class="co">#&gt; 4 0.0000000 0.0000000 0.0000000  0.03125000  0.0000000  0.0000000  0.0000000</span></span>
-<span><span class="co">#&gt; 5 0.1839369 0.2453626 0.3146195  0.34161560  0.3871180  0.4729951  0.5737004</span></span>
-<span><span class="co">#&gt; 6 0.0000000 2.0000000 4.0000000 18.95432692 10.0000000 23.0000000 35.0000000</span></span>
-<span><span class="co">#&gt; 7 0.5171583 0.6132419 0.6799566  0.54981498  0.7185010  0.7427998  0.7737296</span></span>
-<span><span class="co">#&gt; 8 0.0000000 0.0000000 0.0000000  0.04086538  0.0000000  0.0000000  0.0000000</span></span>
+<span><span class="co">#&gt; 1 0.5346097 0.6485005 0.7284606  0.59277750  0.7729769  0.8137387  0.8501548</span></span>
+<span><span class="co">#&gt; 2 0.0000000 0.0000000 0.0000000  0.03125000  0.0000000  0.0000000  0.0000000</span></span>
+<span><span class="co">#&gt; 3 0.5303805 0.6513962 0.7236615  0.58623717  0.7651967  0.7999074  0.8342828</span></span>
+<span><span class="co">#&gt; 4 0.0000000 0.0000000 0.0000000  0.03846154  0.0000000  0.0000000  0.0000000</span></span>
+<span><span class="co">#&gt; 5 0.1835373 0.2423687 0.3113911  0.34102285  0.3892109  0.4739323  0.5801266</span></span>
+<span><span class="co">#&gt; 6 0.0000000 2.0000000 4.0000000 18.92067308 10.0000000 23.0000000 36.0000000</span></span>
+<span><span class="co">#&gt; 7 0.5198822 0.6117556 0.6803387  0.55108924  0.7165049  0.7446924  0.7765798</span></span>
+<span><span class="co">#&gt; 8 0.0000000 0.0000000 0.0000000  0.03846154  0.0000000  0.0000000  0.0000000</span></span>
 <span><span class="co">#&gt;       P.90.0         max      stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1  0.8826502   0.9372641  0.3130056        1120         704</span></span>
-<span><span class="co">#&gt; 2  0.0000000   1.0000000  0.1979783        1120         704</span></span>
-<span><span class="co">#&gt; 3  0.8645161   0.9156258  0.3050726        1120         704</span></span>
-<span><span class="co">#&gt; 4  0.0000000   1.0000000  0.1739926        1120         704</span></span>
-<span><span class="co">#&gt; 5  0.6986371   0.8719050  0.2366125        1120         704</span></span>
-<span><span class="co">#&gt; 6 62.0000000 100.0000000 27.4637931        1120         704</span></span>
-<span><span class="co">#&gt; 7  0.8089786   0.8600247  0.2815753        1120         704</span></span>
-<span><span class="co">#&gt; 8  0.0000000   1.0000000  0.1979783        1120         704</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  0.8888350   0.9413260  0.3146934        1120         704</span></span>
+<span><span class="co">#&gt; 2  0.0000000   1.0000000  0.1739926        1120         704</span></span>
+<span><span class="co">#&gt; 3  0.8731361   0.9230593  0.3076160        1120         704</span></span>
+<span><span class="co">#&gt; 4  0.0000000   1.0000000  0.1923077        1120         704</span></span>
+<span><span class="co">#&gt; 5  0.6991727   0.8758675  0.2376461        1120         704</span></span>
+<span><span class="co">#&gt; 6 61.0000000 100.0000000 27.4175504        1120         704</span></span>
+<span><span class="co">#&gt; 7  0.8116835   0.8641800  0.2826484        1120         704</span></span>
+<span><span class="co">#&gt; 8  0.0000000   2.0000000  0.2044259        1120         704</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="retrieving-a-series-of-statistics-in-a-batch">Retrieving a series of statistics in a batch<a class="anchor" aria-label="anchor" href="#retrieving-a-series-of-statistics-in-a-batch"></a>
@@ -865,30 +1029,38 @@ same periods. The <code>GetStatisticsBy*</code> functions
 specifically crafted for being called from a <code>lapply</code>-like
 function, and thus potentially be executed in parallel. The following
 example illustrates how to do this.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">script_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"NDVI_dataMask_float32.js"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
+<span><span class="va">ndvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        bands <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"R"</span><span class="op">)</span>,</span>
+<span>        formula <span class="op">=</span> <span class="st">"(N - R)/(N + R)"</span>,</span>
+<span>        long_name <span class="op">=</span> <span class="st">"Normalized Difference Vegetation Index"</span>,</span>
+<span>        platforms <span class="op">=</span> <span class="st">"Sentinel-2"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="va">seasons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SeasonalTimerange.html">SeasonalTimerange</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"2020-06-01"</span>, to <span class="op">=</span> <span class="st">"2023-08-31"</span><span class="op">)</span></span>
 <span><span class="va">lst_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">seasons</span>, <span class="va">GetStatisticsByTimerange</span>, aoi <span class="op">=</span> <span class="va">aoi</span>, </span>
-<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, </span>
+<span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">ndvi_script</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, </span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7L</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">lst_stats</span><span class="op">)</span></span>
 <span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="va">weekly_stats</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">weekly_stats</span><span class="op">$</span><span class="va">from</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">weekly_stats</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weekly_stats</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         from         to     output       band min      mean       max     stDev</span></span>
-<span><span class="co">#&gt; 1 2020-06-01 2020-06-07 statistics ndvi_value   0 0.5098300 0.8682218 0.2910484</span></span>
-<span><span class="co">#&gt; 2 2020-06-08 2020-06-14 statistics ndvi_value   0 0.5726369 0.9431616 0.3054573</span></span>
-<span><span class="co">#&gt; 3 2020-06-15 2020-06-21 statistics ndvi_value   0 0.6214251 1.0000000 0.3205804</span></span>
-<span><span class="co">#&gt; 4 2020-06-22 2020-06-28 statistics ndvi_value   0 0.4591027 0.8495593 0.2735705</span></span>
-<span><span class="co">#&gt; 5 2020-06-29 2020-07-05 statistics ndvi_value   0 0.5989513 0.9304222 0.3006899</span></span>
+<span><span class="co">#&gt;         from         to  output  band min      mean       max     stDev</span></span>
+<span><span class="co">#&gt; 1 2020-06-01 2020-06-07 default index  -1 0.4082754 0.8682218 0.5207691</span></span>
+<span><span class="co">#&gt; 2 2020-06-08 2020-06-14 default index  -1 0.5388992 0.9431616 0.3889898</span></span>
+<span><span class="co">#&gt; 3 2020-06-15 2020-06-21 default index  -1 0.5560332 1.0000000 0.5017145</span></span>
+<span><span class="co">#&gt; 4 2020-06-22 2020-06-28 default index  -1 0.3958983 0.8495593 0.4120251</span></span>
+<span><span class="co">#&gt; 5 2020-06-29 2020-07-05 default index  -1 0.5687154 0.9304222 0.3793754</span></span>
 <span><span class="co">#&gt;   sampleCount noDataCount</span></span>
 <span><span class="co">#&gt; 1        1120         704</span></span>
 <span><span class="co">#&gt; 2        1120         704</span></span>
 <span><span class="co">#&gt; 3        1120         704</span></span>
 <span><span class="co">#&gt; 4        1120         704</span></span>
 <span><span class="co">#&gt; 5        1120         704</span></span></code></pre></div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="section level2">
@@ -916,7 +1088,7 @@ images), Catalog API (used for catalog searches), and Statistical API
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

@@ -1,6 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.github$
 ^LICENSE$
+^README\.md$
 ^.github/*
 ^animations/*
 ^docs/*

@@ -175,6 +175,19 @@ GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
     } else {
         req <- httr2::req_oauth_client_credentials(req, client = client)
     }
+    # automatically retry failing requests
+    after_8 <- function(resp) {
+        # convert millisecond into seconds
+        if (resp$status_code == 429L) {
+            wait <- as.numeric(httr2::resp_header(resp,
+                                                  header = "retry-after",
+                                                  default = NA)) / 1000.0
+        } else {
+            wait <- NA
+        }
+        return(wait)
+    }
+    req <- httr2::req_retry(req, max_tries = 5, after = after_8)
     # run the request
     resp <- try(httr2::req_perform(req), silent = TRUE)
     if (inherits(resp, "try-error")) {

@@ -32,6 +32,9 @@ UniqueCatalog <- function(imageCatalog, by = c("areaCoverage", "tileCloudCover")
         agg1 <- stats::aggregate(areaCoverage ~ acquisitionDate, data = imageCatalog, FUN = max)
         tmp <- merge.data.frame(agg1, imageCatalog, by = c("acquisitionDate", "areaCoverage"), sort = FALSE)
     } else {
+        if (is.na(match("tileCloudCover", names(imageCatalog)))) {
+            stop("'tileCloudCover' is not present in the image catalog")
+        }
         # get image with minimal cloud cover for the day
         agg1 <- stats::aggregate(tileCloudCover ~ acquisitionDate, data = imageCatalog, FUN = min)
         tmp <- merge.data.frame(agg1, imageCatalog, by = c("acquisitionDate", "tileCloudCover"), sort = FALSE)
