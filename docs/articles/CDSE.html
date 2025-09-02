@@ -182,7 +182,7 @@ argument.</p>
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2023-07-01"</span>, to <span class="op">=</span> <span class="st">"2023-07-31"</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">TRUE</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">images</span></span>
-<span><span class="co">#&gt; Simple feature collection with 140 features and 11 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 85 features and 11 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 4.357925 ymin: 48.58836 xmax: 7.775117 ymax: 50.54532</span></span>
@@ -190,48 +190,48 @@ argument.</p>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    acquisitionDate tileCloudCover areaCoverage   satellite</span></span>
 <span><span class="co">#&gt; 1       2023-07-31          98.87        1.845 sentinel-2a</span></span>
-<span><span class="co">#&gt; 2       2023-07-31          98.87        1.845 sentinel-2a</span></span>
-<span><span class="co">#&gt; 3       2023-07-31          99.85       20.346 sentinel-2a</span></span>
-<span><span class="co">#&gt; 4       2023-07-31          99.85       20.346 sentinel-2a</span></span>
-<span><span class="co">#&gt; 5       2023-07-31          99.74        5.934 sentinel-2a</span></span>
-<span><span class="co">#&gt; 6       2023-07-31          99.74        5.934 sentinel-2a</span></span>
-<span><span class="co">#&gt; 7       2023-07-31          99.94       16.324 sentinel-2a</span></span>
-<span><span class="co">#&gt; 8       2023-07-31          99.94       16.324 sentinel-2a</span></span>
-<span><span class="co">#&gt; 9       2023-07-31          99.91       92.463 sentinel-2a</span></span>
-<span><span class="co">#&gt; 10      2023-07-31          99.91       92.463 sentinel-2a</span></span>
+<span><span class="co">#&gt; 2       2023-07-31          99.85       20.346 sentinel-2a</span></span>
+<span><span class="co">#&gt; 3       2023-07-31          99.74        5.934 sentinel-2a</span></span>
+<span><span class="co">#&gt; 4       2023-07-31          99.94       16.324 sentinel-2a</span></span>
+<span><span class="co">#&gt; 5       2023-07-31          99.91       92.463 sentinel-2a</span></span>
+<span><span class="co">#&gt; 6       2023-07-31          99.41       22.236 sentinel-2a</span></span>
+<span><span class="co">#&gt; 7       2023-07-31          99.41       22.236 sentinel-2a</span></span>
+<span><span class="co">#&gt; 8       2023-07-28          99.99        4.986 sentinel-2a</span></span>
+<span><span class="co">#&gt; 9       2023-07-28          99.99        4.986 sentinel-2a</span></span>
+<span><span class="co">#&gt; 10      2023-07-28          99.99        5.659 sentinel-2a</span></span>
 <span><span class="co">#&gt;    acquisitionTimestampUTC acquisitionTimestampLocal</span></span>
 <span><span class="co">#&gt; 1      2023-07-31 10:47:29       2023-07-31 12:47:29</span></span>
-<span><span class="co">#&gt; 2      2023-07-31 10:47:29       2023-07-31 12:47:29</span></span>
-<span><span class="co">#&gt; 3      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
-<span><span class="co">#&gt; 4      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
-<span><span class="co">#&gt; 5      2023-07-31 10:47:23       2023-07-31 12:47:23</span></span>
-<span><span class="co">#&gt; 6      2023-07-31 10:47:22       2023-07-31 12:47:22</span></span>
-<span><span class="co">#&gt; 7      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
-<span><span class="co">#&gt; 8      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
-<span><span class="co">#&gt; 9      2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
-<span><span class="co">#&gt; 10     2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
+<span><span class="co">#&gt; 2      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
+<span><span class="co">#&gt; 3      2023-07-31 10:47:22       2023-07-31 12:47:22</span></span>
+<span><span class="co">#&gt; 4      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
+<span><span class="co">#&gt; 5      2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
+<span><span class="co">#&gt; 6      2023-07-31 10:47:09       2023-07-31 12:47:09</span></span>
+<span><span class="co">#&gt; 7      2023-07-31 10:47:09       2023-07-31 12:47:09</span></span>
+<span><span class="co">#&gt; 8      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
+<span><span class="co">#&gt; 9      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
+<span><span class="co">#&gt; 10     2023-07-28 10:37:27       2023-07-28 12:37:27</span></span>
 <span><span class="co">#&gt;                                                             sourceId long.min</span></span>
 <span><span class="co">#&gt; 1  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFQ_20241021T055741.SAFE 4.357925</span></span>
-<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFQ_20230731T202459.SAFE 4.357925</span></span>
-<span><span class="co">#&gt; 3  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGQ_20241021T055741.SAFE 5.714101</span></span>
-<span><span class="co">#&gt; 4  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGQ_20230731T202459.SAFE 5.714101</span></span>
-<span><span class="co">#&gt; 5  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULV_20230731T202459.SAFE 6.230946</span></span>
-<span><span class="co">#&gt; 6  S2A_MSIL2A_20230731T103631_N0510_R008_T32ULV_20241021T055741.SAFE 6.230946</span></span>
-<span><span class="co">#&gt; 7  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFR_20241021T055741.SAFE 4.382698</span></span>
-<span><span class="co">#&gt; 8  S2A_MSIL2A_20230731T103631_N0509_R008_T31UFR_20230731T202459.SAFE 4.382698</span></span>
-<span><span class="co">#&gt; 9  S2A_MSIL2A_20230731T103631_N0509_R008_T31UGR_20230731T202459.SAFE 5.763559</span></span>
-<span><span class="co">#&gt; 10 S2A_MSIL2A_20230731T103631_N0510_R008_T31UGR_20241021T055741.SAFE 5.763559</span></span>
+<span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGQ_20241021T055741.SAFE 5.714101</span></span>
+<span><span class="co">#&gt; 3  S2A_MSIL2A_20230731T103631_N0510_R008_T32ULV_20241021T055741.SAFE 6.230946</span></span>
+<span><span class="co">#&gt; 4  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFR_20241021T055741.SAFE 4.382698</span></span>
+<span><span class="co">#&gt; 5  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGR_20241021T055741.SAFE 5.763559</span></span>
+<span><span class="co">#&gt; 6  S2A_MSIL2A_20230731T103631_N0510_R008_T32ULA_20241021T055741.SAFE 6.178682</span></span>
+<span><span class="co">#&gt; 7  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULA_20230731T202459.SAFE 6.178682</span></span>
+<span><span class="co">#&gt; 8  S2A_MSIL2A_20230728T102601_N0510_R108_T31UGQ_20241020T071602.SAFE 5.880056</span></span>
+<span><span class="co">#&gt; 9  S2A_MSIL2A_20230728T102601_N0509_R108_T31UGQ_20230728T180355.SAFE 5.880056</span></span>
+<span><span class="co">#&gt; 10 S2A_MSIL2A_20230728T102601_N0510_R108_T32ULV_20241020T071602.SAFE 6.234494</span></span>
 <span><span class="co">#&gt;     lat.min long.max  lat.max                       geometry</span></span>
 <span><span class="co">#&gt; 1  48.62983 5.904558 49.64443 POLYGON ((4.385187 49.64443...</span></span>
-<span><span class="co">#&gt; 2  48.62983 5.904558 49.64443 POLYGON ((4.385187 49.64443...</span></span>
-<span><span class="co">#&gt; 3  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
-<span><span class="co">#&gt; 4  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
-<span><span class="co">#&gt; 5  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
-<span><span class="co">#&gt; 6  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
-<span><span class="co">#&gt; 7  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
-<span><span class="co">#&gt; 8  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
-<span><span class="co">#&gt; 9  49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span>
-<span><span class="co">#&gt; 10 49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
+<span><span class="co">#&gt; 3  48.63394 7.762836 49.64597 POLYGON ((6.230946 49.61959...</span></span>
+<span><span class="co">#&gt; 4  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
+<span><span class="co">#&gt; 5  49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span>
+<span><span class="co">#&gt; 6  49.53174 7.752769 50.54532 POLYGON ((6.178682 50.51809...</span></span>
+<span><span class="co">#&gt; 7  49.53174 7.752769 50.54532 POLYGON ((6.178682 50.51809...</span></span>
+<span><span class="co">#&gt; 8  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
+<span><span class="co">#&gt; 9  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
+<span><span class="co">#&gt; 10 48.63304 7.775117 49.62896 POLYGON ((6.259211 49.62026...</span></span></code></pre></div>
 <p>We can visualize the coverage of the area of interest by the
 satellite image tiles by plotting the footprints of the available images
 and showing the region of interest in red.</p>
@@ -254,7 +254,7 @@ others cover almost the entire area.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">areaCoverage</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   1.845   5.595  15.113  19.758  20.346  92.463</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.845   5.595  15.393  18.679  20.346  92.463</span></span></code></pre></div>
 <p>The tile number can be obtained from the image attribute
 <code>sourceId</code>, as explained <a href="https://sentiwiki.copernicus.eu/web/s2-products" class="external-link">here</a>. We can
 therefore summarize the distribution of area coverage by tile number,
@@ -272,19 +272,19 @@ and see which tiles provide the best coverage of the AOI.</p>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGQ</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.294   4.899  12.706  12.587  20.346  20.346 </span></span>
+<span><span class="co">#&gt;   4.294   4.910  12.706  12.566  20.346  20.346 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGR</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.855  15.565  54.299  53.426  92.463  92.463 </span></span>
+<span><span class="co">#&gt;   6.855  15.543  16.022  48.698  92.463  92.463 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULA</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.169  14.922  18.814  17.972  22.236  22.236 </span></span>
+<span><span class="co">#&gt;   6.171  15.108  22.236  18.734  22.236  22.236 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULV</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.944   5.595   5.819   5.723   5.934   5.934</span></span></code></pre></div>
+<span><span class="co">#&gt;   4.944   5.595   5.705   5.727   5.934   5.934</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="catalog-by-season">Catalog by season<a class="anchor" aria-label="anchor" href="#catalog-by-season"></a>
 </h3>
@@ -359,7 +359,7 @@ function, and thus potentially also using the parallel processing.</p>
 <span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T155141_N0510_R011_T18TWL_20240820T212405.SAFE -74.88632</span></span>
 <span><span class="co">#&gt; 3  S2B_MSIL2A_20230726T153819_N0510_R011_T18TWL_20240819T050747.SAFE -74.88431</span></span>
 <span><span class="co">#&gt; 4  S2A_MSIL2A_20230711T153821_N0510_R011_T18TWL_20241019T212830.SAFE -74.88773</span></span>
-<span><span class="co">#&gt; 5  S2A_MSIL2A_20230601T155141_N0509_R011_T18TWL_20230601T220554.SAFE -74.89199</span></span>
+<span><span class="co">#&gt; 5  S2A_MSIL2A_20230601T155141_N0510_R011_T18TWL_20240812T201136.SAFE -74.89199</span></span>
 <span><span class="co">#&gt; 6  S2A_MSIL2A_20220825T155151_N0510_R011_T18TWL_20240630T134356.SAFE -74.89577</span></span>
 <span><span class="co">#&gt; 7  S2B_MSIL2A_20220803T154819_N0510_R054_T18TWL_20240715T195039.SAFE -75.00023</span></span>
 <span><span class="co">#&gt; 8  S2A_MSIL2A_20220719T154951_N0510_R054_T18TWL_20240705T002349.SAFE -75.00023</span></span>
@@ -449,9 +449,12 @@ course, always get the raw values and then customise the visualisation
 in your R code. Other indices might have only one version; it will
 likely first compute the index value and then possibly transform it for
 visualisation - adapt based on your needs.</p>
-<div class="float">
-<img src="script_code.png" alt="Using evalscript code from the repository"><div class="figcaption">Using evalscript code from the repository</div>
+<div class="figure" style="text-align: center">
+<img src="script_code.png" alt="Using evalscript code from the repository" width="80%"><p class="caption">
+Using evalscript code from the repository
+</p>
 </div>
+<p><br></p>
 <p><em>Note:</em></p>
 <p><em>The repository also contains scripts for satellite collections
 that are not available through CDSE.</em></p>
@@ -497,7 +500,7 @@ generated script directly in a function, you would use something like
 and just provide the <code>short_name</code> of the index as the first
 argument (instead of the one-row <code>data.frame</code>). Please note
 that the <code>short_name</code> is case-sensitive, although most of the
-names are in full upper-case . You of course still have to provide any
+names are in full upper-case. You of course still have to provide any
 additional arguments, if required, in the usual way. Here is an
 example:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -535,14 +538,16 @@ illustrate the process.</p>
 <span><span class="va">day</span> <span class="op">&lt;-</span> <span class="va">images</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">tileCloudCover</span><span class="op">)</span>, <span class="op">]</span><span class="op">[[</span><span class="st">"acquisitionDate"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="co"># get the greyscale image</span></span>
 <span><span class="va">grey_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"grey.tif"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">custom_script</span>, file <span class="op">=</span> <span class="va">grey_file</span>,</span>
+<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">custom_script</span>, </span>
+<span>         file <span class="op">=</span> <span class="va">grey_file</span>,</span>
 <span>         collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, format <span class="op">=</span> <span class="st">"image/tiff"</span>,</span>
 <span>         mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, resolution <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>         mask <span class="op">=</span> <span class="cn">FALSE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="co"># get the RGB image</span></span>
 <span><span class="va">script_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"TrueColorS2L2A.js"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">rgb_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"rgb.tif"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">script_file</span>, file <span class="op">=</span> <span class="va">rgb_file</span>,</span>
+<span><span class="fu"><a href="../reference/GetImage.html">GetImage</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">aoi</span><span class="op">)</span>, time_range <span class="op">=</span> <span class="va">day</span>, script <span class="op">=</span> <span class="va">script_file</span>, </span>
+<span>         file <span class="op">=</span> <span class="va">rgb_file</span>,</span>
 <span>         collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, format <span class="op">=</span> <span class="st">"image/tiff"</span>,</span>
 <span>         mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, resolution <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>         mask <span class="op">=</span> <span class="cn">FALSE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
@@ -557,8 +562,14 @@ illustrate the process.</p>
 <span><span class="co"># Plot RGB image</span></span>
 <span><span class="fu">plotRGB</span><span class="op">(</span><span class="va">rgb_img</span><span class="op">)</span>   <span class="co"># expects layers 1,2,3 as R,G,B</span></span>
 <span><span class="co"># Plot greyscale image</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">grey_img</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">256</span>, start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, axes <span class="op">=</span> <span class="cn">FALSE</span>, mar <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CDSE_files/figure-html/compare%20greyscale%20and%20RGB%20images-1.png" width="100%" style="display: block; margin: auto;"></p>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">grey_img</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">256</span>, start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>     axes <span class="op">=</span> <span class="cn">FALSE</span>, mar <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="CDSE_files/figure-html/compare%20greyscale%20and%20RGB%20images-1.png" alt="RGB and greyscale images of Central Park" width="100%"><p class="caption">
+RGB and greyscale images of Central Park
+</p>
+</div>
+<div style="page-break-after: always;"></div>
 <p><em>Caveats:</em></p>
 <p><em>Kernel Spectral Indices cannot be used in this context as they do
 not fit into the API model (they do not operate directly on raw spectral
@@ -566,6 +577,7 @@ bands).</em></p>
 <p><em>The indices that are not available for the Sentinel-1 or
 Sentinel-2 platforms cannot be used, as only the Sentinel collections
 are available through the CDSE API.</em></p>
+<p><br></p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -660,7 +672,7 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file934759f9d7a2 </span></span>
+<span><span class="co">#&gt; name        : file136c1a95a596 </span></span>
 <span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
 <span><span class="co">#&gt; max value   :        0.9507549</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -861,8 +873,8 @@ are of equal duration. This is controlled by the value of the
 <span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
 <span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value  0.000000000  0.58623717   0.92305928</span></span>
 <span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover  0.000000000  0.03846154   1.00000000</span></span>
-<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value  0.000000000  0.56409693   0.97042620</span></span>
-<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover  0.000000000  1.11778846  44.00000000</span></span>
+<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value  0.000000000  0.56782958   0.97438085</span></span>
+<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover  0.000000000  1.02644231  46.00000000</span></span>
 <span><span class="co">#&gt; 13 2023-07-16 statistics  ndvi_value  0.000000000  0.02039137   0.04840916</span></span>
 <span><span class="co">#&gt; 14 2023-07-16 statistics cloud_cover 65.000000000 73.26442308 100.00000000</span></span>
 <span><span class="co">#&gt; 15 2023-07-19 statistics  ndvi_value  0.000000000  0.00000000   0.00000000</span></span>
@@ -888,8 +900,8 @@ are of equal duration. This is controlled by the value of the
 <span><span class="co">#&gt; 8   0.000000000        1120         704</span></span>
 <span><span class="co">#&gt; 9   0.307616006        1120         704</span></span>
 <span><span class="co">#&gt; 10  0.192307692        1120         704</span></span>
-<span><span class="co">#&gt; 11  0.313581645        1120         704</span></span>
-<span><span class="co">#&gt; 12  4.049343598        1120         704</span></span>
+<span><span class="co">#&gt; 11  0.312498927        1120         704</span></span>
+<span><span class="co">#&gt; 12  3.895482200        1120         704</span></span>
 <span><span class="co">#&gt; 13  0.006433569        1120         704</span></span>
 <span><span class="co">#&gt; 14 14.578444429        1120         704</span></span>
 <span><span class="co">#&gt; 15  0.000000000        1120         704</span></span>
@@ -1075,7 +1087,11 @@ provided. Once you are on the webpage, scroll down to Sentinel Hub, and
 pay particular attention to the Process API (used for retrieving
 images), Catalog API (used for catalog searches), and Statistical API
 (used for retrieving statistics).</p>
-<p><a href="https://dashboard.dataspace.copernicus.eu/#/service-health" class="external-link"><img src="service_health.png" alt="Copernicus Data Space Ecosystem Service Health"></a></p>
+<div class="figure" style="text-align: center">
+<img src="service_health.png" alt="Copernicus Data Space Ecosystem Service Health" width="100%"><p class="caption">
+Copernicus Data Space Ecosystem Service Health
+</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
