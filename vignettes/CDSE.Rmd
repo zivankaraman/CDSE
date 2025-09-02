@@ -165,13 +165,11 @@ There is a large collection of evalscripts that you can readily use available in
 knitr::include_graphics("script_code.png")
 ```
 
-<br>
-
 *Note:*
 
 *The repository also contains scripts for satellite collections that are not available through CDSE.*
 
-
+<br>
 
 ## Awesome Spectral Indices
 
