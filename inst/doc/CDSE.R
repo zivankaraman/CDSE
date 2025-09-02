@@ -65,6 +65,9 @@ summer_images <- summer_images[rev(order(summer_images$acquisitionDate)), ]
 row.names(summer_images) <- NULL
 summer_images
 
+## ----label="ready-to-use examples", echo = FALSE, fig.cap = "Using evalscript code from the repository", fig.align = "center", out.width = "80%"----
+knitr::include_graphics("script_code.png")
+
 ## ----label="spectral indices"-------------------------------------------------
 si <- rsi::spectral_indices() # get spectral indices
 # NDVI
@@ -85,7 +88,7 @@ custom_def <- list(bands = c("R", "G", "B"),
                    platforms = "Sentinel-2")
 custom_script <- paste(MakeEvalScript(custom_def), collapse = "\n")
 
-## ----label="compare greyscale and RGB images"---------------------------------
+## ----label="compare greyscale and RGB images", fig.cap = "RGB and greyscale images of Central Park", fig.width = 8, fig.height = 5----
 # select the day with smallest cloud cover
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
 aoi <- sf::read_sf(dsn, as_tibble = FALSE)
@@ -95,14 +98,16 @@ images <- SearchCatalog(aoi = aoi, from = "2023-06-01", to = "2023-08-31",
 day <- images[order(images$tileCloudCover), ][["acquisitionDate"]][1]
 # get the greyscale image
 grey_file <- file.path(tempdir(), "grey.tif")
-GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = custom_script, file = grey_file,
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = custom_script, 
+         file = grey_file,
          collection = "sentinel-2-l2a", format = "image/tiff",
          mosaicking_order = "leastCC", resolution = 20,
          mask = FALSE, buffer = 100, client = OAuthClient)
 # get the RGB image
 script_file <- system.file("scripts", "TrueColorS2L2A.js", package = "CDSE")
 rgb_file <- file.path(tempdir(), "rgb.tif")
-GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = script_file, file = rgb_file,
+GetImage(bbox = sf::st_bbox(aoi), time_range = day, script = script_file, 
+         file = rgb_file,
          collection = "sentinel-2-l2a", format = "image/tiff",
          mosaicking_order = "leastCC", resolution = 20,
          mask = FALSE, buffer = 100, client = OAuthClient)
@@ -117,7 +122,8 @@ old.par <- par(mfrow = c(1, 2))
 # Plot RGB image
 plotRGB(rgb_img)   # expects layers 1,2,3 as R,G,B
 # Plot greyscale image
-plot(grey_img, col = grey.colors(256, start = 0, end = 1), legend = FALSE, axes = FALSE, mar = 0)
+plot(grey_img, col = grey.colors(256, start = 0, end = 1), legend = FALSE, 
+     axes = FALSE, mar = 0)
 
 ## ----label = "reset plot", include = FALSE------------------------------------
 # Reset plotting layout to default
@@ -246,4 +252,7 @@ weekly_stats <- do.call(rbind, lst_stats)
 weekly_stats <- weekly_stats[order(weekly_stats$from), ]
 row.names(weekly_stats) <- NULL
 head(weekly_stats, n = 5)
+
+## ----label="service health", echo = FALSE, fig.cap = "Copernicus Data Space Ecosystem Service Health", fig.align = "center", out.width = "100%"----
+knitr::include_graphics("service_health.png")
 
