@@ -72,21 +72,22 @@ knitr::include_graphics("script_code.png")
 si <- rsi::spectral_indices() # get spectral indices
 # NDVI
 ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
-ndvi_script <- MakeEvalScript(ndvi) # generates the script
+ndvi_script <- MakeEvalScript(ndvi, constellation = "landsat") # generates the script
 # GDVI
 gdvi <- subset(si, short_name == "GDVI") # creates one-row data.frame
 # GDVI requires an extra argument provided by the user
-gdvi_script <- MakeEvalScript(gdvi, nexp = 2) # generates the script
+gdvi_script <- MakeEvalScript(gdvi, nexp = 2, constellation = "sentinel-2")
 
 ## ----label="spectral indices by short_name"-----------------------------------
-gdvi_script <- MakeEvalScript("GDVI", nexp = 2)
+gdvi_script <- MakeEvalScript("GDVI", nexp = 2, constellation = "sentinel-2")
 
 ## ----label="custom spectral indices"------------------------------------------
 custom_def <- list(bands = c("R", "G", "B"),
                    formula = "0.3 * R + 0.59 * G + 0.11 * B",
                    # long_name = "Greyscale image",
                    platforms = "Sentinel-2")
-custom_script <- paste(MakeEvalScript(custom_def), collapse = "\n")
+custom_script <- paste(MakeEvalScript(custom_def, constellation = "sentinel-2"), 
+                       collapse = "\n")
 
 ## ----label="compare greyscale and RGB images", fig.cap = "RGB and greyscale images of Central Park", fig.width = 8, fig.height = 5----
 # select the day with smallest cloud cover
@@ -242,8 +243,8 @@ ndvi_script <- paste(MakeEvalScript(
         formula = "(N - R)/(N + R)",
         long_name = "Normalized Difference Vegetation Index",
         platforms = "Sentinel-2"
-    )
-), collapse = "\n")
+    ),
+    constellation = "sentinel-2"), collapse = "\n")
 seasons <- SeasonalTimerange(from = "2020-06-01", to = "2023-08-31")
 lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi, 
     collection = "sentinel-2-l2a", script = ndvi_script, mosaicking_order = "leastCC", 

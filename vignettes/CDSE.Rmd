@@ -41,7 +41,7 @@ The main functions allow to search the catalog of available imagery from the Sen
 
 # API authentication
 
-Most of the API functions require OAuth2 authentication. The recommended procedure is to obtain an authentication client object from the `GetOAuthClient` function and pass it as the `client` argument to the functions requiring the authentication. For more detailed information, you are invited to consult the "`Before you start`" document.
+Most of the API functions require OAuth2 authentication. The recommended procedure is to obtain an authentication client object from the `GetOAuthClient()` function and pass it as the `client` argument to the functions requiring the authentication. For more detailed information, you are invited to consult the "`Before you start`" document.
 
 ```{r label = "GetOAuthClient"}
 id <- Sys.getenv("CDSE_ID")
@@ -108,7 +108,7 @@ by(images$areaCoverage, INDICES = tileNumber, FUN = summary)
 
 ## Catalog by season
 
-Sometimes one can be interested in only a given period of each year, for example, the images taken during the summer months (June to August). We can filter an existing image catalog *a posteriori* using the `SeasonalFilter` function.
+Sometimes one can be interested in only a given period of each year, for example, the images taken during the summer months (June to August). We can filter an existing image catalog *a posteriori* using the `SeasonalFilter()` function.
 
 ```{r label = "seasonal filter on catalog"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
@@ -122,7 +122,7 @@ summer_images <- SeasonalFilter(images, from = "2021-06-01", to = "2023-08-31")
 dim(summer_images)
 ```
 
-It is also possible to query the API directly on the desired seasonal periods by using a vectorized version of the `SearchCatalog` function. The vectorized versions allow running a series of queries having the same parameter values except for either time range, AOI, or the bounding box parameters, using `lapply` or similar function, and thus potentially also using the parallel processing.
+It is also possible to query the API directly on the desired seasonal periods by using a vectorized version of the `SearchCatalog()` function. The vectorized versions allow running a series of queries having the same parameter values except for either time range, AOI, or the bounding box parameters, using `lapply` or similar function, and thus potentially also using the parallel processing.
 
 ```{r label = "seasonal query on catalog"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
@@ -143,13 +143,13 @@ summer_images
 
 # Evalscripts
 
-As we shall see in the examples below, the functions that operate on remotely sensed spectral band values, such as `GetImage` or `GetStatistics`, require an evalscript to be passed to the `script` argument.
+As we shall see in the examples below, the functions that operate on remotely sensed spectral band values, such as `GetImage()` or `GetStatistics()`, require an evalscript to be passed to the `script` argument.
 
 An evalscript (or "custom script") is a piece of JavaScript code that defines how the satellite data shall be processed by the API and what values the service shall return. It is a required part of any request involving data processing, such as retrieving an image of the area of interest or computing some statistical values for a given period of time.
 
 The evaluation scripts can use any JavaScript function or language structures, along with certain utility functions provided by the API for user convenience. The Chrome V8 JavaScript engine is used for running the evalscripts.
 
-The evaluation scripts are passed as the `script` argument to the `GetImage`, `GetStatistics`, and other functions that require an evalscript. It has to be either a character string containing the evaluation script or the name of the file containing the script.
+The evaluation scripts are passed as the `script` argument to the `GetImage()`, `GetStatistics()`, and other functions that require an evalscript. It has to be either a character string containing the evaluation script or the name of the file containing the script.
 
 Although it is beyond the scope of this document to provide the detailed guidance for writing evalscripts, we shall provide here some tips that can help you to use the the above mentioned functions without deep understanding of the evalscripts' internal workings. We encourage users who wish to acquire a deeper knowledge of evalscripts to consult the API [Beginners Guide](https://docs.sentinel-hub.com/api/latest/user-guides/beginners-guide/) and [Evalscript (custom script)](https://docs.sentinel-hub.com/api/latest/evalscript/) documentation. You can also find a large collection of custom scripts that you can readily use in this [repository](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/).
 
@@ -175,7 +175,7 @@ knitr::include_graphics("script_code.png")
 
 'Awesome Spectral Indices' ([ASI](https://awesome-ee-spectral-indices.readthedocs.io/en/latest/)) is a standardized, machine-readable catalogue of spectral indices used in remote sensing for Earth Observation. It currently includes over 240 spectral indices grouped into eight application domains: vegetation, water, burn, snow, soil, urban, radar, and kernel indices. Each spectral index in ASI comes with a set of attributes such as a short and long name, application domain, formula, required bands, platforms, references, date of addition, and contributor information.
 
-The `R` package [rsi](https://cran.r-project.org/package=rsi) implements an interface to the ASI collection, providing the list of indices directly in `R` as a friendly `data.frame` (actually a `tibble`). These indices can now be directly used in the 'CDSE' package to provide the evalscript to the functions that require one. For this purpose, we have developed the `MakeEvalScript` function that will generate the script for you based on the information contained in the `data.frame` of spectral indices produced by `rsi::spectral_indices()`.
+The `R` package [rsi](https://cran.r-project.org/package=rsi) implements an interface to the ASI collection, providing the list of indices directly in `R` as a friendly `data.frame` (actually a `tibble`). These indices can now be directly used in the 'CDSE' package to provide the evalscript to the functions that require one. For this purpose, we have developed the `MakeEvalScript()` function that will generate the script for you based on the information contained in the `data.frame` of spectral indices produced by `rsi::spectral_indices()`.
 
 Here is an example showing how it works.
 
@@ -183,11 +183,11 @@ Here is an example showing how it works.
 si <- rsi::spectral_indices() # get spectral indices
 # NDVI
 ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
-ndvi_script <- MakeEvalScript(ndvi) # generates the script
+ndvi_script <- MakeEvalScript(ndvi, constellation = "landsat") # generates the script
 # GDVI
 gdvi <- subset(si, short_name == "GDVI") # creates one-row data.frame
 # GDVI requires an extra argument provided by the user
-gdvi_script <- MakeEvalScript(gdvi, nexp = 2) # generates the script
+gdvi_script <- MakeEvalScript(gdvi, nexp = 2, constellation = "sentinel-2")
 ```
 
 The value returned by the function is a character vector with each element representing one line of the script. You can best visualise the script code by `cat(gdvi_script, sep = "\n")`, or save it to a file for later use with `cat(gdvi_script, file = "GDVI.js", sep = "\n")`. To use the generated script directly in a function, you would use something like `GetImage(..., script = paste(gdvi_script, collapse = "\n"), ...)`.
@@ -195,7 +195,7 @@ The value returned by the function is a character vector with each element repre
 If the package `rsi` is installed, you can use a shortcut and just provide the `short_name` of the index as the first argument (instead of the one-row `data.frame`). Please note that the `short_name` is case-sensitive, although most of the names are in full upper-case. You of course still have to provide any additional arguments, if required, in the usual way. Here is an example:
 
 ```{r label="spectral indices by short_name"}
-gdvi_script <- MakeEvalScript("GDVI", nexp = 2)
+gdvi_script <- MakeEvalScript("GDVI", nexp = 2, constellation = "sentinel-2")
 ```
 
 Finally, you can also define ad-hoc custom indices by providing a one-row `data.frame` crafted after the model produced by `rsi::spectral_indices()`. Please ensure that you respect the correct formatting, particularly when writing the formula. Since the function does not use all the attributes of spectral indices but just `bands`, `formula`, `platform` and optionally `long_name` (used as a comment in the header of the script), you can provide only this information, and it does not even have to be a `data.frame`, a simple `list` will do.
@@ -207,7 +207,8 @@ custom_def <- list(bands = c("R", "G", "B"),
                    formula = "0.3 * R + 0.59 * G + 0.11 * B",
                    # long_name = "Greyscale image",
                    platforms = "Sentinel-2")
-custom_script <- paste(MakeEvalScript(custom_def), collapse = "\n")
+custom_script <- paste(MakeEvalScript(custom_def, constellation = "sentinel-2"), 
+                       collapse = "\n")
 ```
 
 We can now compare the greyscale and RGB images.
@@ -256,7 +257,7 @@ plot(grey_img, col = grey.colors(256, start = 0, end = 1), legend = FALSE,
 
 *Kernel Spectral Indices cannot be used in this context as they do not fit into the API model (they do not operate directly on raw spectral bands).*
 
-*The indices that are not available for the Sentinel-1 or Sentinel-2 platforms cannot be used, as only the Sentinel collections are available through the CDSE API.*
+*The indices that are not available for the Sentinel-1, Sentinel-2 or Landsat-8/9 platforms cannot be used, as only these collections are available through the CDSE API.*
 
 <br>
 
@@ -316,7 +317,7 @@ terra::plotRGB(terra::flip(terra::rast(png), direction = "vertical"))
 
 ## Retrieving a series of images in a batch
 
-It often happens that one is interested in acquiring a series of images of a particular zone (AOI or bounding box) for several dates, or the images of different areas of interest for the same date (probably located close to each other so that they are visited on the same day). The `GetImageBy*` functions (`GetImageByTimerange`, `GetImageByAOI`, `GetImageByBbox`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. We shall illustrate how to do this with an example.
+It often happens that one is interested in acquiring a series of images of a particular zone (AOI or bounding box) for several dates, or the images of different areas of interest for the same date (probably located close to each other so that they are visited on the same day). The `GetImageBy*()` functions (`GetImageByTimerange()`, `GetImageByAOI()`, `GetImageByBbox()`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. We shall illustrate how to do this with an example.
 
 ```{r label="retrieve images in parallel", fig.cap="Central Park monthly NDVI"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
@@ -361,7 +362,8 @@ ans <- sapply(seq_along(days), FUN = function(i) {
 
 \newpage
 
-In this particular example, parallelisation is not necessarily beneficial as we are retrieving only 12 images, but for a large number of images, it can significantly reduce the execution time. Also note that we have used the `filter` argument of the `SearchCatalog` function to limit the list of images to the tiles having cloud cover \< 5%.
+In this particular example, parallelisation is not necessarily beneficial as we are retrieving only 12 images, but for a large number of images, it can significantly reduce the execution time. Also note that we have limited the list of images to the tiles having cloud cover \< 5%
+using the `filter` argument of the `SearchCatalog()` function.
 
 \newpage
 
@@ -427,7 +429,7 @@ head(weekly_stats, n = 10)
 
 ## Retrieving a series of statistics in a batch
 
-Just as when retrieving satellite images, one can be interested in acquiring a series of statistics for a particular zone (AOI or bounding box) for several dates, or the statistics of different zones for the same periods. The `GetStatisticsBy*` functions (`GetStatisticsByTimerange`, `GetStatisticsByAOI`, `GetStatisticsByBbox`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. The following example illustrates how to do this.
+Just as when retrieving satellite images, one can be interested in acquiring a series of statistics for a particular zone (AOI or bounding box) for several dates, or the statistics of different zones for the same periods. The `GetStatisticsBy*()` functions (`GetStatisticsByTimerange()`, `GetStatisticsByAOI()`, `GetStatisticsByBbox()`) facilitate this task as they are specifically crafted for being called from a `lapply`-like function, and thus potentially be executed in parallel. The following example illustrates how to do this.
 
 ```{r label="series of statistics"}
 dsn <- system.file("extdata", "centralpark.geojson", package = "CDSE")
@@ -438,8 +440,8 @@ ndvi_script <- paste(MakeEvalScript(
         formula = "(N - R)/(N + R)",
         long_name = "Normalized Difference Vegetation Index",
         platforms = "Sentinel-2"
-    )
-), collapse = "\n")
+    ),
+    constellation = "sentinel-2"), collapse = "\n")
 seasons <- SeasonalTimerange(from = "2020-06-01", to = "2023-08-31")
 lst_stats <- lapply(seasons, GetStatisticsByTimerange, aoi = aoi, 
     collection = "sentinel-2-l2a", script = ndvi_script, mosaicking_order = "leastCC", 
