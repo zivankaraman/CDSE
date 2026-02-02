@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CDSE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ releases of the package.</p>
 </h2>
 <p>Most of the API functions require OAuth2 authentication. The
 recommended procedure is to obtain an authentication client object from
-the <code>GetOAuthClient</code> function and pass it as the
+the <code><a href="../reference/GetOAuthClient.html">GetOAuthClient()</a></code> function and pass it as the
 <code>client</code> argument to the functions requiring the
 authentication. For more detailed information, you are invited to
 consult the “<code>Before you start</code>” document.</p>
@@ -123,42 +123,46 @@ argument <code>as_data_frame</code> to <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">collections</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetCollections.html">GetCollections</a></span><span class="op">(</span>as_data_frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">collections</span></span>
-<span><span class="co">#&gt;                      id                 title</span></span>
-<span><span class="co">#&gt; 1        sentinel-2-l1c        Sentinel 2 L1C</span></span>
-<span><span class="co">#&gt; 2    sentinel-3-olci-l2    Sentinel 3 OLCI L2</span></span>
-<span><span class="co">#&gt; 3       sentinel-3-olci       Sentinel 3 OLCI</span></span>
-<span><span class="co">#&gt; 4      sentinel-3-slstr      Sentinel 3 SLSTR</span></span>
-<span><span class="co">#&gt; 5 sentinel-3-synergy-l2 Sentinel 3 Synergy L2</span></span>
-<span><span class="co">#&gt; 6        sentinel-1-grd        Sentinel 1 GRD</span></span>
-<span><span class="co">#&gt; 7        sentinel-2-l2a        Sentinel 2 L2A</span></span>
-<span><span class="co">#&gt; 8        sentinel-5p-l2  Sentinel 5 Precursor</span></span>
+<span><span class="co">#&gt;                      id                   title</span></span>
+<span><span class="co">#&gt; 1        sentinel-2-l1c          Sentinel 2 L1C</span></span>
+<span><span class="co">#&gt; 2    sentinel-3-olci-l2      Sentinel 3 OLCI L2</span></span>
+<span><span class="co">#&gt; 3         landsat-ot-l1 Landsat 8-9 OLI-TIRS L1</span></span>
+<span><span class="co">#&gt; 4       sentinel-3-olci         Sentinel 3 OLCI</span></span>
+<span><span class="co">#&gt; 5      sentinel-3-slstr        Sentinel 3 SLSTR</span></span>
+<span><span class="co">#&gt; 6 sentinel-3-synergy-l2   Sentinel 3 Synergy L2</span></span>
+<span><span class="co">#&gt; 7        sentinel-1-grd          Sentinel 1 GRD</span></span>
+<span><span class="co">#&gt; 8        sentinel-2-l2a          Sentinel 2 L2A</span></span>
+<span><span class="co">#&gt; 9        sentinel-5p-l2    Sentinel 5 Precursor</span></span>
 <span><span class="co">#&gt;                                                                    description</span></span>
 <span><span class="co">#&gt; 1                                     Sentinel 2 imagery processed to level 1C</span></span>
 <span><span class="co">#&gt; 2                 Sentinel 3 data derived from imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 3                                   Sentinel 3 imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 4                                  Sentinel 3 imagery captured by SLSTR sensor</span></span>
-<span><span class="co">#&gt; 5 Sentinel 3 data derived from imagery captured by both OLCI and SLSTR sensors</span></span>
-<span><span class="co">#&gt; 6                                     Sentinel 1 Ground Range Detected Imagery</span></span>
-<span><span class="co">#&gt; 7                                     Sentinel 2 imagery processed to level 2A</span></span>
-<span><span class="co">#&gt; 8                      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
-<span><span class="co">#&gt;                  since instrument  gsd bands constellation long.min lat.min</span></span>
-<span><span class="co">#&gt; 1 2015-11-01T00:00:00Z        msi   10    13    sentinel-2     -180     -56</span></span>
-<span><span class="co">#&gt; 2 2016-04-17T11:33:13Z       olci  300    NA          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt; 3 2016-04-17T11:33:13Z       olci  300    21          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt; 4 2016-04-17T11:33:13Z      slstr 1000    11          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt; 5 2016-04-17T11:33:13Z olci/slstr  300    NA          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt; 6 2014-10-03T00:00:00Z      c-sar   NA    NA    sentinel-1     -180     -85</span></span>
-<span><span class="co">#&gt; 7 2016-11-01T00:00:00Z        msi   10    12    sentinel-2     -180     -56</span></span>
-<span><span class="co">#&gt; 8 2018-04-30T00:18:50Z    tropomi 5500    NA          &lt;NA&gt;     -180     -85</span></span>
-<span><span class="co">#&gt;   long.max lat.max</span></span>
-<span><span class="co">#&gt; 1      180      83</span></span>
-<span><span class="co">#&gt; 2      180      85</span></span>
-<span><span class="co">#&gt; 3      180      85</span></span>
-<span><span class="co">#&gt; 4      180      85</span></span>
-<span><span class="co">#&gt; 5      180      85</span></span>
-<span><span class="co">#&gt; 6      180      85</span></span>
-<span><span class="co">#&gt; 7      180      83</span></span>
-<span><span class="co">#&gt; 8      180      85</span></span></code></pre></div>
+<span><span class="co">#&gt; 3                        Landsat 8-9 Collection 2 imagery processed to level 1</span></span>
+<span><span class="co">#&gt; 4                                   Sentinel 3 imagery captured by OLCI sensor</span></span>
+<span><span class="co">#&gt; 5                                  Sentinel 3 imagery captured by SLSTR sensor</span></span>
+<span><span class="co">#&gt; 6 Sentinel 3 data derived from imagery captured by both OLCI and SLSTR sensors</span></span>
+<span><span class="co">#&gt; 7                                     Sentinel 1 Ground Range Detected Imagery</span></span>
+<span><span class="co">#&gt; 8                                     Sentinel 2 imagery processed to level 2A</span></span>
+<span><span class="co">#&gt; 9                      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
+<span><span class="co">#&gt;                  since            instrument  gsd bands constellation long.min</span></span>
+<span><span class="co">#&gt; 1 2015-11-01T00:00:00Z                   msi   10    13    sentinel-2     -180</span></span>
+<span><span class="co">#&gt; 2 2016-04-17T11:33:13Z                  olci  300    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 3 2013-03-08T00:00:00Z oli/tirs/oli-2/tirs-2   30    17          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 4 2016-04-17T11:33:13Z                  olci  300    21          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 5 2016-04-17T11:33:13Z                 slstr 1000    11          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 6 2016-04-17T11:33:13Z            olci/slstr  300    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 7 2014-10-03T00:00:00Z                 c-sar   NA    NA    sentinel-1     -180</span></span>
+<span><span class="co">#&gt; 8 2016-11-01T00:00:00Z                   msi   10    12    sentinel-2     -180</span></span>
+<span><span class="co">#&gt; 9 2018-04-30T00:18:50Z               tropomi 5500    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt;   lat.min long.max lat.max</span></span>
+<span><span class="co">#&gt; 1     -56      180      83</span></span>
+<span><span class="co">#&gt; 2     -85      180      85</span></span>
+<span><span class="co">#&gt; 3     -85      180      85</span></span>
+<span><span class="co">#&gt; 4     -85      180      85</span></span>
+<span><span class="co">#&gt; 5     -85      180      85</span></span>
+<span><span class="co">#&gt; 6     -85      180      85</span></span>
+<span><span class="co">#&gt; 7     -85      180      85</span></span>
+<span><span class="co">#&gt; 8     -56      180      83</span></span>
+<span><span class="co">#&gt; 9     -85      180      85</span></span></code></pre></div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="section level2">
@@ -182,7 +186,7 @@ argument.</p>
 <span><span class="va">images</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SearchCatalog.html">SearchCatalog</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, from <span class="op">=</span> <span class="st">"2023-07-01"</span>, to <span class="op">=</span> <span class="st">"2023-07-31"</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, with_geometry <span class="op">=</span> <span class="cn">TRUE</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">images</span></span>
-<span><span class="co">#&gt; Simple feature collection with 85 features and 11 fields</span></span>
+<span><span class="co">#&gt; Simple feature collection with 70 features and 11 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 4.357925 ymin: 48.58836 xmax: 7.775117 ymax: 50.54532</span></span>
@@ -195,10 +199,10 @@ argument.</p>
 <span><span class="co">#&gt; 4       2023-07-31          99.94       16.324 sentinel-2a</span></span>
 <span><span class="co">#&gt; 5       2023-07-31          99.91       92.463 sentinel-2a</span></span>
 <span><span class="co">#&gt; 6       2023-07-31          99.41       22.236 sentinel-2a</span></span>
-<span><span class="co">#&gt; 7       2023-07-31          99.41       22.236 sentinel-2a</span></span>
-<span><span class="co">#&gt; 8       2023-07-28          99.99        4.986 sentinel-2a</span></span>
-<span><span class="co">#&gt; 9       2023-07-28          99.99        4.986 sentinel-2a</span></span>
-<span><span class="co">#&gt; 10      2023-07-28          99.99        5.659 sentinel-2a</span></span>
+<span><span class="co">#&gt; 7       2023-07-28          99.99        4.986 sentinel-2a</span></span>
+<span><span class="co">#&gt; 8       2023-07-28          99.99        5.659 sentinel-2a</span></span>
+<span><span class="co">#&gt; 9       2023-07-28          99.99        4.294 sentinel-2a</span></span>
+<span><span class="co">#&gt; 10      2023-07-28          99.92        4.944 sentinel-2a</span></span>
 <span><span class="co">#&gt;    acquisitionTimestampUTC acquisitionTimestampLocal</span></span>
 <span><span class="co">#&gt; 1      2023-07-31 10:47:29       2023-07-31 12:47:29</span></span>
 <span><span class="co">#&gt; 2      2023-07-31 10:47:25       2023-07-31 12:47:25</span></span>
@@ -206,10 +210,10 @@ argument.</p>
 <span><span class="co">#&gt; 4      2023-07-31 10:47:14       2023-07-31 12:47:14</span></span>
 <span><span class="co">#&gt; 5      2023-07-31 10:47:11       2023-07-31 12:47:11</span></span>
 <span><span class="co">#&gt; 6      2023-07-31 10:47:09       2023-07-31 12:47:09</span></span>
-<span><span class="co">#&gt; 7      2023-07-31 10:47:09       2023-07-31 12:47:09</span></span>
-<span><span class="co">#&gt; 8      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
-<span><span class="co">#&gt; 9      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
-<span><span class="co">#&gt; 10     2023-07-28 10:37:27       2023-07-28 12:37:27</span></span>
+<span><span class="co">#&gt; 7      2023-07-28 10:37:28       2023-07-28 12:37:28</span></span>
+<span><span class="co">#&gt; 8      2023-07-28 10:37:27       2023-07-28 12:37:27</span></span>
+<span><span class="co">#&gt; 9      2023-07-28 10:37:21       2023-07-28 12:37:21</span></span>
+<span><span class="co">#&gt; 10     2023-07-28 10:37:20       2023-07-28 12:37:20</span></span>
 <span><span class="co">#&gt;                                                             sourceId long.min</span></span>
 <span><span class="co">#&gt; 1  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFQ_20241021T055741.SAFE 4.357925</span></span>
 <span><span class="co">#&gt; 2  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGQ_20241021T055741.SAFE 5.714101</span></span>
@@ -217,10 +221,10 @@ argument.</p>
 <span><span class="co">#&gt; 4  S2A_MSIL2A_20230731T103631_N0510_R008_T31UFR_20241021T055741.SAFE 4.382698</span></span>
 <span><span class="co">#&gt; 5  S2A_MSIL2A_20230731T103631_N0510_R008_T31UGR_20241021T055741.SAFE 5.763559</span></span>
 <span><span class="co">#&gt; 6  S2A_MSIL2A_20230731T103631_N0510_R008_T32ULA_20241021T055741.SAFE 6.178682</span></span>
-<span><span class="co">#&gt; 7  S2A_MSIL2A_20230731T103631_N0509_R008_T32ULA_20230731T202459.SAFE 6.178682</span></span>
-<span><span class="co">#&gt; 8  S2A_MSIL2A_20230728T102601_N0510_R108_T31UGQ_20241020T071602.SAFE 5.880056</span></span>
-<span><span class="co">#&gt; 9  S2A_MSIL2A_20230728T102601_N0509_R108_T31UGQ_20230728T180355.SAFE 5.880056</span></span>
-<span><span class="co">#&gt; 10 S2A_MSIL2A_20230728T102601_N0510_R108_T32ULV_20241020T071602.SAFE 6.234494</span></span>
+<span><span class="co">#&gt; 7  S2A_MSIL2A_20230728T102601_N0510_R108_T31UGQ_20241020T071602.SAFE 5.880056</span></span>
+<span><span class="co">#&gt; 8  S2A_MSIL2A_20230728T102601_N0510_R108_T32ULV_20241020T071602.SAFE 6.234494</span></span>
+<span><span class="co">#&gt; 9  S2A_MSIL2A_20230728T102601_N0510_R108_T31UGQ_20241020T040431.SAFE 6.218396</span></span>
+<span><span class="co">#&gt; 10 S2A_MSIL2A_20230728T102601_N0510_R108_T32ULV_20241020T040431.SAFE 6.235763</span></span>
 <span><span class="co">#&gt;     lat.min long.max  lat.max                       geometry</span></span>
 <span><span class="co">#&gt; 1  48.62983 5.904558 49.64443 POLYGON ((4.385187 49.64443...</span></span>
 <span><span class="co">#&gt; 2  48.58836 7.285031 49.61960 POLYGON ((5.768528 49.6196,...</span></span>
@@ -228,15 +232,15 @@ argument.</p>
 <span><span class="co">#&gt; 4  49.52843 5.959371 50.54373 POLYGON ((4.411363 50.54373...</span></span>
 <span><span class="co">#&gt; 5  49.48563 7.365728 50.51810 POLYGON ((5.820783 50.5181,...</span></span>
 <span><span class="co">#&gt; 6  49.53174 7.752769 50.54532 POLYGON ((6.178682 50.51809...</span></span>
-<span><span class="co">#&gt; 7  49.53174 7.752769 50.54532 POLYGON ((6.178682 50.51809...</span></span>
-<span><span class="co">#&gt; 8  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
-<span><span class="co">#&gt; 9  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
-<span><span class="co">#&gt; 10 48.63304 7.775117 49.62896 POLYGON ((6.259211 49.62026...</span></span></code></pre></div>
+<span><span class="co">#&gt; 7  48.58836 7.281682 49.60696 POLYGON ((6.254039 49.60696...</span></span>
+<span><span class="co">#&gt; 8  48.63304 7.775117 49.62896 POLYGON ((6.259211 49.62026...</span></span>
+<span><span class="co">#&gt; 9  49.36204 7.285031 49.60696 POLYGON ((6.254038 49.60696...</span></span>
+<span><span class="co">#&gt; 10 49.27949 7.759809 49.64597 POLYGON ((6.259212 49.62026...</span></span></code></pre></div>
 <p>We can visualize the coverage of the area of interest by the
 satellite image tiles by plotting the footprints of the available images
 and showing the region of interest in red.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">maps</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adeckmyn/maps" class="external-link">maps</a></span><span class="op">)</span></span>
 <span><span class="va">days</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">acquisitionDate</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span>database <span class="op">=</span> <span class="st">"world"</span>, col <span class="op">=</span> <span class="st">"lightgrey"</span>, fill <span class="op">=</span> <span class="cn">TRUE</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">47.5</span>, <span class="fl">51.5</span><span class="op">)</span><span class="op">)</span></span>
@@ -254,7 +258,7 @@ others cover almost the entire area.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">images</span><span class="op">$</span><span class="va">areaCoverage</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   1.845   5.595  15.393  18.679  20.346  92.463</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.845   5.603  15.115  19.758  20.346  92.463</span></span></code></pre></div>
 <p>The tile number can be obtained from the image attribute
 <code>sourceId</code>, as explained <a href="https://sentiwiki.copernicus.eu/web/s2-products" class="external-link">here</a>. We can
 therefore summarize the distribution of area coverage by tile number,
@@ -272,26 +276,26 @@ and see which tiles provide the best coverage of the AOI.</p>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGQ</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.294   4.910  12.706  12.566  20.346  20.346 </span></span>
+<span><span class="co">#&gt;   4.294   4.910  12.706  12.587  20.346  20.346 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T31UGR</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.855  15.543  16.022  48.698  92.463  92.463 </span></span>
+<span><span class="co">#&gt;   6.855  15.607  54.299  53.426  92.463  92.463 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULA</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   6.171  15.108  22.236  18.734  22.236  22.236 </span></span>
+<span><span class="co">#&gt;   6.171  14.950  18.814  17.972  22.236  22.236 </span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
 <span><span class="co">#&gt; tileNumber: T32ULV</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   4.944   5.595   5.705   5.727   5.934   5.934</span></span></code></pre></div>
+<span><span class="co">#&gt;   4.944   5.603   5.819   5.723   5.934   5.934</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="catalog-by-season">Catalog by season<a class="anchor" aria-label="anchor" href="#catalog-by-season"></a>
 </h3>
 <p>Sometimes one can be interested in only a given period of each year,
 for example, the images taken during the summer months (June to August).
 We can filter an existing image catalog <em>a posteriori</em> using the
-<code>SeasonalFilter</code> function.</p>
+<code><a href="../reference/SeasonalFilter.html">SeasonalFilter()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -305,11 +309,12 @@ We can filter an existing image catalog <em>a posteriori</em> using the
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">summer_images</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 14 10</span></span></code></pre></div>
 <p>It is also possible to query the API directly on the desired seasonal
-periods by using a vectorized version of the <code>SearchCatalog</code>
-function. The vectorized versions allow running a series of queries
-having the same parameter values except for either time range, AOI, or
-the bounding box parameters, using <code>lapply</code> or similar
-function, and thus potentially also using the parallel processing.</p>
+periods by using a vectorized version of the
+<code><a href="../reference/SearchCatalog.html">SearchCatalog()</a></code> function. The vectorized versions allow
+running a series of queries having the same parameter values except for
+either time range, AOI, or the bounding box parameters, using
+<code>lapply</code> or similar function, and thus potentially also using
+the parallel processing.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -391,8 +396,8 @@ function, and thus potentially also using the parallel processing.</p>
 <h2 id="evalscripts">Evalscripts<a class="anchor" aria-label="anchor" href="#evalscripts"></a>
 </h2>
 <p>As we shall see in the examples below, the functions that operate on
-remotely sensed spectral band values, such as <code>GetImage</code> or
-<code>GetStatistics</code>, require an evalscript to be passed to the
+remotely sensed spectral band values, such as <code><a href="../reference/GetImage.html">GetImage()</a></code> or
+<code><a href="../reference/GetStatistics.html">GetStatistics()</a></code>, require an evalscript to be passed to the
 <code>script</code> argument.</p>
 <p>An evalscript (or “custom script”) is a piece of JavaScript code that
 defines how the satellite data shall be processed by the API and what
@@ -405,7 +410,7 @@ structures, along with certain utility functions provided by the API for
 user convenience. The Chrome V8 JavaScript engine is used for running
 the evalscripts.</p>
 <p>The evaluation scripts are passed as the <code>script</code> argument
-to the <code>GetImage</code>, <code>GetStatistics</code>, and other
+to the <code><a href="../reference/GetImage.html">GetImage()</a></code>, <code><a href="../reference/GetStatistics.html">GetStatistics()</a></code>, and other
 functions that require an evalscript. It has to be either a character
 string containing the evaluation script or the name of the file
 containing the script.</p>
@@ -475,20 +480,20 @@ interface to the ASI collection, providing the list of indices directly
 in <code>R</code> as a friendly <code>data.frame</code> (actually a
 <code>tibble</code>). These indices can now be directly used in the
 ‘CDSE’ package to provide the evalscript to the functions that require
-one. For this purpose, we have developed the <code>MakeEvalScript</code>
-function that will generate the script for you based on the information
-contained in the <code>data.frame</code> of spectral indices produced by
-<code><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">rsi::spectral_indices()</a></code>.</p>
+one. For this purpose, we have developed the
+<code><a href="../reference/MakeEvalScript.html">MakeEvalScript()</a></code> function that will generate the script for
+you based on the information contained in the <code>data.frame</code> of
+spectral indices produced by <code><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">rsi::spectral_indices()</a></code>.</p>
 <p>Here is an example showing how it works.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">si</span> <span class="op">&lt;-</span> <span class="fu">rsi</span><span class="fu">::</span><span class="fu"><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">spectral_indices</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># get spectral indices</span></span>
 <span><span class="co"># NDVI</span></span>
 <span><span class="va">ndvi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">si</span>, <span class="va">short_name</span> <span class="op">==</span> <span class="st">"NDVI"</span><span class="op">)</span> <span class="co"># creates one-row data.frame</span></span>
-<span><span class="va">ndvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">ndvi</span><span class="op">)</span> <span class="co"># generates the script</span></span>
+<span><span class="va">ndvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">ndvi</span>, constellation <span class="op">=</span> <span class="st">"landsat"</span><span class="op">)</span> <span class="co"># generates the script</span></span>
 <span><span class="co"># GDVI</span></span>
 <span><span class="va">gdvi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">si</span>, <span class="va">short_name</span> <span class="op">==</span> <span class="st">"GDVI"</span><span class="op">)</span> <span class="co"># creates one-row data.frame</span></span>
 <span><span class="co"># GDVI requires an extra argument provided by the user</span></span>
-<span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">gdvi</span>, nexp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># generates the script</span></span></code></pre></div>
+<span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">gdvi</span>, nexp <span class="op">=</span> <span class="fl">2</span>, constellation <span class="op">=</span> <span class="st">"sentinel-2"</span><span class="op">)</span></span></code></pre></div>
 <p>The value returned by the function is a character vector with each
 element representing one line of the script. You can best visualise the
 script code by <code>cat(gdvi_script, sep = "\n")</code>, or save it to
@@ -504,7 +509,7 @@ names are in full upper-case. You of course still have to provide any
 additional arguments, if required, in the usual way. Here is an
 example:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="st">"GDVI"</span>, nexp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gdvi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="st">"GDVI"</span>, nexp <span class="op">=</span> <span class="fl">2</span>, constellation <span class="op">=</span> <span class="st">"sentinel-2"</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, you can also define ad-hoc custom indices by providing a
 one-row <code>data.frame</code> crafted after the model produced by
 <code><a href="https://permian-global-research.github.io/rsi/reference/spectral_indices.html" class="external-link">rsi::spectral_indices()</a></code>. Please ensure that you respect the
@@ -526,7 +531,8 @@ illustrate the process.</p>
 <span>                   formula <span class="op">=</span> <span class="st">"0.3 * R + 0.59 * G + 0.11 * B"</span>,</span>
 <span>                   <span class="co"># long_name = "Greyscale image",</span></span>
 <span>                   platforms <span class="op">=</span> <span class="st">"Sentinel-2"</span><span class="op">)</span></span>
-<span><span class="va">custom_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">custom_def</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">custom_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="../reference/MakeEvalScript.html">MakeEvalScript</a></span><span class="op">(</span><span class="va">custom_def</span>, constellation <span class="op">=</span> <span class="st">"sentinel-2"</span><span class="op">)</span>, </span>
+<span>                       collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <p>We can now compare the greyscale and RGB images.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># select the day with smallest cloud cover</span></span>
@@ -574,9 +580,9 @@ RGB and greyscale images of Central Park
 <p><em>Kernel Spectral Indices cannot be used in this context as they do
 not fit into the API model (they do not operate directly on raw spectral
 bands).</em></p>
-<p><em>The indices that are not available for the Sentinel-1 or
-Sentinel-2 platforms cannot be used, as only the Sentinel collections
-are available through the CDSE API.</em></p>
+<p><em>The indices that are not available for the Sentinel-1, Sentinel-2
+or Landsat-8/9 platforms cannot be used, as only these collections are
+available through the CDSE API.</em></p>
 <p><br></p>
 <div style="page-break-after: always;"></div>
 </div>
@@ -667,14 +673,14 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span>    resolution <span class="op">=</span> <span class="fl">10</span>, mask <span class="op">=</span> <span class="cn">TRUE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">ras</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 383, 355, 1  (nrow, ncol, nlyr)</span></span>
-<span><span class="co">#&gt; resolution  : 0.0001003292, 0.0001003292  (x, y)</span></span>
-<span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
+<span><span class="co">#&gt; dimensions  : 427, 301, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; resolution  : 0.0001183781, 9.002468e-05  (x, y)</span></span>
+<span><span class="co">#&gt; extent      : -73.98355, -73.94792, 40.76321, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file23ec4a6d7994 </span></span>
-<span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
-<span><span class="co">#&gt; max value   :        0.9507549</span></span>
+<span><span class="co">#&gt; name        : file4c782bf32834 </span></span>
+<span><span class="co">#&gt; min value   :       -0.5500000 </span></span>
+<span><span class="co">#&gt; max value   :        0.9535776</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ras</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Central Park NDVI on"</span>, <span class="va">day</span><span class="op">)</span>, cex.main <span class="op">=</span> <span class="fl">0.75</span>,</span>
 <span>    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"yellow"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -736,9 +742,9 @@ Central Park image as PNG file
 images of a particular zone (AOI or bounding box) for several dates, or
 the images of different areas of interest for the same date (probably
 located close to each other so that they are visited on the same day).
-The <code>GetImageBy*</code> functions
-(<code>GetImageByTimerange</code>, <code>GetImageByAOI</code>,
-<code>GetImageByBbox</code>) facilitate this task as they are
+The <code>GetImageBy*()</code> functions
+(<code><a href="../reference/GetImageBy....html">GetImageByTimerange()</a></code>, <code><a href="../reference/GetImageBy....html">GetImageByAOI()</a></code>,
+<code><a href="../reference/GetImageBy....html">GetImageByBbox()</a></code>) facilitate this task as they are
 specifically crafted for being called from a <code>lapply</code>-like
 function, and thus potentially be executed in parallel. We shall
 illustrate how to do this with an example.</p>
@@ -790,9 +796,9 @@ Central Park monthly NDVI
 <p>In this particular example, parallelisation is not necessarily
 beneficial as we are retrieving only 12 images, but for a large number
 of images, it can significantly reduce the execution time. Also note
-that we have used the <code>filter</code> argument of the
-<code>SearchCatalog</code> function to limit the list of images to the
-tiles having cloud cover &lt; 5%.</p>
+that we have limited the list of images to the tiles having cloud cover
+&lt; 5% using the <code>filter</code> argument of the
+<code><a href="../reference/SearchCatalog.html">SearchCatalog()</a></code> function.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1035,12 +1041,13 @@ request to compute the percentiles. If the percentiles requested are 25,
 <p>Just as when retrieving satellite images, one can be interested in
 acquiring a series of statistics for a particular zone (AOI or bounding
 box) for several dates, or the statistics of different zones for the
-same periods. The <code>GetStatisticsBy*</code> functions
-(<code>GetStatisticsByTimerange</code>, <code>GetStatisticsByAOI</code>,
-<code>GetStatisticsByBbox</code>) facilitate this task as they are
-specifically crafted for being called from a <code>lapply</code>-like
-function, and thus potentially be executed in parallel. The following
-example illustrates how to do this.</p>
+same periods. The <code>GetStatisticsBy*()</code> functions
+(<code><a href="../reference/GetStatisticsBy....html">GetStatisticsByTimerange()</a></code>,
+<code><a href="../reference/GetStatisticsBy....html">GetStatisticsByAOI()</a></code>, <code><a href="../reference/GetStatisticsBy....html">GetStatisticsByBbox()</a></code>)
+facilitate this task as they are specifically crafted for being called
+from a <code>lapply</code>-like function, and thus potentially be
+executed in parallel. The following example illustrates how to do
+this.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dsn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"centralpark.geojson"</span>, package <span class="op">=</span> <span class="st">"CDSE"</span><span class="op">)</span></span>
 <span><span class="va">aoi</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">dsn</span>, as_tibble <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -1050,8 +1057,8 @@ example illustrates how to do this.</p>
 <span>        formula <span class="op">=</span> <span class="st">"(N - R)/(N + R)"</span>,</span>
 <span>        long_name <span class="op">=</span> <span class="st">"Normalized Difference Vegetation Index"</span>,</span>
 <span>        platforms <span class="op">=</span> <span class="st">"Sentinel-2"</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    constellation <span class="op">=</span> <span class="st">"sentinel-2"</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="va">seasons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SeasonalTimerange.html">SeasonalTimerange</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"2020-06-01"</span>, to <span class="op">=</span> <span class="st">"2023-08-31"</span><span class="op">)</span></span>
 <span><span class="va">lst_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">seasons</span>, <span class="va">GetStatisticsByTimerange</span>, aoi <span class="op">=</span> <span class="va">aoi</span>, </span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">ndvi_script</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, </span>

@@ -1,19 +1,20 @@
 #' Create a Sentinel Hub API Evalscript
 #'
 #' @description
-#' Generates a JavaScript evalscript for calculating a spectral index for
-#' Sentinel-1 or Sentinel-2 imagery.
+#' Generates a JavaScript evaluation script for calculating a spectral index for
+#' Sentinel-1, Sentinel-2 or Landsat-8/9 imagery.
 #'
 #' @details
 #' This function takes a spectral index definition and creates a JavaScript
-#' evalscript compatible with the Sentinel Hub API. The index can be specified
+#' evaluation script compatible with the Sentinel Hub API. The index can be specified
 #' by its short name from the \code{rsi} package's spectral index database
 #' (see \code{rsi::spectral_indices()}) or as a custom \code{list} or \code{data.frame}.
 #'
 #' The function automatically maps common band names (e.g., `N`, `R`, `G`, `B`)
-#' to the corresponding Sentinel-1 or Sentinel-2 band names required by the
-#' API. Any constants in the index formula (e.g., the soil adjustment factor
-#' `L` in SAVI) must be provided as named arguments.
+#' to the corresponding Sentinel-1, Sentinel-2 or Landsat-8/9 band names required by the
+#' API, based on the value of the \code{constellation} argument. Any constants in the index
+#' formula (e.g., the soil adjustment factor `L` in SAVI) must be provided as named
+#' arguments.
 #'
 #' @param x A \code{character} string with the \code{short_name} of a spectral index
 #'   from \code{rsi::spectral_indices()} or a single-row \code{data.frame} (or \code{list})
@@ -22,6 +23,8 @@
 #' @param ... Named arguments providing values for any constants required by the
 #'   index's formula. The function will stop if a required constant is missing
 #'   and warn if unused arguments are provided.
+#' @param constellation character indicating the constellation for which the script should be
+#' generated. Must be one of "sentinel-1", "sentinel-2", or "landsat".
 #'
 #' @return A `character` vector containing the JavaScript evalscript. It can be used as
 #' `script` argument in functions that require one as shown here:
@@ -40,7 +43,7 @@
 #' # NDVI
 #' si <- rsi::spectral_indices() # retrieves spectral indices
 #' ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
-#' ndvi_script <- MakeEvalScript(ndvi) # generates the script
+#' ndvi_script <- MakeEvalScript(ndvi, constellation = "sentinel-2") # generates the script
 #' cat(ndvi_script, sep = "\n")
 #'
 #' # SAVI, which requires the constant L
@@ -54,12 +57,12 @@
 #'   bands = I(list(c("N", "G"))),
 #'   formula = "(N - G) / (N + G)"
 #' )
-#' cat(MakeEvalScript(custom_index))
+#' cat(MakeEvalScript(custom_index, constellation = "landsat"))
 #' }
-MakeEvalScript <- function(x, ...) {
+MakeEvalScript <- function(x, ..., constellation = c("sentinel-1", "sentinel-2", "landsat")) {
     if (is.character(x)) {
         stopifnot(length(x) == 1L)
-        # check that rsi package is available
+        # check that 'rsi' package is available
         if (system.file(package = "rsi") == "") {
             stop("If argument 'x' is character the package 'rsi' is required", call. = FALSE)
         }
@@ -69,24 +72,29 @@ MakeEvalScript <- function(x, ...) {
     if (inherits(x, "data.frame")) stopifnot(nrow(x) == 1L)
     stopifnot(is.list(x))
     stopifnot(length(setdiff(c("bands", "formula", "platforms"), names(x))) == 0L)
-    is_s1 <- !is.na(pmatch("Sentinel-1", unlist(x$platforms)))
-    is_s2 <- !is.na(match("Sentinel-2", unlist(x$platforms)))
-    stopifnot(isFALSE(all(c(is_s1, is_s2))))
-    if (!(any(is_s1, is_s2))) {
-        stop("This function is available only for platforms 'Sentinel-1' or 'Sentinel-2'")
+    platforms <- unlist(x$platforms)
+    is_s1 <- !is.na(pmatch("Sentinel-1", platforms))
+    is_s2 <- !is.na(match("Sentinel-2", platforms))
+    is_lo <- !is.na(match("Landsat-OLI", platforms))
+    is_lt <- !is.na(match("Landsat-TM", platforms))
+    stopifnot(isFALSE(all(c(is_s1, is_s2, is_lo, is_lt))))
+    if (!(any(is_s1, is_s2, is_lo, is_lt))) {
+        stop("This function is available only for platforms 'Sentinel-1', 'Sentinel-2', 'Landsat-OLI' or 'Landsat-TM'")
     }
+    constellation <- match.arg(constellation)
+    map <- switch (constellation,
+            "sentinel-1" = c(VV = "VV", VH = "VH",  HH = "HH", HV = "HV"),
+            "sentinel-2" = c(A = "B01", B = "B02", G = "B03", R = "B04", RE1 = "B05",
+                             RE2 = "B06", RE3 = "B07", N = "B08", N2 = "B8A", WV = "B09",
+                             S1 = "B11", S2 = "B12"),
+            "landsat" = c(A = "B01", B = "B02", G = "B03", R = "B04", N = "B05",
+                          S1 = "B06", S2 = "B07", T = "B10" , T1 = "B11"),
+        stop("This function is available only for constellations 'sentinel-1' , 'sentinel-2' or 'landsat'")
+    )
     bands <- unlist(x$bands)
     formula <- x$formula
     vars <- get_si_vars(formula)
     stopifnot(length(setdiff(vars, bands)) == 0L)
-    if (is_s2) {
-        map <-
-            c(A = "B01", B = "B02", G = "B03", R = "B04", RE1 = "B05", RE2 = "B06",
-              RE3 = "B07", N = "B08", N2 = "B8A", WV = "B09", S1 = "B11", S2 = "B12"
-            )
-    } else {
-        map <- c(VV = "VV", VH = "VH",  HH = "HH", HV = "HV")
-    }
     const <- setdiff(bands, names(map))
     bands <- intersect(bands, names(map))
     if (length(bands) == 0L) {
