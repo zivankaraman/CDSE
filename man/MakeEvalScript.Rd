@@ -4,7 +4,11 @@
 \alias{MakeEvalScript}
 \title{Create a Sentinel Hub API Evalscript}
 \usage{
-MakeEvalScript(x, ...)
+MakeEvalScript(
+  x,
+  ...,
+  constellation = c("sentinel-1", "sentinel-2", "landsat")
+)
 }
 \arguments{
 \item{x}{A \code{character} string with the \code{short_name} of a spectral index
@@ -15,6 +19,9 @@ and optionally \code{long_name}.}
 \item{...}{Named arguments providing values for any constants required by the
 index's formula. The function will stop if a required constant is missing
 and warn if unused arguments are provided.}
+
+\item{constellation}{character indicating the constellation for which the script should be
+generated. Must be one of "sentinel-1", "sentinel-2", or "landsat".}
 }
 \value{
 A `character` vector containing the JavaScript evalscript. It can be used as
@@ -25,19 +32,20 @@ A `character` vector containing the JavaScript evalscript. It can be used as
 It can also be saved to a file for later use or further modifications.
 }
 \description{
-Generates a JavaScript evalscript for calculating a spectral index for
-Sentinel-1 or Sentinel-2 imagery.
+Generates a JavaScript evaluation script for calculating a spectral index for
+Sentinel-1, Sentinel-2 or Landsat-8/9 imagery.
 }
 \details{
 This function takes a spectral index definition and creates a JavaScript
-evalscript compatible with the Sentinel Hub API. The index can be specified
+evaluation script compatible with the Sentinel Hub API. The index can be specified
 by its short name from the \code{rsi} package's spectral index database
 (see \code{rsi::spectral_indices()}) or as a custom \code{list} or \code{data.frame}.
 
 The function automatically maps common band names (e.g., `N`, `R`, `G`, `B`)
-to the corresponding Sentinel-1 or Sentinel-2 band names required by the
-API. Any constants in the index formula (e.g., the soil adjustment factor
-`L` in SAVI) must be provided as named arguments.
+to the corresponding Sentinel-1, Sentinel-2 or Landsat-8/9 band names required by the
+API, based on the value of the \code{constellation} argument. Any constants in the index
+formula (e.g., the soil adjustment factor `L` in SAVI) must be provided as named
+arguments.
 }
 \examples{
 \dontrun{
@@ -45,7 +53,7 @@ API. Any constants in the index formula (e.g., the soil adjustment factor
 # NDVI
 si <- rsi::spectral_indices() # retrieves spectral indices
 ndvi <- subset(si, short_name == "NDVI") # creates one-row data.frame
-ndvi_script <- MakeEvalScript(ndvi) # generates the script
+ndvi_script <- MakeEvalScript(ndvi, constellation = "sentinel-2") # generates the script
 cat(ndvi_script, sep = "\n")
 
 # SAVI, which requires the constant L
@@ -59,6 +67,6 @@ custom_index <- data.frame(
   bands = I(list(c("N", "G"))),
   formula = "(N - G) / (N + G)"
 )
-cat(MakeEvalScript(custom_index))
+cat(MakeEvalScript(custom_index, constellation = "landsat"))
 }
 }
