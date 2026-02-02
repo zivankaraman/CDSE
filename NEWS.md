@@ -1,8 +1,8 @@
-# CDSE 0.3.1 (2022-02-05)
+# CDSE 0.3.1 (2022-02-03)
 
 -   Adapted `MakeEvalScript()` function to handle Landsat-8/9 data
 
-# CDSE 0.3.O (2025-08-05)
+# CDSE 0.3.0 (2025-08-05)
 
 -   Adapted `GetCollections()` function to handle multi-instrument collections like 'Sentinel 3 Synergy L2'
 -   Added `MakeEvalScript()` function that creates evalscript from spectral indices defined in the `rsi` package
