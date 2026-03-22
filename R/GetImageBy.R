@@ -33,11 +33,6 @@
 #'  \code{\link[CDSE]{GetImage}}
 #' @rdname GetImageBy...
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
-#' @importFrom sf st_transform st_geometry st_bbox st_buffer st_coordinates st_centroid
-#' @importFrom geojsonsf sfc_geojson
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
-#' @importFrom terra rast crs project mask writeRaster
 
 #' @name GetImageBy...
 #' @param time_range scalar or vector (Date or character that can be converted to date) defining the time interval.

@@ -95,10 +95,10 @@
 #' @rdname GetStatistics
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Statistical.html}
-#' @importFrom sf st_transform st_geometry st_bbox st_buffer st_coordinates st_centroid
 #' @importFrom geojsonsf sfc_geojson
+#' @importFrom httr2 req_auth_bearer_token req_body_json req_headers req_oauth_client_credentials req_options req_perform req_retry request resp_body_json resp_header
 #' @importFrom jsonlite fromJSON
-#' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
+#' @importFrom sf st_bbox st_buffer st_centroid st_coordinates st_geometry st_transform
 GetStatistics <- function(aoi, bbox, time_range, collection, script,
                           mosaicking_order = c("mostRecent", "leastRecent", "leastCC")[1],
                           pixels, resolution, buffer = 0, percentiles = NULL, aggregation_period = 1L,

@@ -49,7 +49,6 @@ GetOAuthToken <- function(id, secret, url = getOption("CDSE.auth_url")) {
 #' @rdname GetOAuthClient
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Overview/Authentication.html}
-#' @importFrom httr2 oauth_client
 GetOAuthClient <- function(id, secret, url = getOption("CDSE.auth_url")) {
     id <- CheckCredential(id)
     secret <- CheckCredential(secret)

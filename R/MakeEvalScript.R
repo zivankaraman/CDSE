@@ -35,7 +35,7 @@
 #'
 #' @export
 #'
-#' @importFrom stats as.formula setNames
+#' @importFrom rsi spectral_indices
 #'
 #' @examples
 #' \dontrun{
@@ -63,11 +63,12 @@ MakeEvalScript <- function(x, ..., constellation = c("sentinel-1", "sentinel-2",
     if (is.character(x)) {
         stopifnot(length(x) == 1L)
         # check that 'rsi' package is available
-        if (system.file(package = "rsi") == "") {
+        if (requireNamespace("rsi", quietly = TRUE)) {
+            si <- rsi::spectral_indices()
+            x <- subset(si, si$short_name == x)
+        } else {
             stop("If argument 'x' is character the package 'rsi' is required", call. = FALSE)
         }
-        si <- rsi::spectral_indices()
-        x <- subset(si, si$short_name == x)
     }
     if (inherits(x, "data.frame")) stopifnot(nrow(x) == 1L)
     stopifnot(is.list(x))

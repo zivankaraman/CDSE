@@ -52,6 +52,7 @@ SeasonalFilter <- function(catalog, from, to) {
 #' }
 #' @rdname SeasonalTimerange
 #' @export
+#' @importFrom lubridate day month year ymd
 SeasonalTimerange <- function(from, to) {
     from <- as.Date(from)
     to <- as.Date(to)

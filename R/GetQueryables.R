@@ -19,12 +19,8 @@
 #' @rdname GetQueryables
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/ApiReference.html#tag/catalog_collections/operation/getCatalogCollectionQueryables}
-#' @importFrom sf st_transform st_geometry st_bbox st_polygon st_as_sfc st_intersects st_area st_intersection
-#' @importFrom geojsonsf sfc_geojson
+#' @importFrom httr2 req_auth_bearer_token req_oauth_client_credentials req_options req_perform request resp_body_string
 #' @importFrom jsonlite fromJSON
-#' @importFrom httr2 request req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform resp_body_json
-#' @importFrom lutz tz_lookup_coords
-#' @importFrom lubridate with_tz
 GetQueryables <- function(collection, as_data_frame = TRUE, client, token, url = getOption("CDSE.catalog_url")) {
     # build the request
     req <- httr2::request(sprintf("%scollections/%s/queryables", url, collection))
