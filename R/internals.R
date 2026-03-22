@@ -184,6 +184,7 @@ CheckBbox <- function(bbox) {
     }
     return(bbox)
 }
+
 #' @title Compute degree lengths
 #' @description Computes the length of one degree of longitude and latitude at a given latitude.
 #' @param latitude numeric latitude(s)

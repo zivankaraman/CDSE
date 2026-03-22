@@ -34,9 +34,7 @@
 #' It can also be saved to a file for later use or further modifications.
 #'
 #' @export
-#'
-#' @importFrom rsi spectral_indices
-#'
+#' @importFrom stats as.formula setNames
 #' @examples
 #' \dontrun{
 #'
