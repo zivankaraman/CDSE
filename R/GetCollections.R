@@ -12,7 +12,7 @@
 #' @rdname GetCollections
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
-#' @importFrom httr2 request req_perform resp_body_json
+#' @importFrom httr2 req_options req_perform request resp_body_json
 GetCollections <- function(as_data_frame = TRUE, url = getOption("CDSE.catalog_url")) {
     req <- httr2::request(paste0(url, "collections"))
     resp <- try(httr2::req_perform(req), silent = TRUE)

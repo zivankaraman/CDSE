@@ -41,12 +41,12 @@
 #' @rdname SearchCatalog
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Catalog.html}
-#' @importFrom sf st_transform st_geometry st_bbox st_polygon st_as_sfc st_intersects st_area st_intersection
 #' @importFrom geojsonsf sfc_geojson
+#' @importFrom httr2 req_auth_bearer_token req_body_json req_oauth_client_credentials req_options req_perform req_retry request resp_body_json resp_header
 #' @importFrom jsonlite fromJSON
-#' @importFrom httr2 request req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform resp_body_json
-#' @importFrom lutz tz_lookup_coords
 #' @importFrom lubridate with_tz
+#' @importFrom lutz tz_lookup_coords
+#' @importFrom sf st_area st_as_sfc st_bbox st_geometry st_intersection st_intersects st_polygon st_transform
 SearchCatalog <- function(aoi, bbox, from, to, collection, as_data_frame = TRUE, with_geometry = TRUE,
                           filter = NULL, client, token, url = getOption("CDSE.catalog_url")) {
     # Only one of either intersects or bbox may be specified.

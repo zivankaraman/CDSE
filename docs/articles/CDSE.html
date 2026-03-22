@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CDSE</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,46 +123,50 @@ argument <code>as_data_frame</code> to <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">collections</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetCollections.html">GetCollections</a></span><span class="op">(</span>as_data_frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">collections</span></span>
-<span><span class="co">#&gt;                      id                   title</span></span>
-<span><span class="co">#&gt; 1        sentinel-2-l1c          Sentinel 2 L1C</span></span>
-<span><span class="co">#&gt; 2    sentinel-3-olci-l2      Sentinel 3 OLCI L2</span></span>
-<span><span class="co">#&gt; 3         landsat-ot-l1 Landsat 8-9 OLI-TIRS L1</span></span>
-<span><span class="co">#&gt; 4       sentinel-3-olci         Sentinel 3 OLCI</span></span>
-<span><span class="co">#&gt; 5      sentinel-3-slstr        Sentinel 3 SLSTR</span></span>
-<span><span class="co">#&gt; 6 sentinel-3-synergy-l2   Sentinel 3 Synergy L2</span></span>
-<span><span class="co">#&gt; 7        sentinel-1-grd          Sentinel 1 GRD</span></span>
-<span><span class="co">#&gt; 8        sentinel-2-l2a          Sentinel 2 L2A</span></span>
-<span><span class="co">#&gt; 9        sentinel-5p-l2    Sentinel 5 Precursor</span></span>
-<span><span class="co">#&gt;                                                                    description</span></span>
-<span><span class="co">#&gt; 1                                     Sentinel 2 imagery processed to level 1C</span></span>
-<span><span class="co">#&gt; 2                 Sentinel 3 data derived from imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 3                        Landsat 8-9 Collection 2 imagery processed to level 1</span></span>
-<span><span class="co">#&gt; 4                                   Sentinel 3 imagery captured by OLCI sensor</span></span>
-<span><span class="co">#&gt; 5                                  Sentinel 3 imagery captured by SLSTR sensor</span></span>
-<span><span class="co">#&gt; 6 Sentinel 3 data derived from imagery captured by both OLCI and SLSTR sensors</span></span>
-<span><span class="co">#&gt; 7                                     Sentinel 1 Ground Range Detected Imagery</span></span>
-<span><span class="co">#&gt; 8                                     Sentinel 2 imagery processed to level 2A</span></span>
-<span><span class="co">#&gt; 9                      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
-<span><span class="co">#&gt;                  since            instrument  gsd bands constellation long.min</span></span>
-<span><span class="co">#&gt; 1 2015-11-01T00:00:00Z                   msi   10    13    sentinel-2     -180</span></span>
-<span><span class="co">#&gt; 2 2016-04-17T11:33:13Z                  olci  300    NA          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt; 3 2013-03-08T00:00:00Z oli/tirs/oli-2/tirs-2   30    17          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt; 4 2016-04-17T11:33:13Z                  olci  300    21          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt; 5 2016-04-17T11:33:13Z                 slstr 1000    11          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt; 6 2016-04-17T11:33:13Z            olci/slstr  300    NA          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt; 7 2014-10-03T00:00:00Z                 c-sar   NA    NA    sentinel-1     -180</span></span>
-<span><span class="co">#&gt; 8 2016-11-01T00:00:00Z                   msi   10    12    sentinel-2     -180</span></span>
-<span><span class="co">#&gt; 9 2018-04-30T00:18:50Z               tropomi 5500    NA          &lt;NA&gt;     -180</span></span>
-<span><span class="co">#&gt;   lat.min long.max lat.max</span></span>
-<span><span class="co">#&gt; 1     -56      180      83</span></span>
-<span><span class="co">#&gt; 2     -85      180      85</span></span>
-<span><span class="co">#&gt; 3     -85      180      85</span></span>
-<span><span class="co">#&gt; 4     -85      180      85</span></span>
-<span><span class="co">#&gt; 5     -85      180      85</span></span>
-<span><span class="co">#&gt; 6     -85      180      85</span></span>
-<span><span class="co">#&gt; 7     -85      180      85</span></span>
-<span><span class="co">#&gt; 8     -56      180      83</span></span>
-<span><span class="co">#&gt; 9     -85      180      85</span></span></code></pre></div>
+<span><span class="co">#&gt;                       id                   title</span></span>
+<span><span class="co">#&gt; 1         sentinel-2-l1c          Sentinel 2 L1C</span></span>
+<span><span class="co">#&gt; 2     sentinel-3-olci-l2      Sentinel 3 OLCI L2</span></span>
+<span><span class="co">#&gt; 3          landsat-ot-l1 Landsat 8-9 OLI-TIRS L1</span></span>
+<span><span class="co">#&gt; 4        sentinel-3-olci         Sentinel 3 OLCI</span></span>
+<span><span class="co">#&gt; 5       sentinel-3-slstr        Sentinel 3 SLSTR</span></span>
+<span><span class="co">#&gt; 6    sentinel-3-slstr-l2     Sentinel 3 SLSTR L2</span></span>
+<span><span class="co">#&gt; 7  sentinel-3-synergy-l2   Sentinel 3 Synergy L2</span></span>
+<span><span class="co">#&gt; 8         sentinel-1-grd          Sentinel 1 GRD</span></span>
+<span><span class="co">#&gt; 9         sentinel-2-l2a          Sentinel 2 L2A</span></span>
+<span><span class="co">#&gt; 10        sentinel-5p-l2    Sentinel 5 Precursor</span></span>
+<span><span class="co">#&gt;                                                                     description</span></span>
+<span><span class="co">#&gt; 1                                      Sentinel 2 imagery processed to level 1C</span></span>
+<span><span class="co">#&gt; 2                  Sentinel 3 data derived from imagery captured by OLCI sensor</span></span>
+<span><span class="co">#&gt; 3                         Landsat 8-9 Collection 2 imagery processed to level 1</span></span>
+<span><span class="co">#&gt; 4                                    Sentinel 3 imagery captured by OLCI sensor</span></span>
+<span><span class="co">#&gt; 5                                   Sentinel 3 imagery captured by SLSTR sensor</span></span>
+<span><span class="co">#&gt; 6                 Sentinel 3 data derived from imagery captured by SLSTR sensor</span></span>
+<span><span class="co">#&gt; 7  Sentinel 3 data derived from imagery captured by both OLCI and SLSTR sensors</span></span>
+<span><span class="co">#&gt; 8                                      Sentinel 1 Ground Range Detected Imagery</span></span>
+<span><span class="co">#&gt; 9                                      Sentinel 2 imagery processed to level 2A</span></span>
+<span><span class="co">#&gt; 10                      Sentinel 5 Precursor imagery captured by TROPOMI sensor</span></span>
+<span><span class="co">#&gt;                   since            instrument  gsd bands constellation long.min</span></span>
+<span><span class="co">#&gt; 1  2015-11-01T00:00:00Z                   msi   10    13    sentinel-2     -180</span></span>
+<span><span class="co">#&gt; 2  2016-04-17T11:33:13Z                  olci  300    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 3  2013-03-08T00:00:00Z oli/tirs/oli-2/tirs-2   30    17          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 4  2016-04-17T11:33:13Z                  olci  300    21          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 5  2016-04-17T11:33:13Z                 slstr 1000    11          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 6  2016-04-17T11:33:13Z                 slstr 1000    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 7  2016-04-17T11:33:13Z            olci/slstr  300    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt; 8  2014-10-03T00:00:00Z                 c-sar   NA    NA    sentinel-1     -180</span></span>
+<span><span class="co">#&gt; 9  2016-11-01T00:00:00Z                   msi   10    12    sentinel-2     -180</span></span>
+<span><span class="co">#&gt; 10 2018-04-30T00:18:50Z               tropomi 5500    NA          &lt;NA&gt;     -180</span></span>
+<span><span class="co">#&gt;    lat.min long.max lat.max</span></span>
+<span><span class="co">#&gt; 1      -56      180      83</span></span>
+<span><span class="co">#&gt; 2      -85      180      85</span></span>
+<span><span class="co">#&gt; 3      -85      180      85</span></span>
+<span><span class="co">#&gt; 4      -85      180      85</span></span>
+<span><span class="co">#&gt; 5      -85      180      85</span></span>
+<span><span class="co">#&gt; 6      -85      180      85</span></span>
+<span><span class="co">#&gt; 7      -85      180      85</span></span>
+<span><span class="co">#&gt; 8      -85      180      85</span></span>
+<span><span class="co">#&gt; 9      -56      180      83</span></span>
+<span><span class="co">#&gt; 10     -85      180      85</span></span></code></pre></div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="section level2">
@@ -249,7 +253,7 @@ and showing the region of interest in red.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title</a></span><span class="op">(</span>main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"AOI coverage by image tiles for period %s"</span>, </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">days</span>, collapse <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span>, line <span class="op">=</span> <span class="fl">1L</span>, cex.main <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="CDSE_files/figure-html/plot%20AOI%20coverage-1.png" alt="Luxembourg image tiles coverage" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/plot%20AOI%20coverage-1.png" class="r-plt" alt="Luxembourg image tiles coverage" width="100%"><p class="caption">
 Luxembourg image tiles coverage
 </p>
 </div>
@@ -455,7 +459,7 @@ in your R code. Other indices might have only one version; it will
 likely first compute the index value and then possibly transform it for
 visualisation - adapt based on your needs.</p>
 <div class="figure" style="text-align: center">
-<img src="script_code.png" alt="Using evalscript code from the repository" width="80%"><p class="caption">
+<img src="script_code.png" class="r-plt" alt="Using evalscript code from the repository" width="80%"><p class="caption">
 Using evalscript code from the repository
 </p>
 </div>
@@ -571,7 +575,7 @@ illustrate the process.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">grey_img</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">256</span>, start <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>     axes <span class="op">=</span> <span class="cn">FALSE</span>, mar <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="CDSE_files/figure-html/compare%20greyscale%20and%20RGB%20images-1.png" alt="RGB and greyscale images of Central Park" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/compare%20greyscale%20and%20RGB%20images-1.png" class="r-plt" alt="RGB and greyscale images of Central Park" width="100%"><p class="caption">
 RGB and greyscale images of Central Park
 </p>
 </div>
@@ -673,19 +677,19 @@ and <code>mask</code>ing the pixels outside of the AOI.</p>
 <span>    resolution <span class="op">=</span> <span class="fl">10</span>, mask <span class="op">=</span> <span class="cn">TRUE</span>, buffer <span class="op">=</span> <span class="fl">100</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">ras</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 427, 301, 1  (nrow, ncol, nlyr)</span></span>
-<span><span class="co">#&gt; resolution  : 0.0001183781, 9.002468e-05  (x, y)</span></span>
-<span><span class="co">#&gt; extent      : -73.98355, -73.94792, 40.76321, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
+<span><span class="co">#&gt; size        : 383, 355, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; resolution  : 0.0001003292, 0.0001003292  (x, y)</span></span>
+<span><span class="co">#&gt; extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : file4c782bf32834 </span></span>
-<span><span class="co">#&gt; min value   :       -0.5500000 </span></span>
-<span><span class="co">#&gt; max value   :        0.9535776</span></span>
+<span><span class="co">#&gt; name        : file692f6b8fc5a0 </span></span>
+<span><span class="co">#&gt; min value   :       -0.5069648 </span></span>
+<span><span class="co">#&gt; max value   :        0.9507549</span></span>
 <span><span class="va">ras</span><span class="op">[</span><span class="va">ras</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ras</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Central Park NDVI on"</span>, <span class="va">day</span><span class="op">)</span>, cex.main <span class="op">=</span> <span class="fl">0.75</span>,</span>
 <span>    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"yellow"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="CDSE_files/figure-html/retrieve%20the%20NDVI%20image-1.png" alt="Central Park NDVI raster" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/retrieve%20the%20NDVI%20image-1.png" class="r-plt" alt="Central Park NDVI raster" width="100%"><p class="caption">
 Central Park NDVI raster
 </p>
 </div>
@@ -730,7 +734,7 @@ more sense if the image is intended for display and not processing.</p>
 <span>    mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>, pixels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">600</span>, <span class="fl">950</span><span class="op">)</span>, client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plotRGB.html" class="external-link">plotRGB</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/flip.html" class="external-link">flip</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">png</span><span class="op">)</span>, direction <span class="op">=</span> <span class="st">"vertical"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="CDSE_files/figure-html/retrieve%20RGB%20image-1.png" alt="Central Park image as PNG file" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/retrieve%20RGB%20image-1.png" class="r-plt" alt="Central Park image as PNG file" width="100%"><p class="caption">
 Central Park image as PNG file
 </p>
 </div>
@@ -788,7 +792,7 @@ illustrate how to do this with an example.</p>
 <span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"yellow"</span>, <span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="CDSE_files/figure-html/retrieve%20images%20in%20parallel-1.png" alt="Central Park monthly NDVI" width="100%"><p class="caption">
+<img src="CDSE_files/figure-html/retrieve%20images%20in%20parallel-1.png" class="r-plt" alt="Central Park monthly NDVI" width="100%"><p class="caption">
 Central Park monthly NDVI
 </p>
 </div>
@@ -868,102 +872,102 @@ are of equal duration. This is controlled by the value of the
 <span>    aggregation_period <span class="op">=</span> <span class="fl">1</span>, aggregation_unit <span class="op">=</span> <span class="st">"w"</span>, lastIntervalBehavior <span class="op">=</span> <span class="st">"EXTEND"</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="va">daily_stats</span></span>
-<span><span class="co">#&gt;          date     output        band          min        mean          max</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value  0.000000000  0.29693709   0.78141010</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover  0.000000000 11.49759615  59.00000000</span></span>
-<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value  0.000000000  0.00130794   0.08091214</span></span>
-<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
-<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value  0.000000000  0.59277750   0.94132596</span></span>
-<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover  0.000000000  0.03125000   1.00000000</span></span>
-<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value  0.009024903  0.01435550   0.01816181</span></span>
-<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
-<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value  0.000000000  0.58623717   0.92305928</span></span>
-<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover  0.000000000  0.03846154   1.00000000</span></span>
-<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value  0.000000000  0.56782958   0.97438085</span></span>
-<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover  0.000000000  1.02644231  46.00000000</span></span>
-<span><span class="co">#&gt; 13 2023-07-16 statistics  ndvi_value  0.000000000  0.02039137   0.04840916</span></span>
-<span><span class="co">#&gt; 14 2023-07-16 statistics cloud_cover 65.000000000 73.26442308 100.00000000</span></span>
-<span><span class="co">#&gt; 15 2023-07-19 statistics  ndvi_value  0.000000000  0.00000000   0.00000000</span></span>
-<span><span class="co">#&gt; 16 2023-07-19 statistics cloud_cover 65.000000000 65.00000000  65.00000000</span></span>
-<span><span class="co">#&gt; 17 2023-07-21 statistics  ndvi_value  0.000000000  0.34102285   0.87586755</span></span>
-<span><span class="co">#&gt; 18 2023-07-21 statistics cloud_cover  0.000000000 18.92067308 100.00000000</span></span>
-<span><span class="co">#&gt; 19 2023-07-24 statistics  ndvi_value  0.000000000  0.31690014   0.68750000</span></span>
-<span><span class="co">#&gt; 20 2023-07-24 statistics cloud_cover  0.000000000  7.19230769  65.00000000</span></span>
-<span><span class="co">#&gt; 21 2023-07-26 statistics  ndvi_value  0.000000000  0.55108924   0.86418003</span></span>
-<span><span class="co">#&gt; 22 2023-07-26 statistics cloud_cover  0.000000000  0.03846154   2.00000000</span></span>
-<span><span class="co">#&gt; 23 2023-07-29 statistics  ndvi_value  0.000000000  0.36109372   0.82380843</span></span>
-<span><span class="co">#&gt; 24 2023-07-29 statistics cloud_cover  0.000000000 14.87500000  65.00000000</span></span>
-<span><span class="co">#&gt; 25 2023-07-31 statistics  ndvi_value  0.000000000  0.57417085   0.90863669</span></span>
-<span><span class="co">#&gt; 26 2023-07-31 statistics cloud_cover  0.000000000  0.05528846  11.00000000</span></span>
+<span><span class="co">#&gt;          date     output        band          min         mean          max</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value 0.000000e+00   0.29693709   0.78141010</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover 0.000000e+00 110.43990385 255.00000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value 0.000000e+00   0.00130794   0.08091214</span></span>
+<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 9.800000e+01 127.75961538 145.00000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value 0.000000e+00   0.59277750   0.94132596</span></span>
+<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover 3.800000e+01 138.45432692 255.00000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value 9.024903e-03   0.01435550   0.01816181</span></span>
+<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 1.280000e+02 204.75000000 255.00000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value 0.000000e+00   0.58623717   0.92305928</span></span>
+<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover 1.080000e+02 127.34134615 137.00000000</span></span>
+<span><span class="co">#&gt; 11 2023-07-14 statistics  ndvi_value 0.000000e+00   0.56782958   0.97438085</span></span>
+<span><span class="co">#&gt; 12 2023-07-14 statistics cloud_cover 3.800000e+01 114.46634615 128.00000000</span></span>
+<span><span class="co">#&gt; 13 2023-07-16 statistics  ndvi_value 0.000000e+00   0.02039137   0.04840916</span></span>
+<span><span class="co">#&gt; 14 2023-07-16 statistics cloud_cover 1.240000e+02 127.71394231 131.00000000</span></span>
+<span><span class="co">#&gt; 15 2023-07-19 statistics  ndvi_value 0.000000e+00   0.00000000   0.00000000</span></span>
+<span><span class="co">#&gt; 16 2023-07-19 statistics cloud_cover 1.280000e+02 204.75000000 255.00000000</span></span>
+<span><span class="co">#&gt; 17 2023-07-21 statistics  ndvi_value 0.000000e+00   0.34102285   0.87586755</span></span>
+<span><span class="co">#&gt; 18 2023-07-21 statistics cloud_cover 0.000000e+00 122.79567308 255.00000000</span></span>
+<span><span class="co">#&gt; 19 2023-07-24 statistics  ndvi_value 0.000000e+00   0.31690014   0.68750000</span></span>
+<span><span class="co">#&gt; 20 2023-07-24 statistics cloud_cover 1.280000e+02 128.00000000 128.00000000</span></span>
+<span><span class="co">#&gt; 21 2023-07-26 statistics  ndvi_value 0.000000e+00   0.55108924   0.86418003</span></span>
+<span><span class="co">#&gt; 22 2023-07-26 statistics cloud_cover 0.000000e+00 159.01201923 255.00000000</span></span>
+<span><span class="co">#&gt; 23 2023-07-29 statistics  ndvi_value 0.000000e+00   0.36109372   0.82380843</span></span>
+<span><span class="co">#&gt; 24 2023-07-29 statistics cloud_cover 1.800000e+01 148.40625000 255.00000000</span></span>
+<span><span class="co">#&gt; 25 2023-07-31 statistics  ndvi_value 0.000000e+00   0.57417085   0.90863669</span></span>
+<span><span class="co">#&gt; 26 2023-07-31 statistics cloud_cover 1.190000e+02 127.89663462 132.00000000</span></span>
 <span><span class="co">#&gt;           stDev sampleCount noDataCount</span></span>
 <span><span class="co">#&gt; 1   0.202025826        1120         704</span></span>
-<span><span class="co">#&gt; 2  16.430652463        1120         704</span></span>
+<span><span class="co">#&gt; 2  57.833865545        1120         704</span></span>
 <span><span class="co">#&gt; 3   0.007348936        1120         704</span></span>
-<span><span class="co">#&gt; 4   0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 4   2.742104723        1120         704</span></span>
 <span><span class="co">#&gt; 5   0.314693450        1120         704</span></span>
-<span><span class="co">#&gt; 6   0.173992636        1120         704</span></span>
+<span><span class="co">#&gt; 6  34.455068715        1120         704</span></span>
 <span><span class="co">#&gt; 7   0.001601320        1120         704</span></span>
-<span><span class="co">#&gt; 8   0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 8  45.187855755        1120         704</span></span>
 <span><span class="co">#&gt; 9   0.307616006        1120         704</span></span>
-<span><span class="co">#&gt; 10  0.192307692        1120         704</span></span>
+<span><span class="co">#&gt; 10  3.689098039        1120         704</span></span>
 <span><span class="co">#&gt; 11  0.312498927        1120         704</span></span>
-<span><span class="co">#&gt; 12  3.895482200        1120         704</span></span>
+<span><span class="co">#&gt; 12 24.541151118        1120         704</span></span>
 <span><span class="co">#&gt; 13  0.006433569        1120         704</span></span>
-<span><span class="co">#&gt; 14 14.578444429        1120         704</span></span>
+<span><span class="co">#&gt; 14  1.068517051        1120         704</span></span>
 <span><span class="co">#&gt; 15  0.000000000        1120         704</span></span>
-<span><span class="co">#&gt; 16  0.000000000        1120         704</span></span>
+<span><span class="co">#&gt; 16 45.187855755        1120         704</span></span>
 <span><span class="co">#&gt; 17  0.237646086        1120         704</span></span>
-<span><span class="co">#&gt; 18 27.417550449        1120         704</span></span>
+<span><span class="co">#&gt; 18 65.530813954        1120         704</span></span>
 <span><span class="co">#&gt; 19  0.187236765        1120         704</span></span>
-<span><span class="co">#&gt; 20 14.153401958        1120         704</span></span>
+<span><span class="co">#&gt; 20  0.000000000        1120         704</span></span>
 <span><span class="co">#&gt; 21  0.282648355        1120         704</span></span>
-<span><span class="co">#&gt; 22  0.204425881        1120         704</span></span>
+<span><span class="co">#&gt; 22 67.762788672        1120         704</span></span>
 <span><span class="co">#&gt; 23  0.236225583        1120         704</span></span>
-<span><span class="co">#&gt; 24 21.364594858        1120         704</span></span>
+<span><span class="co">#&gt; 24 48.557518029        1120         704</span></span>
 <span><span class="co">#&gt; 25  0.300636446        1120         704</span></span>
-<span><span class="co">#&gt; 26  0.575393606        1120         704</span></span>
+<span><span class="co">#&gt; 26  1.024408000        1120         704</span></span>
 <span><span class="va">weekly_stats</span></span>
 <span><span class="co">#&gt;         from         to     output        band min        mean         max</span></span>
-<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59277750   0.9413260</span></span>
-<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
-<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58623717   0.9230593</span></span>
-<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover   0  0.03846154   1.0000000</span></span>
-<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34102285   0.8758675</span></span>
-<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 18.92067308 100.0000000</span></span>
-<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0  0.55108924   0.8641800</span></span>
-<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0  0.03846154   2.0000000</span></span>
+<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0   0.5927775   0.9413260</span></span>
+<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover  38 138.4543269 255.0000000</span></span>
+<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0   0.5862372   0.9230593</span></span>
+<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover 108 127.3413462 137.0000000</span></span>
+<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0   0.3410228   0.8758675</span></span>
+<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 122.7956731 255.0000000</span></span>
+<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0   0.5510892   0.8641800</span></span>
+<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0 159.0120192 255.0000000</span></span>
 <span><span class="co">#&gt;        stDev sampleCount noDataCount</span></span>
 <span><span class="co">#&gt; 1  0.3146934        1120         704</span></span>
-<span><span class="co">#&gt; 2  0.1739926        1120         704</span></span>
+<span><span class="co">#&gt; 2 34.4550687        1120         704</span></span>
 <span><span class="co">#&gt; 3  0.3076160        1120         704</span></span>
-<span><span class="co">#&gt; 4  0.1923077        1120         704</span></span>
+<span><span class="co">#&gt; 4  3.6890980        1120         704</span></span>
 <span><span class="co">#&gt; 5  0.2376461        1120         704</span></span>
-<span><span class="co">#&gt; 6 27.4175504        1120         704</span></span>
+<span><span class="co">#&gt; 6 65.5308140        1120         704</span></span>
 <span><span class="co">#&gt; 7  0.2826484        1120         704</span></span>
-<span><span class="co">#&gt; 8  0.2044259        1120         704</span></span>
+<span><span class="co">#&gt; 8 67.7627887        1120         704</span></span>
 <span><span class="va">weekly_stats_extended</span></span>
 <span><span class="co">#&gt;          from         to     output        band min        mean         max</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 2023-07-07 statistics  ndvi_value   0  0.59277750   0.9413260</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 2023-07-07 statistics cloud_cover   0  0.03125000   1.0000000</span></span>
-<span><span class="co">#&gt; 3  2023-07-08 2023-07-14 statistics  ndvi_value   0  0.58623717   0.9230593</span></span>
-<span><span class="co">#&gt; 4  2023-07-08 2023-07-14 statistics cloud_cover   0  0.03846154   1.0000000</span></span>
-<span><span class="co">#&gt; 5  2023-07-15 2023-07-21 statistics  ndvi_value   0  0.34102285   0.8758675</span></span>
-<span><span class="co">#&gt; 6  2023-07-15 2023-07-21 statistics cloud_cover   0 18.92067308 100.0000000</span></span>
-<span><span class="co">#&gt; 7  2023-07-22 2023-07-28 statistics  ndvi_value   0  0.55108924   0.8641800</span></span>
-<span><span class="co">#&gt; 8  2023-07-22 2023-07-28 statistics cloud_cover   0  0.03846154   2.0000000</span></span>
-<span><span class="co">#&gt; 9  2023-07-29 2023-08-04 statistics  ndvi_value   0  0.57417085   0.9086367</span></span>
-<span><span class="co">#&gt; 10 2023-07-29 2023-08-04 statistics cloud_cover   0  0.05528846  11.0000000</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 2023-07-07 statistics  ndvi_value   0   0.5927775   0.9413260</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 2023-07-07 statistics cloud_cover  38 138.4543269 255.0000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-08 2023-07-14 statistics  ndvi_value   0   0.5862372   0.9230593</span></span>
+<span><span class="co">#&gt; 4  2023-07-08 2023-07-14 statistics cloud_cover 108 127.3413462 137.0000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-15 2023-07-21 statistics  ndvi_value   0   0.3410228   0.8758675</span></span>
+<span><span class="co">#&gt; 6  2023-07-15 2023-07-21 statistics cloud_cover   0 122.7956731 255.0000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-22 2023-07-28 statistics  ndvi_value   0   0.5510892   0.8641800</span></span>
+<span><span class="co">#&gt; 8  2023-07-22 2023-07-28 statistics cloud_cover   0 159.0120192 255.0000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-29 2023-08-04 statistics  ndvi_value   0   0.5741708   0.9086367</span></span>
+<span><span class="co">#&gt; 10 2023-07-29 2023-08-04 statistics cloud_cover 119 127.8966346 132.0000000</span></span>
 <span><span class="co">#&gt;         stDev sampleCount noDataCount</span></span>
 <span><span class="co">#&gt; 1   0.3146934        1120         704</span></span>
-<span><span class="co">#&gt; 2   0.1739926        1120         704</span></span>
+<span><span class="co">#&gt; 2  34.4550687        1120         704</span></span>
 <span><span class="co">#&gt; 3   0.3076160        1120         704</span></span>
-<span><span class="co">#&gt; 4   0.1923077        1120         704</span></span>
+<span><span class="co">#&gt; 4   3.6890980        1120         704</span></span>
 <span><span class="co">#&gt; 5   0.2376461        1120         704</span></span>
-<span><span class="co">#&gt; 6  27.4175504        1120         704</span></span>
+<span><span class="co">#&gt; 6  65.5308140        1120         704</span></span>
 <span><span class="co">#&gt; 7   0.2826484        1120         704</span></span>
-<span><span class="co">#&gt; 8   0.2044259        1120         704</span></span>
+<span><span class="co">#&gt; 8  67.7627887        1120         704</span></span>
 <span><span class="co">#&gt; 9   0.3006364        1120         704</span></span>
-<span><span class="co">#&gt; 10  0.5753936        1120         704</span></span></code></pre></div>
+<span><span class="co">#&gt; 10  1.0244080        1120         704</span></span></code></pre></div>
 <p>In this example we have demonstrated that a week can be specified as
 either 7 days or 1 week.</p>
 </div>
@@ -980,60 +984,60 @@ request to compute the percentiles. If the percentiles requested are 25,
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">1</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">daily_stats</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          date     output        band          min          q1      median</span></span>
-<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value  0.000000000  0.13500306  0.27183646</span></span>
-<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
-<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value  0.000000000  0.00000000  0.00000000</span></span>
-<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 65.000000000 65.00000000 65.00000000</span></span>
-<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value  0.000000000  0.40708151  0.72846061</span></span>
-<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
-<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value  0.009024903  0.01335559  0.01449275</span></span>
-<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 65.000000000 65.00000000 65.00000000</span></span>
-<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value  0.000000000  0.39752251  0.72366148</span></span>
-<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover  0.000000000  0.00000000  0.00000000</span></span>
-<span><span class="co">#&gt;           mean          q3         max        stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1   0.29693709  0.46695372  0.78141010  0.202025826        1120         704</span></span>
-<span><span class="co">#&gt; 2  11.49759615 27.00000000 59.00000000 16.430652463        1120         704</span></span>
-<span><span class="co">#&gt; 3   0.00130794  0.00000000  0.08091214  0.007348936        1120         704</span></span>
-<span><span class="co">#&gt; 4  65.00000000 65.00000000 65.00000000  0.000000000        1120         704</span></span>
-<span><span class="co">#&gt; 5   0.59277750  0.83494651  0.94132596  0.314693450        1120         704</span></span>
-<span><span class="co">#&gt; 6   0.03125000  0.00000000  1.00000000  0.173992636        1120         704</span></span>
-<span><span class="co">#&gt; 7   0.01435550  0.01541287  0.01816181  0.001601320        1120         704</span></span>
-<span><span class="co">#&gt; 8  65.00000000 65.00000000 65.00000000  0.000000000        1120         704</span></span>
-<span><span class="co">#&gt; 9   0.58623717  0.82233500  0.92305928  0.307616006        1120         704</span></span>
-<span><span class="co">#&gt; 10  0.03846154  0.00000000  1.00000000  0.192307692        1120         704</span></span>
+<span><span class="co">#&gt;          date     output        band          min           q1       median</span></span>
+<span><span class="co">#&gt; 1  2023-07-01 statistics  ndvi_value 0.000000e+00   0.13500306   0.27183646</span></span>
+<span><span class="co">#&gt; 2  2023-07-01 statistics cloud_cover 0.000000e+00 120.00000000 128.00000000</span></span>
+<span><span class="co">#&gt; 3  2023-07-04 statistics  ndvi_value 0.000000e+00   0.00000000   0.00000000</span></span>
+<span><span class="co">#&gt; 4  2023-07-04 statistics cloud_cover 9.800000e+01 128.00000000 128.00000000</span></span>
+<span><span class="co">#&gt; 5  2023-07-06 statistics  ndvi_value 0.000000e+00   0.40708151   0.72846061</span></span>
+<span><span class="co">#&gt; 6  2023-07-06 statistics cloud_cover 3.800000e+01 128.00000000 128.00000000</span></span>
+<span><span class="co">#&gt; 7  2023-07-09 statistics  ndvi_value 9.024903e-03   0.01335559   0.01449275</span></span>
+<span><span class="co">#&gt; 8  2023-07-09 statistics cloud_cover 1.280000e+02 169.00000000 216.00000000</span></span>
+<span><span class="co">#&gt; 9  2023-07-11 statistics  ndvi_value 0.000000e+00   0.39752251   0.72366148</span></span>
+<span><span class="co">#&gt; 10 2023-07-11 statistics cloud_cover 1.080000e+02 127.00000000 128.00000000</span></span>
+<span><span class="co">#&gt;            mean           q3          max        stDev sampleCount noDataCount</span></span>
+<span><span class="co">#&gt; 1    0.29693709   0.46695372   0.78141010  0.202025826        1120         704</span></span>
+<span><span class="co">#&gt; 2  110.43990385 128.00000000 255.00000000 57.833865545        1120         704</span></span>
+<span><span class="co">#&gt; 3    0.00130794   0.00000000   0.08091214  0.007348936        1120         704</span></span>
+<span><span class="co">#&gt; 4  127.75961538 128.00000000 145.00000000  2.742104723        1120         704</span></span>
+<span><span class="co">#&gt; 5    0.59277750   0.83494651   0.94132596  0.314693450        1120         704</span></span>
+<span><span class="co">#&gt; 6  138.45432692 136.00000000 255.00000000 34.455068715        1120         704</span></span>
+<span><span class="co">#&gt; 7    0.01435550   0.01541287   0.01816181  0.001601320        1120         704</span></span>
+<span><span class="co">#&gt; 8  204.75000000 248.00000000 255.00000000 45.187855755        1120         704</span></span>
+<span><span class="co">#&gt; 9    0.58623717   0.82233500   0.92305928  0.307616006        1120         704</span></span>
+<span><span class="co">#&gt; 10 127.34134615 128.00000000 137.00000000  3.689098039        1120         704</span></span>
 <span><span class="va">weekly_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetStatistics.html">GetStatistics</a></span><span class="op">(</span>aoi <span class="op">=</span> <span class="va">aoi</span>, time_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2023-07-01"</span>, <span class="st">"2023-07-31"</span><span class="op">)</span>,</span>
 <span>    collection <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span>, script <span class="op">=</span> <span class="va">script_file</span>, mosaicking_order <span class="op">=</span> <span class="st">"leastCC"</span>,</span>
 <span>    resolution <span class="op">=</span> <span class="fl">100</span>, aggregation_period <span class="op">=</span> <span class="fl">7</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">90</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span>
 <span>    client <span class="op">=</span> <span class="va">OAuthClient</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weekly_stats</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         from         to     output        band min     P.10.0    P.20.0</span></span>
-<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0 0.00000000 0.2409204</span></span>
-<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0 0.00000000 0.2461283</span></span>
-<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0 0.03198843 0.1107902</span></span>
-<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0 0.00000000 0.2372815</span></span>
-<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0 0.00000000 0.0000000</span></span>
-<span><span class="co">#&gt;      P.30.0    P.40.0    P.50.0        mean     P.60.0     P.70.0     P.80.0</span></span>
-<span><span class="co">#&gt; 1 0.5346097 0.6485005 0.7284606  0.59277750  0.7729769  0.8137387  0.8501548</span></span>
-<span><span class="co">#&gt; 2 0.0000000 0.0000000 0.0000000  0.03125000  0.0000000  0.0000000  0.0000000</span></span>
-<span><span class="co">#&gt; 3 0.5303805 0.6513962 0.7236615  0.58623717  0.7651967  0.7999074  0.8342828</span></span>
-<span><span class="co">#&gt; 4 0.0000000 0.0000000 0.0000000  0.03846154  0.0000000  0.0000000  0.0000000</span></span>
-<span><span class="co">#&gt; 5 0.1835373 0.2423687 0.3113911  0.34102285  0.3892109  0.4739323  0.5801266</span></span>
-<span><span class="co">#&gt; 6 0.0000000 2.0000000 4.0000000 18.92067308 10.0000000 23.0000000 36.0000000</span></span>
-<span><span class="co">#&gt; 7 0.5198822 0.6117556 0.6803387  0.55108924  0.7165049  0.7446924  0.7765798</span></span>
-<span><span class="co">#&gt; 8 0.0000000 0.0000000 0.0000000  0.03846154  0.0000000  0.0000000  0.0000000</span></span>
-<span><span class="co">#&gt;       P.90.0         max      stDev sampleCount noDataCount</span></span>
-<span><span class="co">#&gt; 1  0.8888350   0.9413260  0.3146934        1120         704</span></span>
-<span><span class="co">#&gt; 2  0.0000000   1.0000000  0.1739926        1120         704</span></span>
-<span><span class="co">#&gt; 3  0.8731361   0.9230593  0.3076160        1120         704</span></span>
-<span><span class="co">#&gt; 4  0.0000000   1.0000000  0.1923077        1120         704</span></span>
-<span><span class="co">#&gt; 5  0.6991727   0.8758675  0.2376461        1120         704</span></span>
-<span><span class="co">#&gt; 6 61.0000000 100.0000000 27.4175504        1120         704</span></span>
-<span><span class="co">#&gt; 7  0.8116835   0.8641800  0.2826484        1120         704</span></span>
-<span><span class="co">#&gt; 8  0.0000000   2.0000000  0.2044259        1120         704</span></span></code></pre></div>
+<span><span class="co">#&gt;         from         to     output        band min       P.10.0      P.20.0</span></span>
+<span><span class="co">#&gt; 1 2023-07-01 2023-07-07 statistics  ndvi_value   0   0.00000000   0.2409204</span></span>
+<span><span class="co">#&gt; 2 2023-07-01 2023-07-07 statistics cloud_cover  38 122.00000000 128.0000000</span></span>
+<span><span class="co">#&gt; 3 2023-07-08 2023-07-14 statistics  ndvi_value   0   0.00000000   0.2461283</span></span>
+<span><span class="co">#&gt; 4 2023-07-08 2023-07-14 statistics cloud_cover 108 124.00000000 126.0000000</span></span>
+<span><span class="co">#&gt; 5 2023-07-15 2023-07-21 statistics  ndvi_value   0   0.03198843   0.1107902</span></span>
+<span><span class="co">#&gt; 6 2023-07-15 2023-07-21 statistics cloud_cover   0   0.00000000  96.0000000</span></span>
+<span><span class="co">#&gt; 7 2023-07-22 2023-07-28 statistics  ndvi_value   0   0.00000000   0.2372815</span></span>
+<span><span class="co">#&gt; 8 2023-07-22 2023-07-28 statistics cloud_cover   0  63.00000000 122.0000000</span></span>
+<span><span class="co">#&gt;        P.30.0      P.40.0      P.50.0        mean      P.60.0      P.70.0</span></span>
+<span><span class="co">#&gt; 1   0.5346097   0.6485005   0.7284606   0.5927775   0.7729769   0.8137387</span></span>
+<span><span class="co">#&gt; 2 128.0000000 128.0000000 128.0000000 138.4543269 128.0000000 128.0000000</span></span>
+<span><span class="co">#&gt; 3   0.5303805   0.6513962   0.7236615   0.5862372   0.7651967   0.7999074</span></span>
+<span><span class="co">#&gt; 4 128.0000000 128.0000000 128.0000000 127.3413462 128.0000000 128.0000000</span></span>
+<span><span class="co">#&gt; 5   0.1835373   0.2423687   0.3113911   0.3410228   0.3892109   0.4739323</span></span>
+<span><span class="co">#&gt; 6 128.0000000 128.0000000 128.0000000 122.7956731 128.0000000 128.0000000</span></span>
+<span><span class="co">#&gt; 7   0.5198822   0.6117556   0.6803387   0.5510892   0.7165049   0.7446924</span></span>
+<span><span class="co">#&gt; 8 141.0000000 150.0000000 154.0000000 159.0120192 174.0000000 202.0000000</span></span>
+<span><span class="co">#&gt;        P.80.0      P.90.0         max      stDev sampleCount noDataCount</span></span>
+<span><span class="co">#&gt; 1   0.8501548   0.8888350   0.9413260  0.3146934        1120         704</span></span>
+<span><span class="co">#&gt; 2 148.0000000 188.0000000 255.0000000 34.4550687        1120         704</span></span>
+<span><span class="co">#&gt; 3   0.8342828   0.8731361   0.9230593  0.3076160        1120         704</span></span>
+<span><span class="co">#&gt; 4 128.0000000 131.0000000 137.0000000  3.6890980        1120         704</span></span>
+<span><span class="co">#&gt; 5   0.5801266   0.6991727   0.8758675  0.2376461        1120         704</span></span>
+<span><span class="co">#&gt; 6 140.0000000 218.0000000 255.0000000 65.5308140        1120         704</span></span>
+<span><span class="co">#&gt; 7   0.7765798   0.8116835   0.8641800  0.2826484        1120         704</span></span>
+<span><span class="co">#&gt; 8 224.0000000 250.0000000 255.0000000 67.7627887        1120         704</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="retrieving-a-series-of-statistics-in-a-batch">Retrieving a series of statistics in a batch<a class="anchor" aria-label="anchor" href="#retrieving-a-series-of-statistics-in-a-batch"></a>
@@ -1095,7 +1099,7 @@ pay particular attention to the Process API (used for retrieving
 images), Catalog API (used for catalog searches), and Statistical API
 (used for retrieving statistics).</p>
 <div class="figure" style="text-align: center">
-<img src="service_health.png" alt="Copernicus Data Space Ecosystem Service Health" width="100%"><p class="caption">
+<img src="service_health.png" class="r-plt" alt="Copernicus Data Space Ecosystem Service Health" width="100%"><p class="caption">
 Copernicus Data Space Ecosystem Service Health
 </p>
 </div>
@@ -1111,7 +1115,7 @@ Copernicus Data Space Ecosystem Service Health
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

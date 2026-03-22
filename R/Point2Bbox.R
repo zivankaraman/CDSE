@@ -17,7 +17,7 @@
 #'  \code{\link[grDevices]{xy.coords}}, \code{\link[sf]{st_crs}}
 #' @rdname Point2Bbox
 #' @export
-#' @importFrom sf st_as_sf st_geometry_type st_coordinates st_crs
+#' @importFrom sf st_as_sf st_coordinates st_crs st_geometry_type
 Point2Bbox <- function(x, y = NULL, size, crs = 4326) {
     allowed_class <- c("sf", "sfc", "SpatialPoints")
     ndx <- inherits(x, allowed_class, which = TRUE)

@@ -1,0 +1,58 @@
+# Produce image catalog without multiple entries per date
+
+Sometimes several images could be available for the given day. It can be
+useful to have a list where for any given day there is just one row in
+the list. This unique row can be selected to represent either the least
+cloud coverage or the biggest coverage of the are of interest.
+
+## Usage
+
+``` r
+UniqueCatalog(
+  imageCatalog,
+  by = c("areaCoverage", "tileCloudCover"),
+  keep = names(imageCatalog)
+)
+```
+
+## Arguments
+
+- imageCatalog:
+
+  `data.frame` as returned by the `SearchCatalog` function.
+
+- by:
+
+  character indicating which attribute is used to select the best image
+  per date. Can be either "areaCoverage" or "tileCloudCover".
+
+- keep:
+
+  list of columns to keep in output. Default: all columns in input.
+
+## Value
+
+`data.frame` with one row per date.
+
+## Details
+
+By default, the returned `data.frame` has the same columns as the input
+catalog. User can specify a subset of columns to include in the output
+through the `keep` parameter.
+
+## See also
+
+[`SearchCatalog`](https://zivankaraman.github.io/CDSE/reference/SearchCatalog.md)
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+dsn <- system.file("extdata", "luxembourg.geojson", package = "CDSE")
+aoi <- sf::read_sf(dsn, as_tibble = FALSE)
+images <- SearchCatalog(aoi = aoi, from = "2023-07-01", to = "2023-07-31",
+          collection = "sentinel-2-l2a", with_geometry = TRUE, client = OAuthClient)
+best_daily <- UniqueCatalog(images, by = "areaCoverage",
+                keep = c("acquisitionDate", "tileCloudCover", "areaCoverage", "satellite"))
+} # }
+```

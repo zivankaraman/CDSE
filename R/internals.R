@@ -1,8 +1,21 @@
+#' @title Check if values are between two bounds
+#' @description Checks if a numeric vector x is between left and right bounds (inclusive).
+#' @param x numeric vector
+#' @param left left bound
+#' @param right right bound
+#' @return logical vector
+#' @keywords internal
+#' @noRd
 between <- function(x, left, right) {
     x >= left & x <= right
 }
 
+#' @title Get the last HTTP error
+#' @description Retrieves the last HTTP error from \code{httr2} response.
+#' @return Error message as string
 #' @importFrom httr2 last_response resp_body_json
+#' @importFrom sf st_as_sf st_as_sfc st_is_empty st_polygon st_union
+#' @keywords internal
 #' @noRd
 LastError <- function() {
     # Sentinel Hub API uses boom - HTTP-friendly error objects
@@ -13,22 +26,45 @@ LastError <- function() {
     return(msg)
 }
 
+#' @title Get the last HTTP response
+#' @description Retrieves the last HTTP response from \code{httr2}.
+#' @return An \code{httr2} response object
+#' @keywords internal
+#' @noRd
 LastResponse <- function() {
     # Sentinel Hub API uses boom - HTTP-friendly error objects
     # https://hapi.dev/module/boom/
     return(httr2::last_response())
 }
 
+#' @title Replace NULL with NA
+#' @description Safely replaces NULL values with NA.
+#' @param x value to check
+#' @return NA if x is NULL, otherwise x
+#' @keywords internal
+#' @noRd
 SafeNull <- function(x) {
     return(ifelse(is.null(x), NA, x))
 }
 
+#' @title Check and format credentials
+#' @description Checks a given credential string and formats it as an empty string if missing.
+#' @param x credential string
+#' @return Formatted credential string
+#' @keywords internal
+#' @noRd
 CheckCredential <- function(x) {
     x <- as.character(x)
     if (is.na(x) || is.null(x) || (length(x) == 0L)) x <- ""
     return(x)
 }
 
+#' @title Enforce vector length of 2
+#' @description Checks if the vector has length 2, or replicates a scalar to length 2.
+#' @param x numeric vector or scalar
+#' @return A vector of length 2
+#' @keywords internal
+#' @noRd
 CheckLengthIs2 <- function(x) {
     # if one value only provided, replicate it twice (use it for both X and Y)
     if (length(x) == 1L) {
@@ -41,6 +77,12 @@ CheckLengthIs2 <- function(x) {
     return(x)
 }
 
+#' @title Validate mosaicking order
+#' @description Validates and formats the mosaicking order argument.
+#' @param x character string for mosaicking
+#' @return Validated mosaicking string
+#' @keywords internal
+#' @noRd
 CheckMosaicking <- function(x) {
     idx <- pmatch(tolower(x), tolower(c("mostRecent", "leastRecent", "leastCC")))
     if (is.na(idx)) {
@@ -56,6 +98,12 @@ CheckMosaicking <- function(x) {
     }
 }
 
+#' @title Validate image format
+#' @description Validates and formats the image format argument.
+#' @param x character string for image format
+#' @return Validated image format string
+#' @keywords internal
+#' @noRd
 CheckFormat <- function(x) {
     idx <- pmatch(tolower(x), tolower(c("image/tiff", "image/png", "image/jpeg", "image/jpg")))
     if (is.na(idx)) {
@@ -76,6 +124,12 @@ CheckFormat <- function(x) {
     }
 }
 
+#' @title Check Area of Interest (AOI)
+#' @description Validates an Area of Interest object.
+#' @param aoi an \code{sf} or \code{sfc} object
+#' @return Validated \code{sf} object
+#' @keywords internal
+#' @noRd
 CheckAOI <- function(aoi) {
     out <- NULL
     if (inherits(aoi, "sf")) {
@@ -105,6 +159,12 @@ CheckAOI <- function(aoi) {
     return(out)
 }
 
+#' @title Check Bounding Box
+#' @description Validates a bounding box numeric array.
+#' @param bbox numeric vector of length 4
+#' @return Validated bounding box numeric array
+#' @keywords internal
+#' @noRd
 CheckBbox <- function(bbox) {
     # try converting to numeric, just in case it is not
     bbox <- try(as.numeric(bbox), silent = TRUE)
@@ -124,6 +184,13 @@ CheckBbox <- function(bbox) {
     }
     return(bbox)
 }
+
+#' @title Compute degree lengths
+#' @description Computes the length of one degree of longitude and latitude at a given latitude.
+#' @param latitude numeric latitude(s)
+#' @return Data frame or named vector with X and Y lengths in meters
+#' @keywords internal
+#' @noRd
 DegLength <- function(latitude) {
     # Computes the length (in meters) of one degree of longitude (X) and one degree of latitude (Y)
     #     at a given "latitude" using the WGS 84 ellipsoid parameters.
@@ -154,6 +221,13 @@ DegLength <- function(latitude) {
     return(out)
 }
 
+#' @title Create a time range
+#' @description Creates a standardized time range list.
+#' @param period a vector of dates or numeric dates
+#' @param format logical, indicates if the output should be formatted as character strings
+#' @return A list with \code{from} and \code{to} time range boundaries
+#' @keywords internal
+#' @noRd
 MakeTimeRange <- function(period, format = TRUE) {
     if (any(c(inherits(period, "character"), inherits(period, "Date")))) {
         from <- as.Date(min(period))
@@ -173,7 +247,12 @@ MakeTimeRange <- function(period, format = TRUE) {
     return(out)
 }
 
-#' @importFrom sf st_as_sfc st_polygon
+#' @title Create polygon from bounding box
+#' @description Creates an \code{sf} polygon geometry from a bounding box vector.
+#' @param x numeric bounding box vector of length 4
+#' @param crs coordinate reference system, default is 4326
+#' @return an \code{sfc} object containing the polygon
+#' @keywords internal
 #' @noRd
 PolyFromBbox <- function(x, crs = 4326) {
     # creates sf geometry from bbox vector
@@ -187,6 +266,12 @@ PolyFromBbox <- function(x, crs = 4326) {
     return(out)
 }
 
+#' @title Search options by pattern
+#' @description Retrieves R options matching a specific pattern.
+#' @param pattern character string for the regex pattern
+#' @return A list of matching options
+#' @keywords internal
+#' @noRd
 grepOptions <- function(pattern) {
     opt <- options()
     return(opt[grep(pattern, names(opt))])
