@@ -3,8 +3,11 @@ Type: Package
 Title: 'Copernicus Data Space Ecosystem' API Wrapper
 Version: 0.3.2
 Authors@R: 
-    person("Zivan", "Karaman", , "zivan.karaman@gmail.com", role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0002-8933-4589"))
+    c(person(given = "Zivan",
+             family = "Karaman", 
+             email = "zivan.karaman@gmail.com", 
+             role = c("aut", "cre", "cph"),
+             comment = c(ORCID = "0000-0002-8933-4589")))
 Description: Provides interface to the 'Copernicus Data Space Ecosystem' API 
     <https://dataspace.copernicus.eu/analyse/apis>, mainly for searching the catalog of available
     data from Copernicus Sentinel missions and obtaining the images for just the area of interest 
