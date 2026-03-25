@@ -652,7 +652,7 @@ ras
 #> extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
 #> source(s)   : memory
-#> name        : file692f6b8fc5a0 
+#> name        : file63603f191118 
 #> min value   :       -0.5069648 
 #> max value   :        0.9507549
 ras[ras < 0] <- 0

@@ -1,11 +1,9 @@
 ---
 title: "Using 'Copernicus Data Space Ecosystem' API Wrapper"
 output:
-  pdf_document:
-    df_print: tibble
-    toc: yes
+  html_document:
+    toc: true
     toc_depth: '2'
-    fig_caption: yes
 urlcolor: blue
 vignette: >
     %\VignetteIndexEntry{Worked examples using CDSE API wrapper}  
@@ -48,10 +46,6 @@ id <- Sys.getenv("CDSE_ID")
 secret <- Sys.getenv("CDSE_SECRET")
 OAuthClient <- GetOAuthClient(id = id, secret = secret)
 ```
-
-## *Note*
-
-*In this document, the data.frames are output as tibbles since it renders better in PDF. However, all the functions produce standard data.frames.*
 
 # Collections
 
@@ -159,7 +153,7 @@ The `scripts` folder of this package contains a few examples of evaluation scrip
 
 ## Ready-to-use examples
 
-There is a large collection of evalscripts that you can readily use available in this [repository](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/). The scripts are grouped by satellite constellation (Sentinel-1, Sentinel-2, ...) and application field (Agriculture, Disaster management, Urban planning, ...). To use one of these scripts, the simplest way is probably to use the "*Download code*" or "*Copy code*" icons in the upper right corner of the code window (see the illustration in Figure 2 below). Some indices come in several flavours (Visualisation vs. Raw Values); select the one that corresponds to your situation. If you want to do some further analysis of the images, use raw values; if you want to simply display the image, you can use the visualisation version (you will probably also export the result as a JPEG or PNG file). You can, of course, always get the raw values and then customise the visualisation in your R code. Other indices might have only one version; it will likely first compute the index value and then possibly transform it for visualisation - adapt based on your needs.
+There is a large collection of evalscripts that you can readily use available in this [repository](https://custom-scripts.sentinel-hub.com/custom-scripts/sentinel/). The scripts are grouped by satellite constellation (Sentinel-1, Sentinel-2, ...) and application field (Agriculture, Disaster management, Urban planning, ...). To use one of these scripts, the simplest way is probably to use the "*Download code*" or "*Copy code*" icons in the upper right corner of the code window (see the illustration below). Some indices come in several flavours (Visualisation vs. Raw Values); select the one that corresponds to your situation. If you want to do some further analysis of the images, use raw values; if you want to simply display the image, you can use the visualisation version (you will probably also export the result as a JPEG or PNG file). You can, of course, always get the raw values and then customise the visualisation in your R code. Other indices might have only one version; it will likely first compute the index value and then possibly transform it for visualisation - adapt based on your needs.
 
 ```{r label="ready-to-use examples", echo = FALSE, fig.cap = "Using evalscript code from the repository", fig.align = "center", out.width = "80%"}
 knitr::include_graphics("script_code.png")
