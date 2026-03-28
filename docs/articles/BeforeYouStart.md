@@ -74,7 +74,7 @@ personal `.Rprofile`. These two options require the name-value pairs,
 for example, `CDSE_ID = "yourid"` and `CDSE_SECRET = "yoursecret"`. You
 can find more information about dealing with sensitive information in R
 at [Managing
-secrets](https://cran.r-project.org/web/packages/httr/vignettes/secrets.html).
+secrets](https://cran.r-project.org/package=httr/vignettes/secrets.html).
 
 ## OAuth authentication client
 
@@ -169,4 +169,4 @@ environment variable in your `.Renviron` file (by adding the line
 settings environment variables.
 
 You can find more information about this issue
-[here](https://cran.r-project.org/web/packages/curl/vignettes/windows.html).
+[here](https://cran.r-project.org/package=curl/vignettes/windows.html).
