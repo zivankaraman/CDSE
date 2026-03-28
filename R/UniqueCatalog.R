@@ -21,7 +21,6 @@
 #' @seealso \code{\link[CDSE]{SearchCatalog}}
 #' @rdname UniqueCatalog
 #' @export
-#' @importFrom stats aggregate
 UniqueCatalog <- function(imageCatalog, by = c("areaCoverage", "tileCloudCover"), keep = names(imageCatalog)) {
     by <- match.arg(by, choices = c("areaCoverage", "tileCloudCover"))
     if (by == "areaCoverage") {

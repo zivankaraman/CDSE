@@ -1,4 +1,8 @@
-# CDSE 0.3.1 (2022-02-03)
+# CDSE 0.3.2 (2026-03-23)
+
+-   Added function `SetPathAPI()` that enables switching between the new and old API path structures (see this [announcement](https://dataspace.copernicus.eu/news/2026-3-9-api-path-structure-updates-sentinel-hub-services))
+
+# CDSE 0.3.1 (2026-02-03)
 
 -   Adapted `MakeEvalScript()` function to handle Landsat-8/9 data
 

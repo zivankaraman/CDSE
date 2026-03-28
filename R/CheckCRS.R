@@ -1,3 +1,10 @@
+#' @title Validate CRS
+#' @description Checks if the provided coordinate reference system is supported by the API.
+#' @param x object of class 'crs'
+#' @return The supported numeric CRS code or an error.
+#' @keywords internal
+#' @noRd
+#' @importFrom sf st_crs
 CheckCRS <- function(x) {
     match_crs <- function(x, table, nomatch = NA_integer_) {
         if (any(c(class(x), sapply(table, class)) != "crs")) {

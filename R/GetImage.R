@@ -47,11 +47,11 @@
 #' @rdname GetImage
 #' @export
 #' @source \url{https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html}
-#' @importFrom sf st_transform st_geometry st_bbox st_buffer st_coordinates st_centroid
 #' @importFrom geojsonsf sfc_geojson
+#' @importFrom httr2 req_auth_bearer_token req_body_json req_headers req_oauth_client_credentials req_options req_perform req_retry request resp_header
 #' @importFrom jsonlite fromJSON
-#' @importFrom httr2 request req_headers req_body_json req_auth_bearer_token req_oauth_client_credentials req_perform
-#' @importFrom terra rast crs project mask writeRaster
+#' @importFrom sf st_as_text st_bbox st_buffer st_centroid st_coordinates st_crs st_geometry st_transform
+#' @importFrom terra crs ext mask project rast res writeRaster
 GetImage <- function(aoi, bbox, time_range, collection, script, file = NULL,
                             format = c("image/tiff", "image/png", "image/jpeg"),
                             mosaicking_order = c("mostRecent", "leastRecent", "leastCC"),
