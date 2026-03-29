@@ -2,6 +2,8 @@
 
 ## CDSE 0.3.2
 
+CRAN release: 2026-03-28
+
 - Added function
   [`SetPathAPI()`](https://zivankaraman.github.io/CDSE/reference/SetPathAPI.md)
   that enables switching between the new and old API path structures

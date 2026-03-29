@@ -652,9 +652,9 @@ ras
 #> extent      : -73.98355, -73.94794, 40.76322, 40.80165  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
 #> source(s)   : memory
-#> name        : file389211998fe2 
-#> min value   :       -0.5069648 
-#> max value   :        0.9507549
+#> name        : file42142f7a0b9 
+#> min value   :      -0.5069648 
+#> max value   :       0.9507549
 ras[ras < 0] <- 0
 terra::plot(ras, main = paste("Central Park NDVI on", day), cex.main = 0.75,
     col = colorRampPalette(c("darkred", "yellow", "darkgreen"))(99))
